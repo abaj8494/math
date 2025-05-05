@@ -1,3 +1,8 @@
+#set page(
+  width: auto,
+  height: auto
+)
+
 #let pascal_triangle(n, width:28pt, height:16pt) = {
   set text(weight: "bold")
   let row = ()
