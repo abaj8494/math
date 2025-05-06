@@ -1,5 +1,17 @@
-#import "custom.typ": mgrid, veq, vapprox
+#import "custom.typ": mgrid, veq, vapprox, proof
 #show math.equation: set text(14pt)
+
+// Create a simple theorem environment
+#let theorem(body) = block(
+  width: 100%,
+  fill: rgb(248, 248, 248),
+  stroke: (paint: rgb(100, 100, 100), thickness: 0.8pt),
+  radius: 3pt,
+  inset: (x: 1em, y: 0.8em),
+  outset: (bottom: 0.8em),
+)[
+  #text(weight: "bold", style: "italic")[Theorem.] #h(0.5em) #body
+]
 
 #set document(title: "Theory of Differential Equations", author: "Aayush Bajaj")
 #set page(numbering: "1")
@@ -182,7 +194,7 @@ in each case, the solution of $y(x)$ becomes:
 - $y(x) = C exp(lambda_1 x) + D exp(lambda_2 x)$
 - $y(x) = C exp(lambda_1 x) + D x exp(lambda_1 x)$
 - $y(x) = C exp(alpha x)cos(beta x) + D exp(alpha x)sin(beta x) 
-= exp(alpha x)(A cos(beta x) + B sin(beta x)) "by DeMoivre's Theorem" $
+  &= exp(alpha x)(A cos(beta x) + B sin(beta x)) "by DeMoivre's Theorem"$
 
 ==== inhomogenous $arrow.r$ method of undetermined coefficients <method-uc>
 $ y(x) = y_h(x) + y_p(x) $
@@ -196,7 +208,7 @@ guesses for $y_p(x)$:
 === variation of parameters
 This method works for any 2nd order inhomogenous ODE if the complementary solution is known.
 
-Theorem:
+#theorem[
 The general solution of the 2nd order inhomogenous ODE:
 $ y^('') + b_1 (x) y^' + b_0 (x) y = f(x) $
 
@@ -205,6 +217,7 @@ is given by $y(x) = u_1(x) y_1(x) + u_2(x) y_2(x)$
 where $y_1$ and $y_2$ are linearly independent solutions of the homogenous ODE such that the Wronskian $W(x) eq.not 0$ and 
 $ u_1(x) = -integral (y_2(x)f(x))/(W(x)) dif x $
 and $ u_2(x) = integral (y_1(x)f(x))/(W(x)) dif x $
+]
 
 === power series method
 note, that we embark on this approach because the @second-order-standard-form[second order standard form] is not solveable in general with _elementary functions_!
@@ -218,16 +231,17 @@ and substitute them into the ODE. Then solve by rearranging indices as necessary
 
 If $x_0$ is an ordinary point @definitions of the differential equation
 $ y^('') + p(x)y^' + q(x)y = 0 $
-then the general solution in a neighbourhood $| x - x_0 | < R$ may be represented as a power series.
+then the general solution in a neighbourhood $|x - x_0|< R$ may be represented as a power series.
 
 === method of frobenius
-Theorem:
+#theorem[
 If $x_0 = 0$ is a regular singular point of the differential equation
 $ y^('') + p(x)y^' + q(x)y = 0 $
 then there exists at least one series solution of the form
 $ y(x) = x^r sum^infinity_(n=0) c_n x^n
 = sum^infinity_(n=0) c_n x^(n+r), c_0 eq.not 0 $
 for some constant $r$ (index).
+]
 
 ==== general indicial equation
 $ r(r-1) + p_0 r + q_0 = 0 $
@@ -312,7 +326,7 @@ $ bold(A)_"canonical" = mat(alpha, beta; -beta, alpha) $
 $ "W"(f_1, f_2, dots, f_n)(x) = det(
   mat(
     f_1(x), f_2(x), dots, f_n(x);
-    f_1'(x), f_2'(x), dots, f_n'(x);
+    f_1^'(x), f_2^'(x), dots, f_n^'(x);
     dots.v, dots.v, dots.down, dots.v;
     f_1^((n-1))(x), f_2^((n-1))(x), dots, f_n^((n-1))(x)
   )
