@@ -38,167 +38,202 @@ $ mgrid(gutter: #1em,
 
     "linear" & "linear" & "non-linear" & "non-linear" & "non-linear" \
 ) $
+
 autonomous = independent variable does not appear in the equation
+
 non-autonomous = independent variable _does_ appear in the equation
 
 ansatz = our initial guess for the form of a solution, i.e. $y_p = A cos (t) + B sin (t)$
+
 indicial equation = a quadratic equation that pops out during the application of the Frobenius method
 
 analytic = a function is analytic at a point if it can be expressed as a convergent power series in a neighborhood of that point  
+
 ordinary point = when $p(x)$ and $q(x)$ are analytic at that point <ordinary-point>
+
 regular singular point = if $P(x) = (x-x_0)p(x)$ and $Q(x) = (x-x_0)^2 q(x)$ are both analytic at $x_0$.
+
 irregular singular point = not regular.
 
-mean convergence = // todo
-pointwise convergence =  // todo
-uniform convergence = // todo
+mean convergence = a sequence of functions $f_n$ converges in mean to $f$ on $[a,b]$ if $lim_(n->infinity) integral^b_a |f_n(x) - f(x)|^2 dif x = 0$
 
-equilibrium point = // todo
-stability // todo, this whole list
-  - stable node = 
-  - unstable bicritical node ("star") = 
-  - stable centre = 
-  - unstable saddle point =
-  - unstable focus =
+pointwise convergence = a sequence of functions $f_n$ converges pointwise to $f$ on $[a,b]$ if $lim_(n->infinity) f_n(x) = f(x)$ for every $x in [a,b]$
 
+uniform convergence = a sequence of functions $f_n$ converges uniformly to $f$ on $[a,b]$ if $lim_(n->infinity) sup_(x in [a,b]) |f_n(x) - f(x)| = 0$
+
+equilibrium point = a point where the derivative of the dependent variable with respect to the independent variable is zero
+stability
+  - stable node = trajectories approach the equilibrium point from all directions and eigenvalues are real and negative
+  - unstable bicritical node ("star") = trajectories move away from the equilibrium point in all directions and eigenvalues are real and positive
+  - stable centre = trajectories orbit around the equilibrium point with eigenvalues that are purely imaginary
+  - unstable saddle point = trajectories approach the equilibrium point in one direction and move away in another, with eigenvalues having opposite signs
+  - unstable focus = trajectories spiral away from the equilibrium point with eigenvalues having positive real parts and non-zero imaginary parts
+
+#pagebreak()
 = Solving Methods
 
-  == First Order
-  table of contents
+== First Order
 
-  === standard form
-  $ (dif y) / (dif x) = f(x, y) $
+=== standard form
+$ (dif y) / (dif x) = f(x, y) $
 
-  === separable
-  $ (dif y)/(dif x) = f(x) g(y)
-  arrow.r.double.long integral (dif y)/g(y) = integral f(x) dif x $
+=== separable
+$ (dif y)/(dif x) = f(x) g(y)
+arrow.r.double.long integral (dif y)/g(y) = integral f(x) dif x $
 
-  === reduction to separable
+=== reduction to separable
 
-  $ (dif y) / (dif x) = f ( y/x) $
-  substitution: $y(x) = x v(x)$
+$ (dif y) / (dif x) = f ( y/x) $
+with substitution: $y(x) = x v(x)$
 
-  === linear standard form
+=== linear standard form
 
-  $ (dif y) / (dif x) + p(x) y = q(x) $ <linear-standard-form>
+$ (dif y) / (dif x) + p(x) y = q(x) $ <linear-standard-form>
 
-  ==== integrating factor
+==== integrating factor
 
-  note, the coefficient of $y'(x)$ must be 1.
+note, the coefficient of $y'(x)$ must be 1.
 
-  $ phi(x) = exp(integral p(x) dif x)$ <phi_x>
+$ phi(x) = exp(integral p(x) dif x) $ <phi_x>
 
-  multiplying the @linear-standard-form[Linear Standard Form] with $phi(x)$ yields:
+multiplying the @linear-standard-form[Linear Standard Form] with $phi(x)$ yields:
 
-  $ (dif)/(dif x)(phi y) = phi(x) q(x)
-  arrow.r.double.long y = phi^(-1) integral phi q(x) dif x $
+$ (dif)/(dif x)(phi y) = phi(x) q(x)
+arrow.r.double.long y = phi^(-1) integral phi q(x) dif x $
 
-  === exact
-  // todo
+=== exact
+A first-order ODE is exact if it can be written in the form:
+$ M(x,y) dif x + N(x,y) dif y = 0 $
+where $(partial M)/(partial y) = (partial N)/(partial x)$. The solution is then given by: $F(x,y) = C$ where $F(x,y)$ satisfies $(partial F)/(partial x) = M(x,y)$ and $(partial F)/(partial y) = N(x,y)$
 
-  == Second Order
+#pagebreak()
+== Second Order
 
-  === standard form <second-order-standard-form>
-  $ y^('') + p(x)y^' + q(x)y = r(x) $
+=== standard form <second-order-standard-form>
+$ y^('') + p(x)y^' + q(x)y = r(x) $
 
-  === reducible to first order
+=== reducible to first order
 
-  $ (dif^2 y)/(dif x^2) + f(y, (dif y)/(dif x)) = 0 $
+$ (dif^2 y)/(dif x^2) + f(y, (dif y)/(dif x)) = 0 $
 
-  is reducible to the first-order ODE
+is reducible to the first-order ODE
 
-  $ p (dif p)/(dif y) + f(y, p) = 0 $
-  with substitution $p = (dif y)/(dif x)$
+$ p (dif p)/(dif y) + f(y, p) = 0 $
+with substitution $p = (dif y)/(dif x)$
 
-  === constant coefficients
-  when $p(x)$ and $q(x)$ are constants:
-  $ y^('') + a_1 y^' + a_0 y = 0 $
+=== constant coefficients
+when $p(x)$ and $q(x)$ are constants:
+$ y^('') + a_1 y^' + a_0 y = 0 $
 
-  ==== homogenous
-  solve the characteristic equation:
-  $ lambda^2 + a_1 lambda + a_0 = 0 $
-  cases:
-  - $lambda_1, lambda_2$ are real and distinct 
-  - $lambda_1, lambda_2$ are real and coincide (same) 
-  - $lambda_1, lambda_2$ are complex conjugates
+==== homogenous
+solve the characteristic equation:
+$ lambda^2 + a_1 lambda + a_0 = 0 $
+cases:
+- $lambda_1, lambda_2$ are real and distinct 
+- $lambda_1, lambda_2$ are real and coincide (same) 
+- $lambda_1, lambda_2$ are complex conjugates
 
-  in each case, the solution of $y(x)$ becomes:
-  - $y(x) = C exp(lambda_1 x) + D exp(lambda_2 x)$
-  - $y(x) = C exp(lambda_1 x) + D x exp(lambda_1 x)$
-  - $y(x) = C exp(alpha x)cos(beta x) + D exp(alpha x)sin(beta x) = exp(alpha x)(A cos(beta x) + B sin(beta x)) "by DeMoivre's Theorem" $
+in each case, the solution of $y(x)$ becomes:
+- $y(x) = C exp(lambda_1 x) + D exp(lambda_2 x)$
+- $y(x) = C exp(lambda_1 x) + D x exp(lambda_1 x)$
+- $y(x) = C exp(alpha x)cos(beta x) + D exp(alpha x)sin(beta x) 
+= exp(alpha x)(A cos(beta x) + B sin(beta x)) "by DeMoivre's Theorem" $
 
-  ==== inhomogenous -> method of undetermined coefficients <method-uc>
-  $ y(x) = y_h(x) + y_p(x) $
-  guesses for $y_p(x)$:
+==== inhomogenous $arrow.r$ method of undetermined coefficients <method-uc>
+$ y(x) = y_h(x) + y_p(x) $
+guesses for $y_p(x)$:
+- for $r(x) = P_n(x)$ (polynomial of degree $n$), try $y_p(x) = Q_n(x)$ 
+- for $r(x) = e^(alpha x)$, try $y_p(x) = A e^(alpha x)$
+- for $r(x) = sin(beta x)$ or $r(x) = cos(beta x)$, try $y_p(x) = A sin(beta x) + B cos(beta x)$
+- for products of the above forms, try products of the corresponding forms
+- if $y_p(x)$ is already a solution of the homogeneous equation, multiply by $x$ or $x^k$ until linearly independent
 
-  === variation of parameters
-  This method works for any 2nd order inhomogenous ODE if the complementary solution is known.
+=== variation of parameters
+This method works for any 2nd order inhomogenous ODE if the complementary solution is known.
 
-  Theorem:
-  The general solution of the 2nd order inhomogenous ODE:
-  $ y^('') + b_1 (x) y^' + b_0 (x) y = f(x) $
+Theorem:
+The general solution of the 2nd order inhomogenous ODE:
+$ y^('') + b_1 (x) y^' + b_0 (x) y = f(x) $
 
-  is given by $y(x) = u_1(x) y_1(x) + u_2(x) y_2(x)$
-  
-  where $y_1$ and $y_2$ are linearly independent solutions of the homogenous ODE such that the Wronskian $W(x) eq.not 0$ and 
-  $ u_1(x) = -integral (y_2(x)f(x))/(W(x)) dif x $
-  and $ u_2(x) = integral (y_1(x)f(x))/(W(x)) dif x $
+is given by $y(x) = u_1(x) y_1(x) + u_2(x) y_2(x)$
 
-  === power series method
-  note, that we embark on this approach because the @second-order-standard-form[second order standard form] is not solveable in general with _elementary functions_!
+where $y_1$ and $y_2$ are linearly independent solutions of the homogenous ODE such that the Wronskian $W(x) eq.not 0$ and 
+$ u_1(x) = -integral (y_2(x)f(x))/(W(x)) dif x $
+and $ u_2(x) = integral (y_1(x)f(x))/(W(x)) dif x $
 
-  pick ansatz of the form
-  $ y = sum^infinity_(n=0) a_n z^n $
-  and take derivatives as required. for example:
-  $ (dif y)/(dif z) = sum^infinity_(n=1) n a_n z^(n-1) 
-  (dif^2 y)/(dif z^2) = sum^infinity_(n=2) n(n-1) a_n z^(n-2) $
-  and substitute them into the ODE. Then solve by rearranging indices as necessary to obtain a recurrence relation. Apply the initial conditions and then guess the closed-form solution of the recurrence relation. Change back to the original variables if required.
+=== power series method
+note, that we embark on this approach because the @second-order-standard-form[second order standard form] is not solveable in general with _elementary functions_!
 
-  If $x_0$ is an ordinary point @definitions of the differential equation
-  $ y^('') + p(x)y^' + q(x)y = 0 $
-  then the general solution in a neighbourhood $| x - x_0 | < R$ may be represented as a power series.
+pick ansatz of the form
+$ y = sum^infinity_(n=0) a_n z^n $
+and take derivatives as required. for example:
+$ (dif y)/(dif z) = sum^infinity_(n=1) n a_n z^(n-1) 
+(dif^2 y)/(dif z^2) = sum^infinity_(n=2) n(n-1) a_n z^(n-2) $
+and substitute them into the ODE. Then solve by rearranging indices as necessary to obtain a recurrence relation. Apply the initial conditions and then guess the closed-form solution of the recurrence relation. Change back to the original variables if required.
 
-  === method of frobenius
-  Theorem:
-  If $x_0 = 0$ is a regular singular point of the differential equation
-  $ y^('') + p(x)y^' + q(x)y = 0 $
-  then there exists at least one series solution of the form
-  $ y(x) = x^r sum^infinity_(n=0) c_n x^n
-  = sum^infinity_(n=0) c_n x^(n+r), c_0 eq.not 0$
-  for some constant $r$ (index).
+If $x_0$ is an ordinary point @definitions of the differential equation
+$ y^('') + p(x)y^' + q(x)y = 0 $
+then the general solution in a neighbourhood $| x - x_0 | < R$ may be represented as a power series.
 
-  ==== general indicial equation
-  $ r(r-1) + p_0 r + q_0 = 0 $
+=== method of frobenius
+Theorem:
+If $x_0 = 0$ is a regular singular point of the differential equation
+$ y^('') + p(x)y^' + q(x)y = 0 $
+then there exists at least one series solution of the form
+$ y(x) = x^r sum^infinity_(n=0) c_n x^n
+= sum^infinity_(n=0) c_n x^(n+r), c_0 eq.not 0 $
+for some constant $r$ (index).
 
-  == n order
-  admits $n$ linearly independent solutions.
+==== general indicial equation
+$ r(r-1) + p_0 r + q_0 = 0 $
 
-  === power series expansion (not sure if it works for n order)
-  // todo the general formula
+== n order
+admits $n$ linearly independent solutions.
 
-  === reduction of order
-  any $n^"th"$ order ODE can be formulated as a system of $n$ first order ODE's.
+=== power series expansion (not sure if it works for n order)
+For an $n^"th"$ order linear ODE with variable coefficients:
+$ a_n(x) y^((n)) + a_(n-1)(x) y^((n-1)) + dots + a_1(x) y^' + a_0(x) y = f(x) $
 
-  // todo the formula
+We assume a solution of the form:
+$ y(x) = sum^infinity_(k=0) c_k (x-x_0)^k $
 
-  == partial differential equations
+Taking derivatives and substituting yields a recurrence relation for coefficients $c_k$, typically allowing us to determine $c_n$ in terms of $c_0, c_1, dots, c_(n-1)$.
 
-  === standard form (linear, homogenous, 2nd order pde)
-  $ A (partial^2 u)/(partial x^2) + B (partial^2 u)/(partial x partial y) + C (partial^2 u)/(partial y^2) + D(partial u)/(partial x) + E(partial u)/(partial y) + F u = 0 $
+=== reduction of order
+any $n^"th"$ order ODE can be formulated as a system of $n$ first order ODE's.
 
-  parabolic equation: $B^2 - 4A C = 0$ @heat[Heat Equation]
-  hyperbolic equation: $B^2 - 4A C > 0$ @wave[Wave Equation]
-  elliptic equation: $B^2 - 4A C < 0$ @laplace-eqn[Laplace Equation]
+For $y^((n)) = f(x, y, y^', dots, y^((n-1)))$, set $y_i = y^((i-1))$ for $i = 1,2,dots,n$ to obtain:
+$ y_i' = y_(i+1) $ for $i = 1,2,dots,n-1$
+$ y_n' = f(x, y_1, y_2, dots, y_n) $
 
-  == separation of variables
-  $ U(x,y) = X(x) Y(y) $
-  then $U_x = Y X^'$ and $U_y = Y^' X$
-  rewrite the PDE with these substitutions, then divide through by $X Y$. Integrate and solve.
+#pagebreak()
+== partial differential equations
 
-  == change of variables
-  // todo
+=== standard form (linear, homogenous, 2nd order pde)
+$ A (partial^2 u)/(partial x^2) + B (partial^2 u)/(partial x partial y) + C (partial^2 u)/(partial y^2) + D(partial u)/(partial x) + E(partial u)/(partial y) + F u = 0 $
 
+parabolic equation: $B^2 - 4A C = 0$ @heat[Heat Equation]
 
+hyperbolic equation: $B^2 - 4A C > 0$ @wave[Wave Equation]
+
+elliptic equation: $B^2 - 4A C < 0$ @laplace-eqn[Laplace Equation]
+
+=== separation of variables
+$ U(x,y) = X(x) Y(y) $
+then $U_x = Y X^'$ and $U_y = Y^' X$
+rewrite the PDE with these substitutions, then divide through by $X Y$. Integrate and solve.
+
+=== change of variables
+When a PDE is difficult to solve directly, changing variables can transform it into a simpler form.
+
+For a second-order PDE, the transformation $u = u(xi, eta)$ where $xi = xi(x,y)$ and $eta = eta(x,y)$ requires computing:
+$ (partial u)/(partial x) = (partial u)/(partial xi)(partial xi)/(partial x) + (partial u)/(partial eta)(partial eta)/(partial x) $
+$ (partial u)/(partial y) = (partial u)/(partial xi)(partial xi)/(partial y) + (partial u)/(partial eta)(partial eta)/(partial y) $
+
+And similarly for second-order derivatives. The canonical transformations are:
+- For hyperbolic: $xi = x + y, eta = x - y$ (characteristic coordinates)
+- For parabolic: $xi = x, eta = y - f(x)$ (transformation along characteristics)
+- For elliptic: $xi = x + i y, eta = x - i y$ (complex characteristics)
 
 = systems / dynamical systems
 
@@ -211,7 +246,20 @@ stability // todo, this whole list
 - $Re(lambda_1) < 0 arrow.r.double.long "stable focus"$
 - $Re(lambda_1) > 0 arrow.r.double.long "unstable focus"$
 
-real canonical form // todo
+real canonical form 
+For a linear system $dot(bold(x)) = bold(A) bold(x)$, the real canonical form depends on the eigenvalues of $bold(A)$:
+
+- Real distinct eigenvalues $lambda_1 eq.not lambda_2$:
+$ bold(A)_"canonical" = mat(lambda_1, 0; 0, lambda_2) $
+
+- Real repeated eigenvalues $lambda_1 = lambda_2$ with linearly independent eigenvectors:
+$ bold(A)_"canonical" = mat(lambda_1, 0; 0, lambda_1) $
+
+- Real repeated eigenvalues $lambda_1 = lambda_2$ with one linearly independent eigenvector:
+$ bold(A)_"canonical" = mat(lambda_1, 1; 0, lambda_1) $
+
+- Complex conjugate eigenvalues $lambda = alpha plus.minus i beta$:
+$ bold(A)_"canonical" = mat(alpha, beta; -beta, alpha) $
 
 = functions
 
@@ -346,10 +394,10 @@ $ (partial^2 u)/ (partial x^2) + (partial^2 u) / (partial y^2) = 0 $
 == fourier series
 
 $ y(x) = a_0/2 + sum^N_(n=1) (a_n cos (n x) + b_n sin (n x)) $
-$ a_n = 1/pi integral^pi_(-pi) y(x) cos(n x) dif x, n = 0, 1, 2, dots.h$
-$ b_n = 1/pi integral^pi_(-pi) y(x) sin(n x) dif x, n = 1, 2, dots.h$
+$ a_n = 1/pi integral^pi_(-pi) y(x) cos(n x) dif x, n = 0, 1, 2, dots.h $
+$ b_n = 1/pi integral^pi_(-pi) y(x) sin(n x) dif x, n = 1, 2, dots.h $
 
-parseval's identity
+== parseval's identity
 $ (|| f ||^2) / L = 1/L integral^L_(-L) f^2 dif x
 = a_0 / 2 + sum^infinity_(n=1) (a_n^2 + b_n^2) $
 
