@@ -1,4 +1,5 @@
 #import "custom.typ": mgrid, veq, vapprox
+#show math.equation: set text(14pt)
 
 #set document(title: "Theory of Differential Equations", author: "Aayush Bajaj")
 #set page(numbering: "1")
@@ -26,9 +27,40 @@
 
 = Definitions <definitions>
 
-order = the power the differential is raised to.
-linear = the dependent variable and it's derivatives are all not non-linear.
+// Define a function for creating fancy definition boxes
+#let def-box(term, content) = {
+  block(
+    width: 100%,
+    fill: rgb(248, 248, 248),
+    stroke: (paint: rgb(120, 120, 120), thickness: 0.8pt),
+    radius: 3pt,
+    inset: (x: 0.8em, y: 0.6em),
+    outset: (bottom: 0.8em),
+  )[
+    #text(weight: "bold")[#term] #h(0.5em) #text[=] #h(0.5em) #content
+  ]
+}
 
+// Define a function for stability types with a different style
+#let stability-box(type, content) = {
+  block(
+    width: 100%,
+    fill: rgb(240, 240, 240),
+    stroke: (paint: rgb(100, 100, 100), thickness: 0.8pt, dash: "dashed"),
+    radius: 3pt,
+    inset: (x: 0.8em, y: 0.6em),
+    outset: (bottom: 0.8em),
+  )[
+    #text(style: "italic", weight: "bold")[#type] #h(0.5em) #text[=] #h(0.5em) #content
+  ]
+}
+
+// Basic definitions
+#def-box("order", [the power the differential is raised to.])
+
+#def-box("linear", [the dependent variable and it's derivatives are all not non-linear.])
+
+// Example equations showing linearity
 $ mgrid(gutter: #1em,
     underbrace((dif^2 y) / (dif t))
       & underbrace(cos(x) (dif y)/(dif x))
@@ -39,35 +71,48 @@ $ mgrid(gutter: #1em,
     "linear" & "linear" & "non-linear" & "non-linear" & "non-linear" \
 ) $
 
-autonomous = independent variable does not appear in the equation
+// More definitions
+#def-box("autonomous", [independent variable does not appear in the equation])
 
-non-autonomous = independent variable _does_ appear in the equation
+#def-box("non-autonomous", [independent variable _does_ appear in the equation])
 
-ansatz = our initial guess for the form of a solution, i.e. $y_p = A cos (t) + B sin (t)$
+#def-box("ansatz", [our initial guess for the form of a solution, i.e. $y_p = A cos (t) + B sin (t)$])
 
-indicial equation = a quadratic equation that pops out during the application of the Frobenius method
+#def-box("indicial equation", [a quadratic equation that pops out during the application of the Frobenius method])
 
-analytic = a function is analytic at a point if it can be expressed as a convergent power series in a neighborhood of that point  
+#def-box("analytic", [a function is analytic at a point if it can be expressed as a convergent power series in a neighborhood of that point])
 
-ordinary point = when $p(x)$ and $q(x)$ are analytic at that point <ordinary-point>
+#def-box("ordinary point", [when $p(x)$ and $q(x)$ are analytic at that point]) <ordinary-point>
 
-regular singular point = if $P(x) = (x-x_0)p(x)$ and $Q(x) = (x-x_0)^2 q(x)$ are both analytic at $x_0$.
+#def-box("regular singular point", [if $P(x) = (x-x_0)p(x)$ and $Q(x) = (x-x_0)^2 q(x)$ are both analytic at $x_0$.])
 
-irregular singular point = not regular.
+#def-box("irregular singular point", [not regular.])
 
-mean convergence = a sequence of functions $f_n$ converges in mean to $f$ on $[a,b]$ if $lim_(n->infinity) integral^b_a |f_n(x) - f(x)|^2 dif x = 0$
+// Convergence definitions
+#def-box("mean convergence", [a sequence of functions $f_n$ converges in mean to $f$ on $[a,b]$ if $lim_(n->infinity) integral^b_a |f_n(x) - f(x)|^2 dif x = 0$])
 
-pointwise convergence = a sequence of functions $f_n$ converges pointwise to $f$ on $[a,b]$ if $lim_(n->infinity) f_n(x) = f(x)$ for every $x in [a,b]$
+#def-box("pointwise convergence", [a sequence of functions $f_n$ converges pointwise to $f$ on $[a,b]$ if $lim_(n->infinity) f_n(x) = f(x)$ for every $x in [a,b]$])
 
-uniform convergence = a sequence of functions $f_n$ converges uniformly to $f$ on $[a,b]$ if $lim_(n->infinity) sup_(x in [a,b]) |f_n(x) - f(x)| = 0$
+#def-box("uniform convergence", [a sequence of functions $f_n$ converges uniformly to $f$ on $[a,b]$ if $lim_(n->infinity) sup_(x in [a,b]) |f_n(x) - f(x)| = 0$])
 
-equilibrium point = a point where the derivative of the dependent variable with respect to the independent variable is zero
-stability
-  - stable node = trajectories approach the equilibrium point from all directions and eigenvalues are real and negative
-  - unstable bicritical node ("star") = trajectories move away from the equilibrium point in all directions and eigenvalues are real and positive
-  - stable centre = trajectories orbit around the equilibrium point with eigenvalues that are purely imaginary
-  - unstable saddle point = trajectories approach the equilibrium point in one direction and move away in another, with eigenvalues having opposite signs
-  - unstable focus = trajectories spiral away from the equilibrium point with eigenvalues having positive real parts and non-zero imaginary parts
+// Equilibrium and stability section with special styling
+#pagebreak()
+#block(width: 100%, outset: (top: 0.8em, bottom: 0.6em))[
+  #align(center)[#text(weight: "bold", size: 1.1em)[Equilibrium Points and Stability]]
+]
+
+#def-box("equilibrium point", [a point where the derivative of the dependent variable with respect to the independent variable is zero])
+
+// Stability types with different styling
+#stability-box("stable node", [trajectories approach the equilibrium point from all directions and eigenvalues are real and negative])
+
+#stability-box("unstable bicritical node (\"star\")", [trajectories move away from the equilibrium point in all directions and eigenvalues are real and positive])
+
+#stability-box("stable centre", [trajectories orbit around the equilibrium point with eigenvalues that are purely imaginary])
+
+#stability-box("unstable saddle point", [trajectories approach the equilibrium point in one direction and move away in another, with eigenvalues having opposite signs])
+
+#stability-box("unstable focus", [trajectories spiral away from the equilibrium point with eigenvalues having positive real parts and non-zero imaginary parts])
 
 #pagebreak()
 = Solving Methods
@@ -212,11 +257,11 @@ $ y_n' = f(x, y_1, y_2, dots, y_n) $
 === standard form (linear, homogenous, 2nd order pde)
 $ A (partial^2 u)/(partial x^2) + B (partial^2 u)/(partial x partial y) + C (partial^2 u)/(partial y^2) + D(partial u)/(partial x) + E(partial u)/(partial y) + F u = 0 $
 
-parabolic equation: $B^2 - 4A C = 0$ @heat[Heat Equation]
+parabolic equation: $B^2 - 4A C = 0$ (@heat[Heat Equation])
 
-hyperbolic equation: $B^2 - 4A C > 0$ @wave[Wave Equation]
+hyperbolic equation: $B^2 - 4A C > 0$ (@wave[Wave Equation])
 
-elliptic equation: $B^2 - 4A C < 0$ @laplace-eqn[Laplace Equation]
+elliptic equation: $B^2 - 4A C < 0$ (@laplace-eqn[Laplace Equation])
 
 === separation of variables
 $ U(x,y) = X(x) Y(y) $
@@ -359,13 +404,13 @@ implies $ integral^r_0 x^n J_(n-1) (x) dif x = r^n J_n(r) $ for $n = 1, 2, 3, do
 
 thus the de admits solutions
 case 1: $2 nu in.not ZZ $
-$ y(x) = A J_nu(x) + B J_(-nu)(x) $
-$J_nu(x)$,$J_(-nu)(x)$ linearly independent
+$ y(x) = A J_(nu)(x) + B J_(-nu)(x) $
+$J_(nu)(x)$, $J_(-nu)(x)$ linearly independent
 case 2: $2 nu in ZZ $
-$ y(x) = A J_nu(x) + B J_(-nu)(x) $
+$ y(x) = A J_(nu)(x) + B J_(-nu)(x) $
 case 3: $nu in ZZ $
-$J_nu(x)$,$J_(-nu)(x)$ linearly independent
-$ y(x) = A J_nu(x) + B Y_(nu)(x) $
+$J_(nu)(x)$, $J_(-nu)(x)$ linearly independent
+$ y(x) = A J_(nu)(x) + B Y_(nu)(x) $
 
 == laguerre's equation
 <laguerre>
@@ -378,7 +423,7 @@ $ y^('') - 2 x y^' + 2 n y = 0 $
 == sturm-liouville form
 $ (p y^')^' + (q + lambda r ) y = 0 $
 
-note that @bessel, @laguerre, @hermite and @legendre equations can all be written in this form. furthermore, *any* 2nd order linear homogenous ODE $y^('') + a_1(x)y^' + [a_2(x) + lambda a_3(x)]y = 0$ may be written in this form.
+note that @bessel[Bessel], @laguerre[Laguerre], @hermite[Hermite] and @legendre[Legendre] equations can all be written in this form. furthermore, *any* 2nd order linear homogenous ODE $y^('') + a_1(x)y^' + [a_2(x) + lambda a_3(x)]y = 0$ may be written in this form.
 
 == heat equation (pde) <heat>
 $ (partial^2 u) / (partial x^2) = (partial u)/(partial t) $
