@@ -45,3 +45,23 @@ Compiled with the code
 // this is exactly what you want to be writing!
 #pascal_triangle(8)
 ```
+
+# Topics
+
+- [ ] Discrete
+  - [ ] Logic
+  - [ ] Graph Theory
+  - [ ] Number Theory
+  - [ ] Combinatorics
+- [ ] Calculus
+  - [ ] Single Variable
+  - [ ] Multivariable
+  - [ ] Differential Equations
+- [ ] Linear Algebra
+- [ ] Optimisation
+- [ ] Probability
+- [ ] Real Analysis
+- [ ] Complex Analysis
+- [ ] Measure Theory
+- [ ] Time Series
+- [ ] Bayesian Inference
