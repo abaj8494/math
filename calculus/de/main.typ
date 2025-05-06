@@ -30,6 +30,10 @@ ordinary point = when $p(x)$ and $q(x)$ are analytic at that point <ordinary-poi
 regular singular point = if $P(x) = (x-x_0)p(x)$ and $Q(x) = (x-x_0)^2 q(x)$ are both analytic at $x_0$.
 irregular singular point = not regular.
 
+mean convergence = 
+pointwise convergence = 
+uniform convergence =
+
 = Solving Methods
 
   == First Order
@@ -66,7 +70,8 @@ irregular singular point = not regular.
 
   == Second Order
 
-  === standard form
+  === standard form <second-order-standard-form>
+  $ y^('') + p(x)y^' + q(x)y = r(x) $
 
   === reducible to first order
 
@@ -77,6 +82,7 @@ irregular singular point = not regular.
   $ p (dif p)/(dif y) + f(y, p) = 0 $
 
   === constant coefficients
+  when $p(x)$ and $q(x)$ are constants.
 
   ==== homogenous
   solve the characteristic equation. cases:
@@ -84,7 +90,7 @@ irregular singular point = not regular.
   $ y = C e^((alpha + beta i)x) + D e^((alpha - beta i)x)
   = e^(alpha x)(A cos (beta x) + B sin (beta x)) "by DeMoivre's Theorem" $
 
-  ==== inhomogenous -> method of undetermined coefficients
+  ==== inhomogenous -> method of undetermined coefficients <method-uc>
   y(x) = y_h(x) + y_p(x)
   guesses for y_p(x):
 
@@ -102,6 +108,7 @@ irregular singular point = not regular.
   u_2(x) = integral (y_1(x)f(x))/(W(x)) dif x $
 
   === power series method
+  note, that we embark on this approach because the @second-order-standard-form[second order standard form] is not solveable in general with _elementary functions_!
 
   pick ansatz of the form
   $ y = sum^infinity_(n=0) a_n z^n $
@@ -123,7 +130,11 @@ irregular singular point = not regular.
   = sum^infinity_(n=0) c_n x^(n+r), c_0 eq.not 0$
   for some constant $r$ (index).
 
+  ==== general indicial equation
+  $ r(r-1) + p_0 r + q_0 = 0 $
+
   == n order
+  admits $n$ linearly independent solutions.
 
   === power series expansion (not sure if it works for n order)
 
@@ -131,7 +142,17 @@ irregular singular point = not regular.
 
   == partial differential equations
 
-  == separable
+  === standard form (linear, homogenous, 2nd order pde)
+  $ A (partial^2 u)/(partial x^2) + B (partial^2 u)/(partial x partial y) + C (partial^2 u)/(partial y^2) + D(partial u)/(partial x) + E(partial u)/(partial y) + F u = 0 $
+
+  parabolic equation: $B^2 - 4A C = 0$ @heat[Heat Equation]
+  hyperbolic equation: $B^2 - 4A C > 0$ @wave[Wave Equation]
+  elliptic equation: $B^2 - 4A C < 0$ @laplace-eqn[Laplace Equation]
+
+  == separation of variables
+  $ U(x,y) = X(x) Y(y) $
+  then $U_x = Y X^'$ and $U_y = Y^' X$
+  rewrite the PDE with these substitutions, then divide through by $X Y$. Integrate and solve.
 
   == change of variables
 
@@ -149,8 +170,14 @@ real canonical form
 
 = functions
 
-
-== wronskian
+== wronskian <wronskian>
+$ "W"(f_1, f_2, ..., f_n)(x) = det(mat(
+  f_1(x), f_2(x), ..., f_n(x);
+  f_1'(x), f_2'(x), ..., f_n'(x);
+  dots.v, dots.v, dots.down, dots.v;
+  f_1^((n-1))(x), f_2^((n-1))(x), ..., f_n^((n-1))(x)
+)) $
+note that if a set of functions is linearly dependent, then its Wronskian will equal 0.
 
 == power series, taylor series and maclaurin series expansions
 #import "@preview/cetz:0.0.1": *
@@ -204,6 +231,12 @@ with weight function $w(x) > 0$, if $(phi_n,phi_m)_w =0$ for $m eq.not n$.
 == orthonormality <orthonormal>
 a set ${phi_n}_(n=1,2,3,dots)$ is _orthonormal_ when in addition to being @orthogonal, $(phi_n,phi_n) = 1$, for $n = 1,2,3,dots.h$.
 
+== cauchy-euler <cauchy-euler>
+$ x^2 y^('') + a_1 x y^' + a_0 y = 0$
+you can solve this by either letting $x = e^t$ or using the ansatz $y = x^lambda$
+the characteristic equation is $lambda^2 + (a_1 - 1) lambda + a_0 = 0$
+if you are blessed with the inhomogenous case of above, just use method of undetermined coefficients @method-uc.
+
 == legendre <legendre>
 legendre's (differential) equation
 $ ( 1 - x^2 )y^('') - 2x y^' + n(n+1)y = 0 $
@@ -219,6 +252,16 @@ $ J_alpha(x) = sum^infinity_(m=0) (-1)^m / Gamma(m+1)Gamma(m+alpha+1) (x/2)^(2m+
 implies $ dif / dif x [x^alpha J_alpha(x)] = x^alpha J_(alpha-1)(x) $
 implies $ integral^r_0 x^n J_(n-1) (x) dif x = r^n J_n(r) $ for $n = 1, 2, 3, dots.h$
 
+thus the de admits solutions
+case 1: $2 nu in.not ZZ $
+$ y(x) = A J_nu(x) + B J_(-nu)(x) $
+$J_nu(x)$,$J_(-nu)(x)$ linearly independent
+case 2: $2 nu in ZZ $
+$ y(x) = A J_nu(x) + B J_(-nu)(x) $
+case 3: $nu in ZZ $
+$J_nu(x)$,$J_(-nu)(x)$ linearly independent
+$ y(x) = A J_nu(x) + B Y_(nu)(x) $
+
 == laguerre's equation
 <laguerre>
 $ x y^('') + (1-x)y^' +n y = 0 $
@@ -230,20 +273,31 @@ $ y^('') - 2 x y^' + 2 n y = 0 $
 == sturm-liouville form
 $ (p y^')^' + (q + lambda r ) y = 0 $
 
-note that @bessel, @laguerre, @hermite and @legendre equations can all be written in this form.
+note that @bessel, @laguerre, @hermite and @legendre equations can all be written in this form. furthermore, *any* 2nd order linear homogenous ODE $y^('') + a_1(x)y^' + [a_2(x) + lambda a_3(x)]y = 0$ may be written in this form.
 
-== wave equation (pde)
+== heat equation (pde) <heat>
+$ (partial^2 u) / (partial x^2) = (partial u)/(partial t) $
+
+== wave equation (pde) <wave>
 
 $ (partial^2 u) / (partial x^2) = 1/c^2 (partial^2 u)/(partial t^2) $
 
-== laplace's equation
+== laplace's equation (pde ) <laplace-eqn>
 
 $ (partial^2 u)/ (partial x^2) + (partial^2 u) / (partial y^2) = 0 $
+
+== fourier series
+
+$ y(x) = a_0/2 + sum^N_(n=1) (a_n cos (n x) + b_n sin (n x)) $
+$ a_n = 1/pi integral^pi_(-pi) y(x) cos(n x) dif x, n = 0, 1, 2, dots.h$
+$ b_n = 1/pi integral^pi_(-pi) y(x) sin(n x) dif x, n = 1, 2, dots.h$
 
 = wheretoput
 reduction of order
 fourier series
   - sine, cosine
 parseval's identity'
+$ (|| f ||^2) / L = 1/L integral^L_(-L) f^2 dif x
+= a_0 / 2 + sum^infinity_(n=1) (a_n^2 + b_n^2) $
 
 cauchy-euler
