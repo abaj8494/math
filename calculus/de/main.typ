@@ -75,20 +75,29 @@ uniform convergence =
 
   === reducible to first order
 
-  $ (dif^2 y)/(dif x) + f(y, (dif y)/(dif x)) = 0$
+  $ (dif^2 y)/(dif x^2) + f(y, (dif y)/(dif x)) = 0$
 
   is reducible to the first-order ODE
 
   $ p (dif p)/(dif y) + f(y, p) = 0 $
+  with substitution $p = (dif y)/(dif x)$
 
   === constant coefficients
-  when $p(x)$ and $q(x)$ are constants.
+  when $p(x)$ and $q(x)$ are constants:
+  $ y^('') + a_1 y^' + a_0 y = 0 $
 
   ==== homogenous
-  solve the characteristic equation. cases:
+  solve the characteristic equation:
+  $ lambda^2 + a_1 lambda + a_0 = 0 $
+  cases:
+  - $lambda_1, lambda_2$ are real and distinct 
+  - $lambda_1, lambda_2$ are real and coincide (same) 
+  - $lambda_1, lambda_2$ are complex conjugates
 
-  $ y = C e^((alpha + beta i)x) + D e^((alpha - beta i)x)
-  = e^(alpha x)(A cos (beta x) + B sin (beta x)) "by DeMoivre's Theorem" $
+  in each case, the solution of $y(x)$ becomes:
+  - $y(x) = C exp(lambda_1 x) + D exp(lambda_2 x)$
+  - $y(x) = C exp(lambda_1 x) + D x exp(lambda_1 x)$
+  - $y(x) = C exp(alpha x)cos(beta x) + D exp(alpha x)sin(beta x) = exp(alpha x)(A cos(beta x) + B sin(beta x)) "by DeMoivre's Theorem" $
 
   ==== inhomogenous -> method of undetermined coefficients <method-uc>
   y(x) = y_h(x) + y_p(x)
@@ -139,6 +148,7 @@ uniform convergence =
   === power series expansion (not sure if it works for n order)
 
   === reduction of order
+  any $n^"th"$ order ODE can be formulated as a system of $n$ first order ODE's.
 
   == partial differential equations
 
@@ -159,6 +169,14 @@ uniform convergence =
 
 = systems / dynamical systems
 
+- $lambda_2 < lambda_1 < 0 arrow.r.double.long "stable node"$
+- $0 < lambda_1 < lambda_2 arrow.r.double.long "unstable node"$
+- $lambda_1 = lambda_2, lambda_1 > 0 arrow.r.double.long "unstable star"$
+- $lambda_1 = lambda_2, lambda_1 < 0 arrow.r.double.long "stable star"$
+- $lambda_1 < 0 < lambda_2 arrow.r.double.long "unstable saddle node"$
+- $Re(lambda_1) = 0 arrow.r.double.long "centre, stable"$
+- $Re(lambda_1) < 0 arrow.r.double.long "stable focus"$
+- $Re(lambda_1) > 0 arrow.r.double.long "unstable focus"$
 equilibrium point
 stability
   - stable node
