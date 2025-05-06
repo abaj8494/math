@@ -1,25 +1,4 @@
-#import "custom.typ": mgrid, veq, vapprox
-
-#set document(title: "Theory of Differential Equations", author: "Aayush Bajaj")
-#set page(numbering: "1")
-
-// Title page
-#align(center)[
-  #block(text(weight: "bold", size: 24pt)[Theory of Differential Equations])
-  #v(2em)
-  #text(size: 14pt)[Aayush Bajaj]
-  #v(1em)
-  #text(size: 12pt)[Version 0.1]
-  #v(1em)
-  #text(size: 12pt)[#datetime.today().display()]
-]
-
-#pagebreak()
-
-// Table of contents
-#outline(title: "Table of Contents")
-
-#pagebreak()
+#import "custom.typ": mgrid, veq
 
 #set heading(numbering:"1.")
 #set math.equation(numbering: "(1)")
@@ -28,16 +7,18 @@
 
 order = the power the differential is raised to.
 linear = the dependent variable and it's derivatives are all not non-linear.
-
 $ mgrid(gutter: #1em,
-    underbrace((dif^2 y) / (dif t))
+    underbrace((dif ^2 y / dif t))
       & underbrace(cos(x) (dif y)/(dif x))
       & underbrace((dif y) / (dif t) (dif ^3 y) / (dif t^3))
       & underbrace(y^' = e^y)
       & underbrace(y (dif y)/(dif x)) \
 
+    veq & veq & veq & veq \
+  
     "linear" & "linear" & "non-linear" & "non-linear" & "non-linear" \
-) $
+)$
+
 autonomous = independent variable does not appear in the equation
 non-autonomous = independent variable _does_ appear in the equation
 
@@ -71,7 +52,7 @@ stability // todo, this whole list
 
   === separable
   $ (dif y)/(dif x) = f(x) g(y)
-  arrow.r.double.long integral (dif y)/g(y) = integral f(x) dif x $
+  arrow.r.double.long integral (dif y)/g(y) = integral f(x) dif x$
 
   === reduction to separable
 
@@ -103,7 +84,7 @@ stability // todo, this whole list
 
   === reducible to first order
 
-  $ (dif^2 y)/(dif x^2) + f(y, (dif y)/(dif x)) = 0 $
+  $ (dif^2 y)/(dif x^2) + f(y, (dif y)/(dif x)) = 0$
 
   is reducible to the first-order ODE
 
@@ -128,8 +109,8 @@ stability // todo, this whole list
   - $y(x) = C exp(alpha x)cos(beta x) + D exp(alpha x)sin(beta x) = exp(alpha x)(A cos(beta x) + B sin(beta x)) "by DeMoivre's Theorem" $
 
   ==== inhomogenous -> method of undetermined coefficients <method-uc>
-  $ y(x) = y_h(x) + y_p(x) $
-  guesses for $y_p(x)$:
+  y(x) = y_h(x) + y_p(x)
+  guesses for y_p(x):
 
   === variation of parameters
   This method works for any 2nd order inhomogenous ODE if the complementary solution is known.
@@ -141,8 +122,8 @@ stability // todo, this whole list
   is given by $y(x) = u_1(x) y_1(x) + u_2(x) y_2(x)$
   
   where $y_1$ and $y_2$ are linearly independent solutions of the homogenous ODE such that the Wronskian $W(x) eq.not 0$ and 
-  $ u_1(x) = -integral (y_2(x)f(x))/(W(x)) dif x $
-  and $ u_2(x) = integral (y_1(x)f(x))/(W(x)) dif x $
+  $ u_1(x) = -integral (y_2(x)f(x))/(W(x)) dif x, "and"
+  u_2(x) = integral (y_1(x)f(x))/(W(x)) dif x $
 
   === power series method
   note, that we embark on this approach because the @second-order-standard-form[second order standard form] is not solveable in general with _elementary functions_!
@@ -216,68 +197,56 @@ real canonical form // todo
 = functions
 
 == wronskian <wronskian>
-$ "W"(f_1, f_2, dots, f_n)(x) = det(
-  mat(
-    f_1(x), f_2(x), dots, f_n(x);
-    f_1'(x), f_2'(x), dots, f_n'(x);
-    dots.v, dots.v, dots.down, dots.v;
-    f_1^((n-1))(x), f_2^((n-1))(x), dots, f_n^((n-1))(x)
-  )
-) $
+$ "W"(f_1, f_2, ..., f_n)(x) = det(mat(
+  f_1(x), f_2(x), ..., f_n(x);
+  f_1'(x), f_2'(x), ..., f_n'(x);
+  dots.v, dots.v, dots.down, dots.v;
+  f_1^((n-1))(x), f_2^((n-1))(x), ..., f_n^((n-1))(x)
+)) $
 note that if a set of functions is linearly dependent, then its Wronskian will equal 0.
 
 == power series, taylor series and maclaurin series expansions
+#import "@preview/cetz:0.0.1": *
 
-#figure(
-  align(center)[
-    #box(
-      width: 90%,
-      fill: rgb(230, 240, 255),
+cetz.diagram(
+  size: (20cm, 12cm),
+  [
+    ellipse[
+      center: (10cm, 6cm),
+      radius: (8cm, 4.5cm),
+      fill: blue.lighten(4),
       stroke: blue,
-      inset: 2em,
-    )[
-      #align(center)[
-        #text(weight: "bold", size: 1.2em)[Power Series]
-        #linebreak()
-        $sum_(n=0)^(infinity) a_n (x - a)^n$
-      ]
-      
-      #v(1em)
-      
-      #align(center)[
-        #box(
-          width: 80%,
-          fill: rgb(230, 250, 230),
-          stroke: green,
-          inset: 2em,
-        )[
-          #align(center)[
-            #text(weight: "bold", size: 1.2em)[Taylor Series]
-            #linebreak()
-            $sum_(n=0)^(infinity) (f^((n))(a))/(n!) (x - a)^n$
-          ]
-          
-          #v(1em)
-          
-          #align(center)[
-            #box(
-              width: 70%,
-              fill: rgb(255, 240, 220),
-              stroke: orange,
-              inset: 2em,
-            )[
-              #align(center)[
-                #text(weight: "bold", size: 1.2em)[Maclaurin Series]
-                #linebreak()
-                $sum_(n=0)^(infinity) (f^((n))(0))/(n!) x^n$
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ],
-  caption: [Relationship between power series, Taylor series, and Maclaurin series, showing proper subset relationships]
+      label: [top, "Power Series"],
+    ],
+    text[
+      at: (10cm, 9.5cm),
+      content: $sum_(n=0)^(infinity) a_n (x - a)^n$,
+    ],
+
+    ellipse[
+      center: (10cm, 6cm),
+      radius: (5.5cm, 3.2cm),
+      fill: green.lighten(4),
+      stroke: green,
+      label: [top, "Taylor Series"],
+    ],
+    text[
+      at: (10cm, 7.8cm),
+      content: $sum_(n=0)^(infinity) (f^((n))(a))/(n!) (x - a)^n$,
+    ],
+
+    ellipse[
+      center: (10cm, 6cm),
+      radius: (3cm, 1.8cm),
+      fill: orange.lighten(4),
+      stroke: orange,
+      label: [top, "Maclaurin Series"],
+    ],
+    text[
+      at: (10cm, 6.8cm),
+      content: $sum_(n=0)^(infinity) (f^((n))(0))/(n!) x^n$,
+    ],
+  ]
 )
 
 == orthogonality <orthogonal>

@@ -1,4 +1,12 @@
-#let mgrid(align: center, gutter: 1em, eq) = context {
+#let mgrid(..args) = context {
+  // Extract named parameters or use defaults
+  let kwargs = args.named()
+  let align = kwargs.at("align", default: center)
+  let gutter = kwargs.at("gutter", default: 1em)
+  
+  // Get positional arguments (the body/eq content)
+  let eq = if args.pos().len() > 0 { args.pos().first() } else { [] }
+  
   if eq.func() != [].func() {
     // Body is just a single element, so leave it as is.
     return eq
@@ -64,5 +72,5 @@
   lines.map(layout-line).join(linebreak())
 }
 
-#let vapprox = rotate(90deg, $ approx $)
-#let veq = rotate(90deg, $ = $)
+#let vapprox = box(baseline: 50%, rotate(90deg, $ approx $))
+#let veq = box(baseline: 50%, rotate(90deg, $ = $))

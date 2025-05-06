@@ -1,3 +1,4 @@
+
 #import "custom.typ": mgrid, veq, vapprox
 
 #set document(title: "Theory of Differential Equations", author: "Aayush Bajaj")
@@ -216,68 +217,56 @@ real canonical form // todo
 = functions
 
 == wronskian <wronskian>
-$ "W"(f_1, f_2, dots, f_n)(x) = det(
-  mat(
-    f_1(x), f_2(x), dots, f_n(x);
-    f_1'(x), f_2'(x), dots, f_n'(x);
-    dots.v, dots.v, dots.down, dots.v;
-    f_1^((n-1))(x), f_2^((n-1))(x), dots, f_n^((n-1))(x)
-  )
-) $
+$ "W"(f_1, f_2, ..., f_n)(x) = det(mat(
+  f_1(x), f_2(x), ..., f_n(x);
+  f_1'(x), f_2'(x), ..., f_n'(x);
+  dots.v, dots.v, dots.down, dots.v;
+  f_1^((n-1))(x), f_2^((n-1))(x), ..., f_n^((n-1))(x)
+)) $
 note that if a set of functions is linearly dependent, then its Wronskian will equal 0.
 
 == power series, taylor series and maclaurin series expansions
+#import "@preview/cetz:0.0.1": *
 
-#figure(
-  align(center)[
-    #box(
-      width: 90%,
-      fill: rgb(230, 240, 255),
+cetz.diagram(
+  size: (20cm, 12cm),
+  [
+    ellipse[
+      center: (10cm, 6cm),
+      radius: (8cm, 4.5cm),
+      fill: blue.lighten(4),
       stroke: blue,
-      inset: 2em,
-    )[
-      #align(center)[
-        #text(weight: "bold", size: 1.2em)[Power Series]
-        #linebreak()
-        $sum_(n=0)^(infinity) a_n (x - a)^n$
-      ]
-      
-      #v(1em)
-      
-      #align(center)[
-        #box(
-          width: 80%,
-          fill: rgb(230, 250, 230),
-          stroke: green,
-          inset: 2em,
-        )[
-          #align(center)[
-            #text(weight: "bold", size: 1.2em)[Taylor Series]
-            #linebreak()
-            $sum_(n=0)^(infinity) (f^((n))(a))/(n!) (x - a)^n$
-          ]
-          
-          #v(1em)
-          
-          #align(center)[
-            #box(
-              width: 70%,
-              fill: rgb(255, 240, 220),
-              stroke: orange,
-              inset: 2em,
-            )[
-              #align(center)[
-                #text(weight: "bold", size: 1.2em)[Maclaurin Series]
-                #linebreak()
-                $sum_(n=0)^(infinity) (f^((n))(0))/(n!) x^n$
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ],
-  caption: [Relationship between power series, Taylor series, and Maclaurin series, showing proper subset relationships]
+      label: [top, "Power Series"],
+    ],
+    text[
+      at: (10cm, 9.5cm),
+      content: $sum_(n=0)^(infinity) a_n (x - a)^n$,
+    ],
+
+    ellipse[
+      center: (10cm, 6cm),
+      radius: (5.5cm, 3.2cm),
+      fill: green.lighten(4),
+      stroke: green,
+      label: [top, "Taylor Series"],
+    ],
+    text[
+      at: (10cm, 7.8cm),
+      content: $sum_(n=0)^(infinity) (f^((n))(a))/(n!) (x - a)^n$,
+    ],
+
+    ellipse[
+      center: (10cm, 6cm),
+      radius: (3cm, 1.8cm),
+      fill: orange.lighten(4),
+      stroke: orange,
+      label: [top, "Maclaurin Series"],
+    ],
+    text[
+      at: (10cm, 6.8cm),
+      content: $sum_(n=0)^(infinity) (f^((n))(0))/(n!) x^n$,
+    ],
+  ]
 )
 
 == orthogonality <orthogonal>
