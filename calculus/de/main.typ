@@ -1,7 +1,7 @@
 #import "custom.typ": mgrid, veq, vapprox, proof
 #show math.equation: set text(14pt)
 
-// Create a simple theorem environment
+// Create a simplhe thheorem environment
 #let theorem(body) = block(
   width: 100%,
   fill: rgb(248, 248, 248),
@@ -14,22 +14,24 @@
 ]
 
 #set document(title: "Theory of Differential Equations", author: "Aayush Bajaj")
-#set page(numbering: "1")
 
-// Title page
+// Title page with background crest
 #align(center)[
+  #v(2em)
   #block(text(weight: "bold", size: 24pt)[Theory of Differential Equations])
   #v(2em)
-  #text(size: 14pt)[Aayush Bajaj]
+  #text(weight: "bold", size: 20pt)[Aayush Bajaj]
   #v(1em)
-  #text(size: 12pt)[Version 0.1]
+  #text(size: 16pt)[Version 1.0]
   #v(1em)
-  #text(size: 12pt)[#datetime.today().display()]
+  #text(size: 16pt)[#datetime.today().display()]
+  #v(4em)
+  #image("crest.svg", width: 90%)
 ]
 
 #pagebreak()
 
-// Table of contents
+#set page(numbering: "1")
 #outline(title: "Table of Contents")
 
 #pagebreak()
@@ -39,7 +41,6 @@
 
 = Definitions <definitions>
 
-// Define a function for creating fancy definition boxes
 #let def-box(term, content) = {
   block(
     width: 100%,
@@ -127,6 +128,7 @@ $ mgrid(gutter: #1em,
 #stability-box("unstable focus", [trajectories spiral away from the equilibrium point with eigenvalues having positive real parts and non-zero imaginary parts])
 
 #pagebreak()
+#set text( size: 14pt )
 = Solving Methods
 
 == First Order
@@ -151,12 +153,12 @@ $ (dif y) / (dif x) + p(x) y = q(x) $ <linear-standard-form>
 
 note, the coefficient of $y'(x)$ must be 1.
 
-$ phi(x) = exp(integral p(x) dif x) $ <phi_x>
+$ phi.alt(x) = exp(integral p(x) dif x) $ <phi_x>
 
-multiplying the @linear-standard-form[Linear Standard Form] with $phi(x)$ yields:
+multiplying the @linear-standard-form[Linear Standard Form] with $phi.alt(x)$ yields:
 
-$ (dif)/(dif x)(phi y) = phi(x) q(x)
-arrow.r.double.long y = phi^(-1) integral phi q(x) dif x $
+$ (dif)/(dif x)(phi.alt y) = phi.alt(x) q(x)
+arrow.r.double.long y = phi.alt^(-1) integral phi.alt q(x) dif x $
 
 === exact
 A first-order ODE is exact if it can be written in the form:
@@ -193,8 +195,7 @@ cases:
 in each case, the solution of $y(x)$ becomes:
 - $y(x) = C exp(lambda_1 x) + D exp(lambda_2 x)$
 - $y(x) = C exp(lambda_1 x) + D x exp(lambda_1 x)$
-- $y(x) = C exp(alpha x)cos(beta x) + D exp(alpha x)sin(beta x) 
-  &= exp(alpha x)(A cos(beta x) + B sin(beta x)) "by DeMoivre's Theorem"$
+- $ y(x) &= C exp(alpha x)cos(beta x) + D exp(alpha x)sin(beta x) \ &= exp(alpha x)(A cos(beta x) + B sin(beta x)) "by DeMoivre's Theorem" $
 
 ==== inhomogenous $arrow.r$ method of undetermined coefficients <method-uc>
 $ y(x) = y_h(x) + y_p(x) $
@@ -203,7 +204,7 @@ guesses for $y_p(x)$:
 - for $r(x) = e^(alpha x)$, try $y_p(x) = A e^(alpha x)$
 - for $r(x) = sin(beta x)$ or $r(x) = cos(beta x)$, try $y_p(x) = A sin(beta x) + B cos(beta x)$
 - for products of the above forms, try products of the corresponding forms
-- if $y_p(x)$ is already a solution of the homogeneous equation, multiply by $x$ or $x^k$ until linearly independent
+- #rect[if $y_p(x)$ is already a solution of the homogeneous equation, multiply by $x$ or $x^k$ until linearly independent]
 
 === variation of parameters
 This method works for any 2nd order inhomogenous ODE if the complementary solution is known.
@@ -323,13 +324,13 @@ $ bold(A)_"canonical" = mat(alpha, beta; -beta, alpha) $
 = functions
 
 == wronskian <wronskian>
-$ "W"(f_1, f_2, dots, f_n)(x) = det(
+#set math.mat(delim: "|")
+$ "W"(f_1, f_2, dots, f_n)(x) =
   mat(
     f_1(x), f_2(x), dots, f_n(x);
     f_1^'(x), f_2^'(x), dots, f_n^'(x);
     dots.v, dots.v, dots.down, dots.v;
     f_1^((n-1))(x), f_2^((n-1))(x), dots, f_n^((n-1))(x)
-  )
 ) $
 note that if a set of functions is linearly dependent, then its Wronskian will equal 0.
 
@@ -388,12 +389,12 @@ note that if a set of functions is linearly dependent, then its Wronskian will e
 )
 
 == orthogonality <orthogonal>
-A set of functions ${phi_n}_(n=1,2,3,dots)$ is said to be orthogonal on the interval $[a,b]$ with respect to the inner product defined by
+A set of functions ${phi.alt_n}_(n=1,2,3,dots)$ is said to be orthogonal on the interval $[a,b]$ with respect to the inner product defined by
 $ (f, g)_w = integral^b_a w(x)f(x)g(x) dif x $
-with weight function $w(x) > 0$, if $(phi_n,phi_m)_w =0$ for $m eq.not n$.
+with weight function $w(x) > 0$, if $(phi.alt_n,phi.alt_m)_w =0$ for $m eq.not n$.
 
 == orthonormality <orthonormal>
-a set ${phi_n}_(n=1,2,3,dots)$ is _orthonormal_ when in addition to being @orthogonal, $(phi_n,phi_n) = 1$, for $n = 1,2,3,dots.h$.
+a set ${phi.alt_n}_(n=1,2,3,dots)$ is _orthonormal_ when in addition to being @orthogonal, $(phi.alt_n,phi.alt_n) = 1$, for $n = 1,2,3,dots.h$.
 
 == cauchy-euler <cauchy-euler>
 $ x^2 y^('') + a_1 x y^' + a_0 y = 0$
