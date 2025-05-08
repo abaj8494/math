@@ -1,4 +1,7 @@
 #import "@preview/thmbox:0.2.0": *
+#import "@preview/drafting:0.2.2": *
+
+
 
 // custom
 #let iff = $<==>$
@@ -14,8 +17,13 @@
     $bar.v.double #body bar.v.double_(#p)$
   }
 }
+#let scr(it) = text(
+  features: ("ss01",),
+  box($cal(it)$),
+)
 
 #show math.equation: set text(14pt)
+#set text( size: 14pt )
 
 #show: thmbox-init()
 
@@ -41,7 +49,6 @@
 
 #pagebreak()
 
-#set text( size: 14pt )
 #set heading(numbering:"1.")
 #set math.equation(numbering: "(1)")
 
@@ -60,7 +67,7 @@
   + Claim / Conjecture: A statement asserted that requires a proof.
 ]
 
-#set enum(numbering: "a)")
+//#set enum(numbering: "a)")
 #definition(
   title: "Vector Norm"
 )[
@@ -116,7 +123,7 @@
   Let $A in RR^{n times n}$ be a symmetric matrix. Then:
   + $A$ has $n$ real eigenvalues.
     + There exists an orthogonal matrix $Q$ ($Q^top Q=I$) such that $A= Q D Q^top$ where $D=op("diag")(lambda_1,dots.h,lambda_n)$ and $Q=[v_1 thin dots.h thin v_n]$ with $v_i$ an eigenvector of $A$ corresponding to eigenvalue $lambda_i$.
-    + $op("det")(A)=product{i=1}^n lambda_i$ and $op("tr")(A)=sum_{i=1}^n lambda_i=sum_{i=1}^n A_{i i}$.
+    + $op("det")(A)=product_(i=1)^n lambda_i$ and $op("tr")(A)=sum_(i=1)^n lambda_i=sum_(i=1)^n A_(i i)$.
     + $A$ is positive definite $iff lambda_i>0$ for all $i=1,dots.h,n$.
     + $A$ is positive semi-definite $iff lambda_i gt.eq 0$ for all $i=1,dots.h,n$.
     + $A$ is indefinite $iff$ there exist $i,j$ with $lambda_i>0$ and $lambda_j<0$.
@@ -238,7 +245,7 @@ Remark: $max f(ve(x)) = -min{-f(ve(x))}$
 #proposition(
   title: "Second order necessary conditions"
 )[
-  If $f\in C^2(RR^n)$ then
+  If $f in C^2(RR^n)$ then
   + Local minimiser $imp nabla f(ve(x)^*)=0$ _and_ $nabla^2 f(ve(x)^*)$ positive semi-definite.
   + Local maximiser $imp nabla f(ve(x)^*)=0$ _and_ $nabla^2 f(ve(x)^*)$ negative semi-definite.
 
@@ -259,31 +266,42 @@ Remark: $max f(ve(x)) = -min{-f(ve(x))}$
 
   #corollary(
     title: "Global Optimums"
-  )
-  [
-    From the sufficiency of stationarity as above, and under the convexity / concavity of $f in C^2 (RR^n)$:
+  )[ From the sufficiency of stationarity as above, and under the convexity / concavity of $f in C^2 (RR^n)$:
     + $f$ convex $imp$ any stationary point is a global minimiser.
     + $f$ _strictly_ convex $imp$ stationary point is the _unique_ global minimiser.
     + $f$ concave $imp$ any stationary point is a global maximiser.
-    + $f$ _strictly_ concave $imp$ stationary point is the _unique_ global maximiser.
-  ]
+    + $f$ _strictly_ concave $imp$ stationary point is the _unique_ global maximiser. ]
 ]
-
 
 #pagebreak()
 = Equality Constraints
 
 #definition(
   title: "Standard Form"
-)[$ op("minimise", limits: #true)_(ve(x) in Omega) #h(1cm) &f(ve(x)) \ "subject to" #h(1cm) &ve(c)_i (ve(x)) = 0 $]
+)[ #math.equation(
+  block: true,                 
+  numbering: n => margin-note(
+    side: right,
+    stroke: white,
+    [(EP)],                                // anchor
+    [ #text(6pt)[EP = equality problem] ] // note body
+  ),
+)[$
+ op("minimise", limits: #true)_(ve(x) in Omega) #h(1cm) &f(ve(x)) \ "subject to" #h(1cm) &ve(c)_i (ve(x)) = 0 
+  $
+]
+]<equality-problem>
 
 #definition(
   title: "Lagrangian"
-)[]
+)[ For $ve(x) in RR^n$, $ve(lambda) in RR^m$, $ cal(ve(L))(ve(x),ve(lambda)) := f(ve(x)) + sum_(i=1)^m lambda_i c_(i)(ve(x)) $<lagrange-multipliers>
+#note[$lambda_i$ are termed Lagrange Multipliers]
+]
 
 #definition(
   title: "Regular Point"
-)[]
+)[ A feasible point $macron(ve(x))$ is _regular_ $iff$ the gradients $nabla c_(i)(macron(ve(x)))$, $i=1,dots.h,m$, are linearly independent. 
+#margin-note(side: left)[#text(6pt)[feasible means the constraint is satisfied at $sscript(macron(ve(x)))$ ] ] ]
 
 #definition(
   title: "Matrix of Constraint Gradients"
@@ -295,76 +313,125 @@ $]
   title: "Jacobian"
 )[$
 J(ve(x)) &= A(ve(x))^T \
-&= mat(nabla ve(c)_i (ve(x))^T; dots.v ; ve(c)_m (ve(x))^T;delim: "[") 
+&= mat(nabla ve(c)_1 (ve(x))^T; dots.v ; ve(c)_m (ve(x))^T;delim: "[") 
 $]
 
 #proposition(
   title: "First order necessary optimality conditions"
-)[]
-
+)[
+  If $ve(x^*)$ is a local minimiser and a regular point of @equality-problem[(EP)], then $exists thin ve(lambda^*) in RR^m$ such that
+  $
+    nabla_x cal(L)(ve(x^*), ve(lambda^*)) = 0, #h(1cm) nabla_(lambda) cal(L)(ve(x^*) , ve(lambda^*)) = ve(0) 
+  $<first-order-eq>
 #corollary(
   title: "Constrained Stationary Point"
-)[]
+)[
+  Any $ve(x^*)$ for which $exists thin ve(lambda^*)$ satisfying @first-order-eq[the first order conditions].
+]
+]
+
 
 #proposition(
   title: "Second order sufficient conditions"
-)[]
+)[
+  Let $ve(x^*)$ be a constrained stationary point of @equality-problem[(EP)] so there exist Lagrange multipliers $ve(lambda^x)$ such that
+  $
+    nabla_ve(x) cal(L)(ve(x^*), ve(lambda^*)) = nabla f(ve(x^*)) + A(ve(x^*)) ve(lambda^*) = ve(0) \
+    nabla_ve(lambda) cal(L)(ve(x^*), ve(lambda^*)) = ve(c)(ve(x^*)) = ve(0)
+  $
+  If $W_Z^*$ is positive definite $imp ve(x^*)$ is a strict local minimiser.
+
+  Here, $ A(ve(x^*)) = mat(nabla c_1(ve(x^*)), dots.h, c_(m)(ve(x^*)); delim: "["; ) $ 
+  $ W_Z^* := (Z^*)^top nabla^2_ve(x) cal(L)(ve(x^*),ve(lambda^*))Z^* $
+  $ Z^* in RR^(n times (n-t^*)) #h(1cm), t^* = op("rank")(A(ve(x^*))) $
+  $ (Z^*)^top A(ve(x^*)) = ve(0) $
+  #remark[ where $W_Z^*$ is the reduced Hessian of the Lagrangian, and that in turn can be thought of as the projection of the Lagrangian's Hessian onto the tangent space of the constraints at the point $ve(x^*)$]
+]
 
 #pagebreak()
 = Inequality Constraints
 
-#definition(title: "Standard Form")[
-$ op("minimise", limits: #true)_(ve(x) in Omega) #h(1cm) &f(ve(x)) \
+
+#definition(
+  title: "Standard Form"
+)[ #math.equation(
+  block: true,                 
+  numbering: n => margin-note(
+    side: right,
+    stroke: white,
+    [(NLP)],                                // anchor
+    [ #text(6pt)[NLP = non-linear problem] ] // note body
+  ),
+)[$
+op("minimise", limits: #true)_(ve(x) in Omega) #h(1cm) &f(ve(x)) \
 "subject to" #h(1cm) &ve(c)_i (ve(x)) = 0, #h(2em) i = 1, dots.h, m_E  \
-&ve(c)_i (ve(x)) lt.eq 0, #h(2em) i = m_E + 1, dots.h, m  $]
+&ve(c)_i (ve(x)) lt.eq 0, #h(2em) i = m_E + 1, dots.h, m  
+  $
+]
+]<nl-problem>
 
 #definition(title: "Convex Problem")[
-  The problem (NLP) is a standard form convex optimisation problem if the objective function $f$ is convex on the feasible set, $ve(c)_i$ is affine for each $i in cal(Epsilon)$, and $ve(c)_i$ is convex for each $i in script(I)$.
+  The problem @nl-problem[(NLP)] is a standard form convex optimisation problem if the objective function $f$ is convex on the feasible set, $ve(c)_i$ is affine for each $i in cal(epsilon.alt)$, and $ve(c)_i$ is convex for each $i in cal(I)$.
 ]
 
 #definition(
   title: "Active Set"
 )[
   The set of active constraints at a feasible point $ve(x)$ is
-  $cal(A)(ve(x)) = { i in 1, dots.h, m : ve(c)_i (ve(x)) = 0} $
+  $ cal(A)(ve(x)) = { i in 1, dots.h, m : ve(c)_i (ve(x)) = 0} $
+
   *Note* that this concept only applies to inequality constraints.
 ]
 
 #definition(
   title: "Regular Point"
-)[]
+)[
+  Feasible $ve(x^*)$ such that ${nabla c_i(ve(x^*)) : i in cal(A)(ve(x^*))}$ are linearly independent.
+]
 
 #proposition(
   title: "Constrained Stationary Point"
-)[]
+)[
+  Feasible $ve(x^*)$ for which $exists ve(lambda_i^*)$ for $i in cal(A)(ve(x^*))$) with
+  $ nabla f(ve(x^*)) + sum_(i in cal(A)(ve(x^*))} lambda_i^* nabla c_i(ve(x^*)) = ve(0) $
+]
 
 #theorem(
   title: "Karush Kuhn Tucker (KKT) necessary optimality conditions"
-)[kkt generalises lagrange multipliers]
+)[
+  If $ve(x^*)$ is a local minimiser and a regular point, then $exists lambda_i^*$ ($i in cal(A)(ve(x^*))$) such that
+  $
+    nabla f(ve(x^*)) + sum_(i in cal(A)(ve(x^*))} lambda_i^* nabla c_i(ve(x^*)) = ve(0),
+  $
+  with $c_(i)(ve(x^*))=0$ $(i\in cal(Epsilon))$, $c_(i)(ve(x^*)) lt.eq 0$ $(i in cal(I))$, $ lambda_i^* gt.eq 0$ $(i in cal(I))$, and $lambda_i^*=0$ for $i in.not cal(A)(ve(x^*))$.
+  #note[KKT generalises @lagrange-multipliers[Lagrange Multipliers]]
+]<KKT>
 
 #theorem(
   title: "Second-order sufficient conditions for strict local minimum"
-)[]
+)[
+  Let $t^*=abs(cal(A)(ve(x^*)))$, $cal(A^*)=[nabla c_i(ve(x^*)) | i in cal(A)(ve(x^*))]$. If $t^* lt n$ and $cal(A^*)$ has full rank, let $Z^* in RR^(n times (n-t^*))$ with $(Z^*)^(top)cal(A^*)=0$. Define
+  $ W^* = nabla^2 f(ve(x^*)) + sum_(i in cal(A)(ve(x^*))} lambda_i^* nabla^2 c_i(ve(x^*))$
+  $ W_Z^* = (Z^*)^top W^* Z^* $
+  If $lambda_i^* gt 0 forall i in cal(I) inter cal(A)(ve(x^*))$ and $W_Z^*$ is positive definite, then $ve(x^*)$ is a strict local minimiser.
+]
 
 #theorem(
   title: "KKT sufficient conditions for global minimum"
-)[]
+)[
+  If @nl-problem[(NLP)] is convex and $ve(x^*)$ satisfies the @KKT[KKT] conditions with $lambda_i^* gt.eq 0$ for all $i in cal(I) inter cal(A)(ve(x^*))$, then $ve(x^*)$ is a global minimiser.
+]
 
 #theorem(
   title: "Wolfe Dual Problem"
 )[
+  $
+  max_(y in RR^n thin lambda in RR^m) f(y) + sum_(i=1)^m lambda_i c_i(ve(y)) \
+  "s.t." nabla f(ve(y)) + sum_(i=1)^m lambda_i nabla c_i(ve(y)) = 0 \
+  lambda_i gt 0 (i in cal(I)) 
+  $
   strong duality, weak duality?
 ]
-
-
-#note(
-  title: "Reduced Hessian"
-)[The reduced Hessian $W_Z^*$ is the projection of the Lagrandian's Hessian onto the tangent space of the constraints at the point $x^*$]
-
-#pagebreak()
-= General Constrained Optimisation
-
-why does the reduced hessian exist for both? is there any difference when solving?
 
 #pagebreak()
 = Numerical Methods (unconstrained)
