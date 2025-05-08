@@ -1,0 +1,300 @@
+
+\documentclass[12pt]{article}
+% Course Summary Transcription -- MATH3161 & MATH5165
+% VERBATIM transcription of the provided PDF (Course Summary-2025.pdf)
+% Compiles with LuaLaTeX / pdfLaTeX without additional styling packages.
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in}
+\setlength{\parindent}{0pt}
+\begin{document}
+
+\begin{center}
+\textbf{The University of New South Wales}\\
+School of Mathematics and Statistics\\[1.2em]
+\textbf{MATH3161 \& MATH5165 -- Optimization, Term 1, 2025}\footnote{Prof Jeya Jeyakumar, School of Mathematics and Statistics, UNSW Sydney.}\\[1.2em]
+\textbf{OPTIMIZATION -- COURSE SUMMARY}
+\end{center}
+
+\bigskip
+
+\section*{TOPIC 1 -- MODEL FORMULATION}
+
+\textbf{Standard Formulation:}
+\begin{equation*}
+\begin{aligned}
+&\min_{x \in \mathbb{R}^n} && f(x) \\
+&\text{s.t.}\; && c_i(x)=0,\; i = 1,\ldots,m_E,\\
+& && c_i(x)\le 0,\; i = m_E+1,\ldots,m.
+\end{aligned}
+\end{equation*}
+
+\textbf{Conversions:}
+\begin{itemize}
+  \item Maximize to minimize: $\displaystyle \max f(x) = -\min\bigl(-f(x)\bigr)$
+  \item Constraint right-hand-side: $c_i(x)=b_i \;\Leftrightarrow\; c_i(x)-b_i = 0$
+  \item Greater-than-or-equal-to inequalities: $c_i(x)\ge 0 \;\Leftrightarrow\; -c_i(x)\le 0$
+  \item Strict inequality: $c_i(x) < 0 \;\Leftrightarrow\; c_i(x)+\varepsilon \le 0,\; \text{for some } \varepsilon>0$
+\end{itemize}
+
+\bigskip
+\section*{TOPIC 2 -- MATHEMATICAL BACKGROUND}
+
+\begin{itemize}
+  \item \textbf{Existence of Global Extrema:} Let $\Omega$ be a compact set and $f$ be continuous on $\Omega$. Then the global extrema of $f$ over $\Omega$ exist.
+  \item \textbf{Gradient:} Let $f: \mathbb{R}^n \to \mathbb{R}$ be continuously differentiable. The gradient $\nabla f : \mathbb{R}^n \to \mathbb{R}^n$ of $f$ at $x$ is
+  \[
+    \nabla f(x) = \begin{bmatrix}
+      \dfrac{\partial f(x)}{\partial x_1} \\
+      \vdots \\
+      \dfrac{\partial f(x)}{\partial x_n}
+    \end{bmatrix}.
+  \]
+  \item \textbf{Hessian:} Let $f: \mathbb{R}^n \to \mathbb{R}$ be twice continuously differentiable. The Hessian $\nabla^2 f : \mathbb{R}^n \to \mathbb{R}^{n\times n}$ of $f$ at $x$ is
+  \[
+    \nabla^2 f(x)=\begin{bmatrix}
+      \dfrac{\partial^2 f(x)}{\partial x_1^2} & \dfrac{\partial^2 f(x)}{\partial x_1\partial x_2} & \cdots & \dfrac{\partial^2 f(x)}{\partial x_1\partial x_n}\\
+      \dfrac{\partial^2 f(x)}{\partial x_2\partial x_1} & \dfrac{\partial^2 f(x)}{\partial x_2^2} & \cdots & \dfrac{\partial^2 f(x)}{\partial x_2\partial x_n}\\
+      \vdots & \vdots & \ddots & \vdots\\
+      \dfrac{\partial^2 f(x)}{\partial x_n\partial x_1} & \dfrac{\partial^2 f(x)}{\partial x_n\partial x_2} & \cdots & \dfrac{\partial^2 f(x)}{\partial x_n^2}
+    \end{bmatrix}.
+  \]
+  \item Let $A\in\mathbb{R}^{n\times n}$ be any real square matrix (not necessarily symmetric). Then $A$ is:
+  \begin{itemize}
+    \item \emph{positive definite} $\Leftrightarrow x^{\top}Ax>0$ for all $x\in\mathbb{R}^n$, $x\ne 0$.
+    \item \emph{positive semi-definite} $\Leftrightarrow x^{\top}Ax\ge 0$ for all $x\in\mathbb{R}^n$.
+    \item \emph{negative definite} $\Leftrightarrow x^{\top}Ax<0$ for all $x\in\mathbb{R}^n$, $x\ne 0$.
+    \item \emph{negative semi-definite} $\Leftrightarrow x^{\top}Ax\le 0$ for all $x\in\mathbb{R}^n$.
+    \item \emph{indefinite} $\Leftrightarrow$ there exist $x,y\in\mathbb{R}^n$ such that $x^{\top}Ax<0$ and $y^{\top}Ay>0$.
+  \end{itemize}
+  \item A real square matrix $A\in\mathbb{R}^{n\times n}$ is positive definite (resp. positive semi-definite, negative definite, negative semi-definite, indefinite) \emph{iff} its symmetric part $\dfrac{A+A^{\top}}{2}$ is positive definite (resp. positive semi-definite, negative definite, negative semi-definite, indefinite).
+  \item Let $A\in\mathbb{R}^{n\times n}$ be a symmetric matrix. Then:
+  \begin{itemize}
+    \item $A$ has $n$ real eigenvalues.
+    \item There exists an orthogonal matrix $Q$ ($Q^{\top}Q=I$) such that $A=QDQ^{\top}$ where $D=\operatorname{diag}(\lambda_1,\ldots,\lambda_n)$ and $Q=[v_1\;\cdots\;v_n]$ with $v_i$ an eigenvector of $A$ corresponding to eigenvalue $\lambda_i$.
+    \item $\det(A)=\prod_{i=1}^n \lambda_i$ and $\operatorname{tr}(A)=\sum_{i=1}^n \lambda_i=\sum_{i=1}^n A_{ii}$.
+    \item $A$ is positive definite $\Leftrightarrow \lambda_i>0$ for all $i=1,\ldots,n$.
+    \item $A$ is positive semi-definite $\Leftrightarrow \lambda_i\ge 0$ for all $i=1,\ldots,n$.
+    \item $A$ is indefinite $\Leftrightarrow$ there exist $i,j$ with $\lambda_i>0$ and $\lambda_j<0$.
+  \end{itemize}
+\end{itemize}
+
+\bigskip
+\section*{TOPIC 3 -- CONVEXITY OF SETS AND FUNCTIONS}
+
+\begin{itemize}
+  \item \textbf{Convex set:} A set $\Omega\subseteq \mathbb{R}^n$ is convex $\Leftrightarrow \theta x + (1-\theta) y\in\Omega$ for all $\theta\in[0,1]$ and for all $x,y\in\Omega$.
+  \item \textbf{Convex function:} Let $\Omega\subseteq \mathbb{R}^n$ be a convex set. The function $f:\Omega\to\mathbb{R}$ is convex \emph{iff}
+  \[
+    f\bigl(\theta x + (1-\theta) y\bigr) \le \theta f(x) + (1-\theta) f(y)\quad \forall\,\theta\in[0,1],\;\forall\,x,y\in\Omega.
+  \]
+  \item \textbf{Convex inequality:} Let $c: \mathbb{R}^n \to \mathbb{R}$ be a convex function. Then $\Omega=\{x\in\mathbb{R}^n: c(x)\le 0\}$ is a convex set.
+  \item Let $\Omega\subset \mathbb{R}^n$ be convex and $f\in C^2(\Omega)$. Then
+  \begin{itemize}
+    \item $\nabla^2 f(x)$ is positive semi-definite $\forall x\in\Omega \;\Rightarrow\; f$ is convex on $\Omega$.
+    \item $\nabla^2 f(x)$ is positive definite $\forall x\in\Omega \;\Rightarrow\; f$ is strictly convex on $\Omega$.
+    \item $\Omega$ is open \emph{and} $\nabla^2 f(x)$ is positive semi-definite $\forall x\in\Omega$ $\Leftrightarrow\; f$ is convex on $\Omega$.
+  \end{itemize}
+  \item \textbf{Epigraph:} For $f: \Omega\to\mathbb{R}$, $\operatorname{epi} f = \{(x,r)\in\mathbb{R}^n\times\mathbb{R}: x\in\Omega,\; f(x)\le r\}$.
+  \item \textbf{Epigraph of a convex function:} $f$ is convex on a convex $\Omega$ $\Leftrightarrow\; \operatorname{epi} f$ is convex in $\mathbb{R}^n\times\mathbb{R}$.
+\end{itemize}
+
+\bigskip
+\section*{TOPIC 4 -- UNCONSTRAINED OPTIMIZATION}
+
+\begin{itemize}
+  \item \textbf{Problem form:} $\displaystyle \min_{x\in\Omega} f(x)$ with $\Omega = \mathbb{R}^n$.
+  \item \textbf{First-order necessary condition:} If $x^*$ is a local minimizer and $f\in C^1(\mathbb{R}^n)$ then $\nabla f(x^*) = 0$.
+  \item \textbf{Unconstrained stationary point:} $x^*$ with $\nabla f(x^*)=0$. Such points may be minimizers, maximizers or saddle points.
+  \item \textbf{Second-order necessary conditions:} If $f\in C^2(\mathbb{R}^n)$ then
+  \begin{itemize}
+    \item Local minimizer $\Rightarrow \nabla f(x^*)=0$ \emph{and} $\nabla^2 f(x^*)$ positive semi-definite.
+    \item Local maximizer $\Rightarrow \nabla f(x^*)=0$ \emph{and} $\nabla^2 f(x^*)$ negative semi-definite.
+  \end{itemize}
+  \item \textbf{Second-order sufficient conditions:} If $\nabla f(x^*)=0$ then
+  \begin{itemize}
+    \item $\nabla^2 f(x^*)$ positive definite $\Rightarrow$ $x^*$ is a \emph{strict} local minimizer.
+    \item $\nabla^2 f(x^*)$ negative definite $\Rightarrow$ $x^*$ is a \emph{strict} local maximizer.
+    \item $\nabla^2 f(x^*)$ indefinite $\Rightarrow$ $x^*$ is a saddle point.
+  \end{itemize}
+  \item \textbf{Sufficiency under convexity/concavity:} For $f\in C^2(\mathbb{R}^n)$:
+  \begin{itemize}
+    \item $f$ convex $\Rightarrow$ any stationary point is a global minimizer.
+    \item $f$ \emph{strictly} convex $\Rightarrow$ stationary point is the \emph{unique} global minimizer.
+    \item $f$ concave $\Rightarrow$ any stationary point is a global maximizer.
+    \item $f$ \emph{strictly} concave $\Rightarrow$ stationary point is the \emph{unique} global maximizer.
+  \end{itemize}
+\end{itemize}
+
+\bigskip
+\section*{TOPIC 5 -- EQUALITY CONSTRAINTS}
+
+\textbf{Standard form:}
+\begin{equation*}
+  \min_{x\in\mathbb{R}^n} \bigl\{ f(x) : c_i(x)=0,\; i=1,\ldots,m \bigr\}. \tag{PE}
+\end{equation*}
+
+\textbf{Lagrangian:} For $x\in\mathbb{R}^n$, $\lambda\in\mathbb{R}^m$,
+\[
+  L(x,\lambda) := f(x) + \sum_{i=1}^m \lambda_i c_i(x).
+\]
+
+\begin{itemize}
+  \item \textbf{Regular point:} A feasible point $x$ is \emph{regular} $\Leftrightarrow$ the gradients $\nabla c_i(x)$, $i=1,\ldots,m$, are linearly independent.
+  \item \textbf{First-order necessary optimality conditions:} If $x^*$ is a local minimizer and a regular point of (PE), then $\exists\,\lambda^*\in\mathbb{R}^m$ such that
+  \[
+    \nabla_x L(x^*,\lambda^*) = 0, \qquad \nabla_{\lambda} L(x^*,\lambda^*) = 0.
+  \]
+  \item \textbf{Constrained stationary point:} Any $x^*$ for which $\exists\,\lambda^*$ satisfying the above equalities.
+  \item \textbf{Second-order sufficient conditions:} Let $(x^*,\lambda^*)$ be a constrained stationary point. Define
+  \[
+    A(x^*) = \begin{bmatrix} \nabla c_1(x^*) & \cdots & \nabla c_m(x^*) \end{bmatrix}, \qquad
+    Z^* \in \mathbb{R}^{n\times(n-t^*)}, \; t^*=\operatorname{rank}A(x^*), \; (Z^*)^{\top}A(x^*) = 0.
+  \]
+  The \emph{reduced Hessian} of $L$ is $W_Z^* = (Z^*)^{\top}\nabla_{xx}^2 L(x^*,\lambda^*) Z^*$. If $W_Z^*$ is positive definite, then $x^*$ is a strict local minimizer.
+\end{itemize}
+
+\bigskip
+\section*{TOPIC 6 -- INEQUALITY CONSTRAINTS}
+
+\textbf{Standard form (with equalities and inequalities):}
+\begin{equation*}
+  \min_{x\in\mathbb{R}^n} \bigl\{ f(x) : c_i(x)=0,\; i\in E,\; c_i(x)\le 0,\; i\in I \bigr\}. \tag{NLP}
+\end{equation*}
+
+\begin{itemize}
+  \item \textbf{Active set at $x^*$:} $A(x^*) = \{ i\in E\cup I : c_i(x^*) = 0 \}.$
+  \item \textbf{Regular point:} Feasible $x^*$ such that $\{\nabla c_i(x^*) : i\in A(x^*)\}$ are linearly independent.
+  \item \textbf{Constrained stationary point:} Feasible $x^*$ for which $\exists\, \lambda_i^*$ ($i\in A(x^*)$) with
+  $\displaystyle \nabla f(x^*) + \sum_{i\in A(x^*)} \lambda_i^* \nabla c_i(x^*) = 0$.
+  \item \textbf{Karush--Kuhn--Tucker (KKT) necessary conditions:} If $x^*$ is a local minimizer and a regular point, then $\exists\, \lambda_i^*$ ($i\in A(x^*)$) such that
+  \[
+    \nabla f(x^*) + \sum_{i\in A(x^*)} \lambda_i^* \nabla c_i(x^*) = 0,
+  \]
+  with $c_i(x^*)=0$ $(i\in E)$, $c_i(x^*)\le 0$ $(i\in I)$, $\lambda_i^*\ge 0$ $(i\in I)$, and $\lambda_i^*=0$ for $i\notin A(x^*)$.
+  \item \textbf{Second-order sufficient conditions for strict local minimum:} Let $t^*=|A(x^*)|$, $A^*=[\nabla c_i(x^*)\mid i\in A(x^*)]$. If $t^*<n$ and $A^*$ has full rank, let $Z^*\in\mathbb{R}^{n\times(n-t^*)}$ with $(Z^*)^{\top}A^*=0$. Define
+  \[
+    W^* = \nabla^2 f(x^*) + \sum_{i\in A(x^*)} \lambda_i^*\nabla^2 c_i(x^*), \qquad W_Z^* = (Z^*)^{\top} W^* Z^*.
+  \]
+  If $\lambda_i^*>0\;\forall i\in I\cap A(x^*)$ and $W_Z^*$ is positive definite, then $x^*$ is a strict local minimizer.
+  \item \textbf{Convex problem:} (NLP) is a \emph{convex optimization} problem if $f$ is convex on the feasible set, $c_i$ is affine $\forall i\in E$, and $c_i$ is convex $\forall i\in I$.
+  \item \textbf{KKT sufficient conditions for global minimum:} If (NLP) is convex and $x^*$ satisfies the KKT conditions with $\lambda_i^*\ge 0$ for all $i\in I\cap A(x^*)$, then $x^*$ is a global minimizer.
+  \item \textbf{Dual problem (Wolfe dual):}
+  \begin{equation*}
+    \max_{y\in\mathbb{R}^n,\,\lambda\in\mathbb{R}^m} \left\{ f(y) + \sum_{i=1}^m \lambda_i c_i(y) : \nabla f(y) + \sum_{i=1}^m \lambda_i \nabla c_i(y) = 0,\; \lambda_i\ge 0\ (i\in I) \right\}. \tag{D}
+  \end{equation*}
+\end{itemize}
+
+\bigskip
+\section*{TOPIC 7 -- NUMERICAL METHODS}
+
+\begin{itemize}
+  \item \textbf{Rates of convergence of iterative methods.} If $x_k\to x^*$ and $\displaystyle \frac{\lVert x_{k+1}-x^*\rVert}{\lVert x_k - x^*\rVert^{\alpha}} \to \beta$ as $k\to\infty$, the method has \emph{$\alpha$-th order} convergence. Key cases: $\alpha=1$ (\emph{linear}), $\alpha=1$ with $\beta=0$ (\emph{superlinear}), $\alpha=2$ (\emph{quadratic}).
+  \item \textbf{Line search methods.} Given $s^{(k)}$ at $x^{(k)}$, set $x^{(k+1)} = x^{(k)} + \alpha^{(k)} s^{(k)}$ where $\alpha^{(k)}$ minimizes or approximately minimizes $\ell_k(\alpha) = f(x^{(k)} + \alpha s^{(k)})$.
+  \item \textbf{Descent direction:} $(g^{(k)})^{\top} s^{(k)} < 0$.
+  \item \textbf{Exact line search condition:} $\ell_k'(\alpha) = g(x^{(k)} + \alpha s^{(k)})^{\top} s^{(k)} = 0$.
+  \item If $s^{(k)}$ is a descent direction, a line search yields $\alpha^{(k)}>0$ with $f^{(k+1)} < f^{(k)}$.
+  \item \emph{Global convergence}: convergence to a stationary point from any $x^{(1)}$.
+  \item \emph{Quadratic termination}: method finds minimizer of a strictly convex quadratic in finite known iterations.
+\end{itemize}
+
+\subsection*{Steepest Descent Method}
+\begin{itemize}
+  \item Search direction: $s^{(k)} = -g^{(k)}$.
+  \item Descent direction: Yes.
+  \item Global convergence: Yes.
+  \item Quadratic termination: No.
+  \item Rate: Linear with exact line searches. If $f$ is strictly convex quadratic, then for each $k$,
+  \[
+    \lVert x^{(k+1)} - x^* \rVert \le \left( \frac{\kappa-1}{\kappa+1} \right)^{\!k} \lVert x^{(1)} - x^* \rVert,
+  \]
+  where $\kappa$ is the condition number of $\nabla^2 f$.
+\end{itemize}
+
+\subsection*{Basic Newton's Method}
+\begin{itemize}
+  \item Search direction: solve $G^{(k)} \delta^{(k)} = -g^{(k)}$ where $G^{(k)}$ is the Hessian.
+  \item Descent direction: Yes, if $G^{(k)}$ positive definite.
+  \item Global convergence: No (Hessian may be singular).
+  \item Quadratic termination: Yes (one iteration for strictly convex quadratics).
+  \item Rate: Quadratic if $G^*$ positive definite.
+  \item Usage: When Hessian can be evaluated and is positive definite.
+\end{itemize}
+
+\subsection*{Conjugate Gradient Method}
+\begin{itemize}
+  \item Search direction: $s^{(k)} = -g^{(k)} + \beta^{(k)} s^{(k-1)}$.
+  \item Descent direction: Yes.
+  \item Quadratic termination: Yes with exact line searches.
+  \item Usage: Large $n$; stores only vectors, avoids solving linear systems.
+\end{itemize}
+
+\bigskip
+\section*{TOPIC 8 -- PENALTY FUNCTION METHODS}
+
+\textbf{Standard formulation:} Same as (NLP).
+
+\textbf{Penalty problem:}
+\begin{equation*}
+  \min_{x\in\mathbb{R}^n} \bigl( f(x) + \mu P(x) \bigr), \tag{$P_{\mu}$}
+\end{equation*}
+with
+\[
+  P(x) = \sum_{i=1}^{m_E} [c_i(x)]^2 + \sum_{i=m_E+1}^{m} [c_i(x)]_{+}^2, \qquad [c_i(x)]_{+}=\max\{c_i(x),0\}.
+\]
+
+\begin{itemize}
+  \item If $c: \mathbb{R}^n \to \mathbb{R}$ is convex, then $\max\{c(x),0\}^2$ is convex.
+  \item $\displaystyle \frac{\partial}{\partial x_j} \bigl( \max\{c(x),0\}^2 \bigr) = 2\,\max\{c(x),0\}\, \frac{\partial c}{\partial x_j}$.
+  \item \textbf{Convergence Theorem:} For each $\mu>0$ let $x_{\mu}$ minimize $(P_{\mu})$ and set $\theta(\mu)=f(x_{\mu})+\mu P(x_{\mu})$. Suppose $\{x_{\mu}\}$ lies in a closed bounded set. Then
+  \[
+    \min_{x} \{ f(x) : c_i(x)=0,\, i\in E,\; c_i(x)\le 0,\, i\in I \} = \lim_{\mu\to\infty} \theta(\mu).
+  \]
+  Moreover, any cluster point $x^*$ of $\{x_{\mu}\}$ solves the original problem, and $\mu P(x_{\mu})\to 0$ as $\mu\to\infty$.
+\end{itemize}
+
+\bigskip
+\section*{TOPIC 9 -- OPTIMAL CONTROL}
+
+A typical \emph{autonomous} optimal control problem with fixed target is
+\begin{equation*}
+  (C)\quad \min_{u(t)\in U} \int_{t_0}^{t_1} f_0\bigl( x(t),u(t) \bigr)\,dt
+  \quad\text{subject to}\quad x' (t) = f\bigl( x(t),u(t) \bigr),\; x(t_0)=x_0,\; x(t_1)=x_1.
+\end{equation*}
+
+\textbf{Hamiltonian:}
+\[
+  H(x,\hat z,u) = \hat z^{\top} \dot{\hat x} = \sum_{i=0}^n z_i(t) f_i\bigl( x(t),u(t) \bigr),
+\]
+where $\hat z(t)=[z_0(t),\ldots,z_n(t)]^{\top}$, $\hat x(t)=[x_0(t),\ldots,x_n(t)]^{\top}$, $x_0(t)=f_0(x(t),u(t))$, $x_0(t_0)=0$.
+
+\textbf{Co-state equations:} $\dot{\hat z} = -\dfrac{\partial H}{\partial \hat x}$.
+
+\medskip
+\textbf{Pontryagin Maximum Principle (autonomous, fixed targets).} Suppose $(x^*,u^*)$ is optimal for (C). Then
+\begin{itemize}
+  \item $z_0 = -1$ (\emph{normal} case), so
+  \[
+    H\bigl( x,\hat z,u \bigr) = -f_0\bigl( x,u \bigr) + \sum_{i=1}^n z_i(t) f_i\bigl( x,u \bigr).
+  \]
+  \item Co-state equations admit a solution $\hat z^*$.
+  \item $u^*$ maximizes $H(x^*,\hat z^*,u)$ over $u\in U$.
+  \item $x^*$ satisfies state equation with $x^*(t_0)=x_0$, $x^*(t_1)=x_1$.
+  \item The Hamiltonian is constant along the optimal path and equals $0$ if $t_1$ is free:
+  \[
+    H(x^*,\hat z^*,u^*) = \begin{cases}
+      \text{constant}, & t_1 \text{ fixed},\\
+      0, & t_1 \text{ free}.
+    \end{cases}
+  \]
+\end{itemize}
+
+\textbf{Partially free targets:} If target is intersection of $k$ surfaces $g_i(x_1)=0$, $i=1,\ldots,k$, then transversality condition is $z_1 = \sum_{i=1}^k c_i \nabla g_i(x_1)$ for some constants $c_i$.
+
+\textbf{Completely free target:} If $x(t_1)$ is unrestricted, then $z(t_1)=0$.
+
+\medskip
+\textbf{Non-autonomous problems.} For state $x' = f(x,u,t)$ and cost $J=\int_{t_0}^{t_1} f_0(x,u,t)\,dt$, introduce extra state $x_{n+1}$ with $x_{n+1}' = 1$, $x_{n+1}(t_0)=t_0$, $x_{n+1}(t_1)=t_1$.
+
+\end{document}
