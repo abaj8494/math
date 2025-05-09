@@ -1,9 +1,23 @@
-#import "@preview/thmbox:0.2.0": *
 #import "@preview/drafting:0.2.2": *
+#import "@preview/thmbox:0.2.0": *
 
+// 1. 1. 1
+// def-box. ?? thmbox.
 
+#show: thmbox-init(counter-level: 2)
 
-// custom
+#let def-counter = counter("def")
+#show: sectioned-counter(def-counter, level: 3)
+
+#let defbox = note.with(
+  numbering: "1.1.1",
+  counter: def-counter,          
+  fill: rgb("#f8f8f8"),
+  border: (paint: rgb("#787878"), thickness: 0.8pt),
+  radius: 3pt,
+  inset: (x: 0.8em, y: 0.6em),
+)
+
 #let iff = $<==>$
 #let imp = $==>$
 #let ve(body) = {
@@ -52,20 +66,16 @@
 #set heading(numbering:"1.")
 #set math.equation(numbering: "(1)")
 
+#v(-0.4cm)
 = Mathematical Background
-
+#v(-1.0cm)
+#hide([#heading(outlined: false, depth: 2)[Hidden]])
 #definition(
   title: "Mathspeak"
 )[
-  + Axiom: A foundational statement accepted without proof. All other results are built ontop.
-  + Proposition: A proved statement that is less central than a theorem, but still of interest.
-  + Lemma: A ``helper'' proposition proved to assist in establishing a more important result.
-  + Corollary: A statement following from a theorem or proposition, requiring little to no extra proof.
-  + Definition: A precise specification of an object, concept or notation.
-  + Theorem: A non-trivial mathematical statement proved on the basis of axioms, definitions and earlier results.
-  + Remark: An explanatory or clarifying note that is not part of the formal logical chain but gives insight / context.
-  + Claim / Conjecture: A statement asserted that requires a proof.
-]
+  #defbox(
+  variant: "Axiom"
+)[A foundational statement accepted without proof. All other results are built ontop.] #defbox( variant: "Proposition")[ A proved statement that is less central than a theorem, but still of interest. ] #defbox( variant: "Lemma")[ A ``helper'' proposition proved to assist in establishing a more important result. ] #defbox( variant: "Corollary")[ A statement following from a theorem or proposition, requiring little to no extra proof. ] #defbox( variant: "Definition")[ A precise specification of an object, concept or notation. ] #defbox( variant: "Theorem")[ A non-trivial mathematical statement proved on the basis of axioms, definitions and earlier results. ] #defbox( variant: "Remark")[ An explanatory or clarifying note that is not part of the formal logical chain but gives insight / context. ] #defbox( variant: "Claim / Conjecture")[ A statement asserted that requires a proof. ] ]
 
 //#set enum(numbering: "a)")
 #definition(
@@ -438,7 +448,13 @@ op("minimise", limits: #true)_(ve(x) in Omega) #h(1cm) &f(ve(x)) \
 
 #definition(
   title: "Rates of convergence of iterative methods"
-)[]
+)[
+  If $ve(x_k) => ve(x^*)$ and $(norm(ve(x_(k+1))-ve(x^*)))/(norm(ve(x_k)- ve(x^*))^alpha) => beta$ as $k => infinity$, the method has _$alpha$-th order_ convergence. 
+  Key cases: 
+  + $alpha=1$ (_linear_),
+  + $alpha=1$ with $beta=0$ (_superlinear_), 
+  + $alpha=2$ (_quadratic_).
+]
 
 #algorithm(
   title: "Line Search Algorithms"
