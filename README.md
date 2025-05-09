@@ -65,3 +65,7 @@ Compiled with the code
 - [ ] Measure Theory
 - [ ] Time Series
 - [ ] Bayesian Inference
+
+# tip
+
+https://qwinsi.github.io/tex2typst-webapp/
