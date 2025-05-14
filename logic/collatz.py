@@ -13,7 +13,7 @@ import argparse
 
 class Queue:
   def __init__(self, capacity):
-    self.data = [0 for _ in range(capacity)]
+    self.data = [None] * capacity
     self.front = 0
     self.rear = -1
     self.size = 0
@@ -56,17 +56,31 @@ class Queue:
     return self.size == len(self.data)
 
 def collatz(n, c=False):
-  start = 1
-  current = start
-  end = n
   q = Queue(1000)
-  while (current != end):
-    q.enqueue(2*current)
-    k = (current-1) / 3
-    if (k.is_integer()):
-      q.enqueue(k)
-    current = q.dequeue()
-  return current
+  q.enqueue((1, [1])) # now enqueuing a tuple so we can track path
+  seen = {1}
+
+  while not q.is_empty():
+    current, path = q.dequeue()
+
+    if current == n:
+      return path
+    
+    doubled = current * 2
+    """another way to compress the following would be to use:
+    for nxt in (current * 2,
+                (current - 1) // 3 if (current - 1) % 3 == 0 else None):
+    """
+    if doubled not in seen:
+      seen.add(doubled)
+      q.enqueue((doubled, path + [doubled]))
+
+    if (current - 1) % 3 == 0:
+      k = (current - 1) // 3
+      if k not in seen:
+        seen.add(k)
+        q.enqueue((k, path + [k]))
+
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser("query")
