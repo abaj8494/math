@@ -48,11 +48,11 @@ Compiled with the code
 
 # Topics
 
-- [ ] Discrete
-  - [ ] Logic
-  - [ ] Graph Theory
-  - [ ] Number Theory
-  - [ ] Combinatorics
+- [ ] Logic
+  - [ ] Set Theory
+- [ ] Graph Theory
+- [ ] Number Theory
+- [ ] Combinatorics
 - [ ] Calculus
   - [ ] Single Variable
   - [ ] Multivariable
