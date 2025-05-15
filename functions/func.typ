@@ -103,7 +103,7 @@ These such functions are continuous on their domains and include taking *sums*, 
 $ p(x) &= a_n x^n + a_(n-1)x^(n-1) + dots.h + a_2 x^2 + a_0 
 &= sum^n_(k=0) a_k x^k $
 
-todo polynomial subplot grid from x^0 to x^7.
+// image
 
 === Rational
 Much in the same way that $QQ$ is defined as any element $a/b$ where $a,b in ZZ$: 
@@ -113,26 +113,76 @@ a function $f$ is called a rational function if it can be written in the form:
 $ f(x) = (P(x))/(Q(x)) $
 where $P(x)$ and $Q(x)$ are polynomial functions of $x$ and $Q$ is not the zero function.
 
+// image
+=== Power
+Note that $sqrt(x)$ is not a polynomial because $sqrt(x) = x^(1/2)$ and $1/2 in.not ZZ$.
+
+// image
 
 == Transcendental <transcendental>
+These are the analytic functions that *do not* satisfy a polynomial equation.
+
 === Exponential
+
+$ e = lim_(n -> infinity) (1 + 1/n)^n $
+furthermore, $ exp(x) = lim_(n -> infinity) (1 + x/n)^n $
+
+graphically we have:
+
+// image
+
+and by Euler's identity we have:
+$ e^(i theta) = cos(theta) + i sin(theta) $
+which relates the "circular" functions cosine and sine with the "exponential" $square$
+
 === Logarithm
+
+setting $y = e^x$ and swapping variables: $x = e^y imp y = ln(x)$. as such the logarithm and exponential functions are inverses of each other.
+
+// image inverse
+
 === Trigonometric
-=== Inverse Trigonetric
+=== Inverse Trig
+=== Reciprocal Trig
+
 === Hyperbolic 
-=== Inverse Hyperbolic
+=== Inverse Hyper
+=== Reciprocal Hyper
+
+=== Factorial
+
+$x!$ and $1/(x!)$
+
 #pagebreak()
 = Non-Elementary
-== Gamma
-== Error
 
+== Transcendental
+=== Gamma
+=== Beta
+=== Riemann Zeta
+=== Error
 $ op("erf")(x) = 2 / sqrt(Pi) integral^x_0 e^((-t)^2) dif t $
-== Elliptic
-== Bessel
-== Riemann Zeta
-== Fresnel
 
+=== Tetration
+
+=== Elliptic Integrals
+=== Trigonometric Integrals
+
+$ op("Si")(x) = integral_0^x (sin(t))/t dif t $
+$ op("si")(x) = - integral^x_infinity (sin(t))/t dif t $
+$ op("Si") - op("si") = Pi/2 = integral^infinity_0 (sin(t))/t dif t $ label as Dirichlet's integral
+
+=== Fresnel
 $ op("S")(x) = integral^x_0 sin(t^2) dif t, thick op("C")(x) = integral^x_0 cos(t^2) dif t $
+
+== Algebraic
+=== Bessel
+
+=== Hypergeometric
+$ Beta_0 + Beta_1 z + Beta_2 z^2 + dots.h = sum_(n>=0) Beta_n z^n $
+where the ratio of successive coefficients is a rational function of $n$:
+$ (Beta_(n+1))/(Beta_n) = (A(n))/(B(n)) $
+
 #pagebreak()
 = Discontinuous
 == Absolute Value

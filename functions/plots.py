@@ -30,6 +30,101 @@ def sigmoid(filename):
 def log(filename):
   """three plots: log_10(x); log_2(x); log_e(x)"""
 
+def exp_log_inv(filename):
+  """plots the natural logarithm and natural exponential on each side of `y=x`"""
+
+def basic_trig(filename):
+  """1 row by 3 col subplot of the sin, cos, tan from -pi to pi"""
+  pass
+
+def inv_basic_trig(filename):
+  """inverse trigs: arcsin, arccos, arctan. 1x3 subplot"""
+  pass
+
+def recip_b_trig(filename):
+  """reciprocal trigs: cosec, sec, cot. 1x3 subplot"""
+  pass
+
+def hype_trig(filename):
+  """"""
+  pass
+
+def inv_hyp_trig(filename):
+  """"""
+  pass
+
+def recip_hyp_trig(filename):
+  """"""
+  pass
+
+def elem_fac(filename):
+  """"""
+  pass
+
+def gamma(filename):
+  """"""
+  pass
+
+def beta(filename):
+  """"""
+  pass
+
+def zeta(filename):
+  """"""
+  pass
+
+def err(filename):
+  """"""
+  pass
+
+def tetration(filename):
+  """"""
+  pass
+
+def elliptic(filename):
+  """"""
+  pass
+
+def trig_int(filename):
+  """"""
+  pass
+
+def fresnel(filename):
+  """"""
+  pass
+
+def bessel(filename):
+  """"""
+  pass
+
+def hypergeo(filename):
+  """"""
+  pass
+
+def absolutev(filename):
+  """"""
+  pass
+
+def step(filename):
+  """"""
+  pass
+
+def heaviside(filename):
+  """"""
+  pass
+
+def floor_plot(filename):
+  """"""
+  pass
+
+def ceil_plot(filename):
+  """"""
+  pass
+
+def square_wave(filename):
+  """"""
+  pass
+
 if __name__ == "__main__":
   polynomial("poly-sp.svg")
   rational("rational-sp.svg")
@@ -37,6 +132,30 @@ if __name__ == "__main__":
   exp("exponential.svg")
   sigmoid("sigmoid.svg")
   log("logarithm.svg")
+  exp_log_inv("exp_log_inv.svg")
+  basic_trig("basic_trig.svg")
+  inv_basic_trig("inv_basic_trig.svg")
+  recip_b_trig("rec_basic_trig.svg")
+  hype_trig("hype_trig.svg")
+  inv_hyp_trig("inv_hype_trig.svg")
+  recip_hyp_trig("recip_hyp_trig.svg")
+  elem_fac("elem_fac.svg")
+  gamma("gamma.svg")
+  beta("beta.svg")
+  zeta("zeta.svg")
+  err("err.svg")
+  tetration("tetration.svg")
+  elliptic("elliptic.svg")
+  trig_int("trig_int.svg")
+  fresnel("fresnel.svg")
+  bessel("bessel.svg")
+  hypergeo("hypergeo.svg")
+  absolutev("abs_v.svg")
+  step("step.svg")
+  heaviside("heaviside.svg")
+  floor_plot("floor.svg")
+  ceil_plot("ceiling.svg")
+  square_wave("square_wave.svg")
 
 
 
