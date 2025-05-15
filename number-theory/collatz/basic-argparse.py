@@ -21,7 +21,7 @@ def collatz(n):
     else:
       current = (current * 3) + 1
     path += [current]
-  return path, len(path)
+  return path, len(path), max(path)
 
 
 if __name__ == "__main__":
@@ -30,7 +30,8 @@ if __name__ == "__main__":
 
   args = parser.parse_args()
   t = collatz(args.n)
-  print(f"Sequence: {t[0]}\nLength: {t[1]}")
+  print(f"Sequence:\n{t[0]}\n\nLength: {t[1]}\n\nState Space Highest Reached: {t[2]}")
+
 
 
 
