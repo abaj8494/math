@@ -6,16 +6,16 @@ Another one of the puzzles was the 9 dot puzzle:
 
 "Draw 4 straight lines connecting all the dots on this grid, without lifting your pen from the page"
 
-[naked.png](naked)
+![naked.png](naked)
 
 I eventually had to turn the card over to see the solution because I could not get it myself!
 
 Anyhow, now that I know some mathematics, and can implement search algorithms, it became possible to solve the 3x3 with backtracking.
 
-[3x3.png](3x3)
+![3x3.png](3x3)
 
-also solving [4x4.png](4x4) was possible with backtracking.
+also solving ![4x4.png](4x4) was possible with backtracking.
 
 The combinatoric complexity required a re-implementation with A-star search to solve anything N>=5.
 
-[5x5.png](5x5)
+![5x5.png](5x5)
