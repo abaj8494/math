@@ -1,0 +1,3 @@
+1194384	1.664	1.393e-06	4.245	3.554e-06	a-star.py:29(points_on_segment)
+19110144	1.532	8.017e-08	1.532	8.017e-08	a-star.py:19(is_colinear)
+162384	1.262	7.771e-06	1.581	9.734e-06	a-star.py:36(count_clusters)
