@@ -19,13 +19,12 @@ dists = np.sqrt(
 
 regions = np.argmin(dists, axis=0)    # 1-nearest-neighbor label per pixel
 
-# --- 3. Visualise the Voronoi tessellation --------------------------
 plt.figure(figsize=(6, 6))
 levels = np.arange(10*n_points) + 0.5
 plt.contour(xs, ys, regions, levels=levels,  # xs, ys come from np.linspace earlier
            colors="black", linewidths=0.6)
 #plt.imshow(regions, extent=(0, 1, 0, 1), origin="lower", interpolation="nearest")
-plt.scatter(points[:, 0], points[:, 1], marker="o", c="black")  # overlay seeds
+#plt.scatter(points[:, 0], points[:, 1], marker="o", c="black")  # overlay seeds
 plt.xlabel("x"); plt.ylabel("y")
 plt.tight_layout()
 plt.savefig("v-bw.svg", format="svg")

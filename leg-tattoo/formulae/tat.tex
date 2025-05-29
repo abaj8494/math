@@ -1,0 +1,43 @@
+\documentclass[size=14pt]{standalone}
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usepackage{bm}
+\usetikzlibrary{decorations.pathmorphing}
+
+\usetikzlibrary {arrows.meta}
+
+\usetikzlibrary{positioning}
+
+\usepackage{amssymb}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+
+\newcommand{\longleadsto}{
+  \mathrel{
+    \tikz[baseline={(0,0.5ex)}]{
+      \draw[->,very thick,decorate,arrows = {-Triangle},decoration={snake,amplitude=0.6mm,segment length=3.3mm}] 
+        (0,0.45) -- (1.1,0.45);
+    }
+  }
+}
+
+\newcommand\myeq{\stackrel{\nabla}{\longleadsto}}
+
+\begin{document}
+\Huge
+
+\begin{tikzpicture}[node distance=1.6cm and 1.5cm, scale=3.0]
+  \node (a) {$\displaystyle \bm{\sum i^n / n!}$};
+  \node (f) [below=of a] {$\bm{\exists}$};
+  \node (b) [below=of f] {$\displaystyle \int \bm{\partial_\theta \mathcal{L}}$};
+  \node (g) [below=of b] {$\bm{\in}$};
+  \node (c) [below=of g] {$\bm{\left| \mathbb{Z} \right| < \,\aleph}$};
+  \node (h) [below=of c] {$\bm{\forall}$};
+  \node (i) [below=of h] {$\bm{\cup}$};
+  \node (e) [below=of i] {$\bm{\emptyset \myeq} \raisebox{-0.1ex}{\scalebox{1.5}{\circ}}$};
+  \node (j) [below=of e] {$\bm{\vdash}$};
+\end{tikzpicture}
+
+\end{document}
