@@ -1,0 +1,204 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+
+\section*{Metric Spaces and Continuity}
+
+\begin{definition}
+A \emph{metric space} is a pair $(X, d)$, where $X$ is a non-empty set and $d : X \times X \to [0, \infty)$ is a function such that for all $x, y, z \in X$:
+\begin{itemize}
+  \item $d(x, y) = 0$ iff $x = y$
+  \item $d(x, y) = d(y, x)$
+  \item $d(x, z) \leq d(x, y) + d(y, z)$ (triangle inequality)
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+A \emph{sequence} in a set $X$ is a function from $\mathbb{N}$ (or $\mathbb{Z}^+$) to $X$.
+\end{definition}
+
+\begin{theorem}
+A sequence in a metric space can have at most one limit.
+\end{theorem}
+
+\begin{definition}
+For a point $x$ in a metric space $(X, d)$ and $\varepsilon > 0$, the \emph{open $\varepsilon$-ball} is
+\[
+B(x, \varepsilon) = \{ y \in X : d(y, x) < \varepsilon \}.
+\]
+\end{definition}
+
+\begin{definition}
+Let $Y \subseteq X$ in a metric space $(X, d)$. Define:
+\begin{itemize}
+  \item $\mathrm{Int}(Y) = \{ y \in Y : \exists \varepsilon > 0 \text{ such that } B(y, \varepsilon) \subseteq Y \}$.
+  \item $\mathrm{Bd}(Y) = X \setminus (\mathrm{Int}(Y) \cup \mathrm{Int}(X \setminus Y))$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+$Y$ is \emph{open} if $Y = \mathrm{Int}(Y)$.
+\end{definition}
+
+\begin{definition}
+$Y$ is \emph{closed} if $X \setminus Y$ is open.
+\end{definition}
+
+\begin{lemma}
+Let $(X, d)$ be a metric space and $Y \subseteq X$. Then $\mathrm{Int}(\mathrm{Int}(Y)) = \mathrm{Int}(Y)$.
+\end{lemma}
+
+\begin{corollary}
+$\mathrm{Int}(Y)$ is open.
+\end{corollary}
+
+\begin{definition}
+The \emph{closure} of $Y$ is $\mathrm{Cl}(Y) = \mathrm{Int}(Y) \cup \mathrm{Bd}(Y)$.
+\end{definition}
+
+\begin{definition}
+$Y$ is \emph{dense} if $\mathrm{Cl}(Y) = X$.
+\end{definition}
+
+\begin{definition}
+A \emph{neighborhood} of $x$ is a set $U \subseteq X$ such that there exists an open set $V$ with $x \in V \subseteq U$.
+\end{definition}
+
+\begin{definition}
+The set of open subsets of $X$ is called the \emph{topology} $\mathcal{O}(X)$.
+\end{definition}
+
+\begin{theorem}
+The topology $\mathcal{O}(X)$ satisfies:
+\begin{itemize}
+  \item $\emptyset, X \in \mathcal{O}(X)$
+  \item Arbitrary unions of open sets are open
+  \item Finite intersections of open sets are open
+\end{itemize}
+\end{theorem}
+
+\begin{definition}
+Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces. A function $f: X \to Y$ is \emph{continuous} if for every open $V \subseteq Y$, the preimage $f^{-1}(V)$ is open in $X$.
+\end{definition}
+
+\begin{theorem}
+If $f: X \to Y$ and $g: Y \to Z$ are continuous, then $g \circ f: X \to Z$ is continuous.
+\end{theorem}
+
+\begin{definition}
+A subset $Y \subseteq X$ is \emph{bounded} if there exists $R > 0$ and $x \in X$ such that $Y \subseteq B(x, R)$.
+\end{definition}
+
+\begin{definition}
+A sequence $\{x_n\}$ in $(X, d)$ is a \emph{Cauchy sequence} if for all $\varepsilon > 0$, there exists $N$ such that $d(x_m, x_n) < \varepsilon$ for all $m, n > N$.
+\end{definition}
+
+\begin{definition}
+A metric space is \emph{complete} if every Cauchy sequence converges to a point in the space.
+\end{definition}
+
+\begin{theorem}
+Let $(X, d)$ be a complete metric space. A subset $Y \subseteq X$ is complete iff $Y$ is closed.
+\end{theorem}
+
+\begin{definition}
+Two Cauchy sequences $\{a_n\}$ and $\{b_n\}$ are equivalent if $\lim d(a_n, b_n) = 0$.
+\end{definition}
+
+\begin{definition}
+The \emph{completion} of a metric space $(X, d)$ is the space of equivalence classes of Cauchy sequences with distance
+\[
+d([\{a_n\}], [\{b_n\}]) = \lim d(a_n, b_n).
+\]
+\end{definition}
+
+\begin{theorem}
+The completion $\overline{X}$ of $X$ is a complete metric space. The map $x \mapsto [\{x\}]$ is an isometry, and its image is dense in $\overline{X}$. The completion is unique up to isometric bijection.
+\end{theorem}
+
+\section*{Normed and Inner Product Spaces}
+
+\begin{definition}
+A \emph{norm} on a vector space $V$ is a function $\|\cdot\|: V \to [0, \infty)$ satisfying:
+\begin{itemize}
+  \item $\|x\| = 0$ iff $x = 0$
+  \item $\|\lambda x\| = |\lambda| \cdot \|x\|$
+  \item $\|x + y\| \leq \|x\| + \|y\|$
+\end{itemize}
+\end{definition}
+
+\begin{theorem}
+Let $(V, \|\cdot\|)$ be a normed vector space. Then $d(x, y) = \|x - y\|$ defines a metric.
+\end{theorem}
+
+\begin{definition}
+A \emph{Banach space} is a complete normed vector space.
+\end{definition}
+
+\begin{definition}
+For $p \in [1, \infty)$, define
+\[
+\ell^p = \left\{ \{x_n\} \subseteq \mathbb{R} : \sum_{n=1}^\infty |x_n|^p < \infty \right\},
+\quad \text{with } \|x\|_p = \left( \sum |x_n|^p \right)^{1/p}.
+\]
+\end{definition}
+
+\begin{theorem}
+$(\ell^p, \|\cdot\|_p)$ is a Banach space.
+\end{theorem}
+
+\begin{definition}
+An \emph{inner product space} is a vector space $V$ with a function $\langle \cdot, \cdot \rangle$ such that:
+\begin{itemize}
+  \item $\langle x, x \rangle > 0$ if $x \neq 0$
+  \item $\langle x, y \rangle = \langle y, x \rangle$
+  \item $\langle x + \lambda y, z \rangle = \langle x, z \rangle + \lambda \langle y, z \rangle$
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+A \emph{Hilbert space} is a complete inner product space.
+\end{definition}
+
+\section*{Contraction and Lipschitz Mappings}
+
+\begin{definition}
+A \emph{contraction} is a function $f: X \to X$ such that there exists $c < 1$ with $d(f(x), f(y)) \leq c d(x, y)$.
+\end{definition}
+
+\begin{lemma}
+Let $(X, d)$ be a metric space and $f$ a contraction. Then the sequence $x_{n+1} = f(x_n)$ is Cauchy.
+\end{lemma}
+
+\begin{theorem}[Contraction Mapping Theorem]
+Let $(X, d)$ be a complete metric space and $f: X \to X$ a contraction. Then $f$ has a unique fixed point. Moreover, for any $x \in X$, the sequence $x_{n+1} = f(x_n)$ converges to that fixed point.
+\end{theorem}
+
+\begin{definition}
+A function $f: X \to \mathbb{R}$ is \emph{Lipschitz continuous} if there exists $K > 0$ such that $|f(x) - f(y)| \leq K|x - y|$.
+\end{definition}
+
+\begin{definition}
+A function $f: X \subseteq \mathbb{R}^2 \to \mathbb{R}$ is \emph{Lipschitz in the second variable} if
+\[
+|f(x, y_1) - f(x, y_2)| \leq K |y_1 - y_2|.
+\]
+\end{definition}
+
+\begin{theorem}[Picard–Lindelöf Theorem]
+Let $g$ be continuous near $(a, b) \in \mathbb{R}^2$ and Lipschitz in the second variable. Then the differential equation
+\[
+y' = g(x, y), \quad y(a) = b
+\]
+has a unique solution near $a$.
+\end{theorem}
+
+\end{document}

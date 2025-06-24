@@ -1,0 +1,142 @@
+\documentclass{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+
+\title{Set Theory and Foundations Summary}
+\author{}
+\date{}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\begin{document}
+
+\maketitle
+
+\section{Russell's Paradox}
+
+Let
+\[
+S = \{T: T \text{ is a set and } T \notin T\}.
+\]
+Is \( S \in S \)?
+
+\section{Constructing Sets}
+
+\begin{itemize}
+    \item \textbf{Unions:} If \( S = \{T_i\}_{i \in I} \), then
+    \[
+    \bigcup_{i \in I} T_i = \{x : \exists i \in I \text{ such that } x \in T_i\}
+    \]
+    is a set.
+
+    \item \textbf{Subsets with Conditions:} If \( S \) is a set and \( \varphi(x) \) is a condition on elements, then
+    \[
+    \{x \in S : \varphi(x)\}
+    \]
+    is a set.
+
+    \item \textbf{Power Set:} If \( S \) is a set, then
+    \[
+    \mathcal{P}(S) = \{T : T \subseteq S\}
+    \]
+    is a set.
+\end{itemize}
+
+\section{Cartesian Product}
+
+If \( A \) and \( B \) are sets, then
+\[
+A \times B = \{(a,b): a \in A, b \in B\}.
+\]
+
+More generally, if \( \{S_i\}_{i \in I} \) is a collection of sets, we can form the product
+\[
+\prod_{i \in I} S_i.
+\]
+An element is a tuple \( (s_i)_{i \in I} \) such that \( s_i \in S_i \). Formally,
+\[
+\prod_{i \in I} S_i = \{f : I \to \bigcup_{i \in I} S_i : f(i) \in S_i \text{ for all } i \in I\}.
+\]
+
+\section{Axiom of Choice (AC)}
+
+\begin{proposition}
+A Cartesian product of non-empty sets is non-empty.
+\end{proposition}
+
+\section{Functions}
+
+A function \( f : A \to B \) assigns each element of \( A \) exactly one element of \( B \). Formally,
+\[
+f \subseteq A \times B \text{ is a function } \Leftrightarrow \forall x \in A, \exists! y \in B \text{ such that } (x, y) \in f.
+\]
+
+\subsection*{Types of Functions}
+
+\begin{itemize}
+    \item \textbf{Injective:} \( \forall x_1, x_2 \in A, f(x_1) = f(x_2) \Rightarrow x_1 = x_2 \).
+    \item \textbf{Surjective:} \( \forall y \in B, \exists x \in A \text{ such that } f(x) = y \).
+    \item \textbf{Bijective:} \( f \) is both injective and surjective.
+\end{itemize}
+
+\begin{definition}
+Two sets \( A \) and \( B \) have the same cardinality if there exists a bijection \( f : A \to B \). We write \( A \sim B \).
+\end{definition}
+
+\begin{theorem}[Cantor's Theorem]
+For any set \( S \), the power set \( \mathcal{P}(S) \) has strictly greater cardinality than \( S \): \( S \not\sim \mathcal{P}(S) \).
+\end{theorem}
+
+\section{Cardinality}
+
+\subsection*{Properties}
+\begin{itemize}
+    \item \( A \sim A \) (reflexive)
+    \item \( A \sim B \Rightarrow B \sim A \) (symmetric)
+    \item \( A \sim B \text{ and } B \sim C \Rightarrow A \sim C \) (transitive)
+\end{itemize}
+
+\subsection*{Notations}
+\begin{itemize}
+    \item \( A \leq B \): there exists an injective map \( f: A \to B \)
+    \item \( A = B \): \( A \sim B \)
+    \item \( A < B \): \( A \leq B \) and \( A \not\sim B \)
+\end{itemize}
+
+\section{Schröder-Bernstein Theorem}
+
+\begin{theorem}[Schröder-Bernstein]
+If there are injective maps \( f : A \to B \) and \( g : B \to A \), then there exists a bijection \( h : A \to B \).
+\end{theorem}
+
+\section{Finite and Infinite Sets}
+
+\begin{definition}
+A set \( S \) is finite if \( |S| = \{1, 2, \dots, n\} \) for some \( n \in \mathbb{N} \). Otherwise it is infinite.
+\end{definition}
+
+\begin{definition}
+A set \( S \) is Dedekind-infinite if there exists a bijection from \( S \) to a proper subset of itself. Otherwise, it is Dedekind-finite.
+\end{definition}
+
+\section{Countability}
+
+\begin{definition}
+A set \( S \) is \textbf{countable} if \( S \leq \mathbb{N} \). If countable and infinite, we say it is \textbf{countably infinite}. Otherwise, it is \textbf{uncountable}.
+\end{definition}
+
+\begin{theorem}
+Let \( I \) be a countable set, and let \( \{S_i\}_{i \in I} \) be a countable collection of countable sets. Then
+\[
+\bigcup_{i \in I} S_i
+\]
+is countable.
+\end{theorem}
+
+\end{document}
+
