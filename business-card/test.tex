@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage[paperwidth=90mm,paperheight=55mm,margin=0mm]{geometry}
+\usepackage{tikz,qrcode,graphicx,xcolor,lmodern}
+\usepackage{wrapfig}
+\usetikzlibrary{calc}        % lets us position the white patch precisely
+
+% ------------------ settings you might tweak ------------------
+\newcommand*{\iconfile}{android-chrome-512x512.png}
+\newcommand*{\iconwidth}{23mm}
+
+\newcommand*{\qrurl}{https://abaj.ai}
+\newcommand*{\qrsize}{23mm}   % black square (module area)
+\newcommand*{\quiet}{1mm}     % quiet zone each side   ‹— now very small
+% --------------------------------------------------------------
+
+\begin{document}
+% ---------------- FRONT ----------------
+\begin{tikzpicture}[remember picture,overlay]
+  \node at (current page.center)
+        {\includegraphics[width=\iconwidth]{\iconfile}};
+\end{tikzpicture}
+
+\clearpage
+% ---------------- BACK -----------------
+\noindent
+\begin{minipage}{\textwidth}
+\fontsize{3}{3.5}\selectfont
+\ttfamily
+\color{gray!70}
+
+% Create invisible space for the QR code in the center
+\newlength{\qrtotalsize}
+\setlength{\qrtotalsize}{\qrsize}
+\addtolength{\qrtotalsize}{2\quiet}
+
+% Position the QR area as a float in the center
+\begin{wrapfigure}{r}{0.5\textwidth}
+\vspace{-\baselineskip}
+\centering
+\phantom{\rule{\qrtotalsize}{\qrtotalsize}}
+\vspace{-\baselineskip}
+\end{wrapfigure}
+
+\input{wallpaper.txt}
+\end{minipage}
+
+% Overlay the actual QR code
+\begin{tikzpicture}[remember picture,overlay]
+  % solid white patch: side = qrsize + 2·quiet
+  \path[fill=white]   
+    ($(current page.center)+(-\qrsize/2-\quiet,-\qrsize/2-\quiet)$)
+      rectangle
+    ($(current page.center)+(\qrsize/2+\quiet,\qrsize/2+\quiet)$);
+
+  % QR code on top of the white patch
+  \node at (current page.center)
+        {\qrcode[height=\qrsize]{\qrurl}};
+\end{tikzpicture}
+\end{document}

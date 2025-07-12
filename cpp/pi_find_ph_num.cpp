@@ -1,6 +1,7 @@
 // g++ -O3 -std=c++17 pi_find_ph_num.cpp -o pi_find
 // Usage: ./pi_find [file] [num]
 // Example: ./pi_find /dev/stdin/0412121212
+// Note: -r flag is also supported for range: -r 8 before the [file] argument
 //
 // Results:
 // z5362216@katana3:.../scratch/z5362216 $ unzip -p pi_dec_1t_01.zip | ./pi_find /dev/stdin 04XXXXXXXX

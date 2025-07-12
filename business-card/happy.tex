@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage[paperwidth=90mm,paperheight=55mm,margin=0mm]{geometry}
+\usepackage{tikz,qrcode,graphicx,xcolor,lmodern}
+
+% ------------ absolute sizes ------------
+\newlength\QRside   \setlength\QRside  {23mm}   % black QR square
+\newlength\Quiet    \setlength\Quiet   {2mm}    % padding all round
+\newlength\LogoW    \setlength\LogoW   {23mm}   % logo width
+% ----------------------------------------
+
+\newcommand*\iconfile{android-chrome-512x512.png}
+\newcommand*\qrurl   {https://abaj.ai}
+
+\begin{document}
+
+% ===============  FRONT ==================
+\begin{tikzpicture}[remember picture,overlay]
+  \node at (current page.center)
+        {\includegraphics[width=\LogoW]{\iconfile}};
+\end{tikzpicture}
+
+\clearpage
+% ===============  BACK  ===================
+\begin{tikzpicture}[remember picture,overlay]
+
+  % 1) wallpaper (shift 0.5 mm so first line prints fully)
+  \node[anchor=north west,
+        font=\tiny\ttfamily,
+        text=gray!70,
+        text width=88mm,
+        align=left]
+        at ([yshift=-.5mm]current page.north west){\input{wallpaper.txt}};
+
+  % 2) ONE opaque node: white background + quiet zone + QR
+  \node[fill=white,             % ← makes the whole box opaque
+        inner sep=\Quiet,       % ← quiet-zone thickness
+        align=center]           % (keeps QR centred inside)
+        at (current page.center)
+        {\qrcode[height=\QRside]{\qrurl}};
+
+\end{tikzpicture}
+\end{document}
+
