@@ -13,4 +13,4 @@ you may open `mvp` in another tab for reference.
 
 # new functionality.
 
-furthermore, you may wish to include the definition of $e$ as $\lim_{n\rightarrow \infty}(1+\frac{1}{n})^\n$ or as the closed form of the infinite sum: $e = \sum_{n=1}^\infty\frac{1}{n!}$
+furthermore, you may wish to include the definition of $e$ as $\lim_{n\rightarrow \infty}(1+\frac{1}{n})^n$ or as the closed form of the infinite sum: $e = \sum_{n=0}^\infty\frac{1}{n!}$
