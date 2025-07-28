@@ -1,0 +1,15 @@
+
+Let$(a_n)^\infty_{n=0}$ be a sequence of real numbers. The series \[\sum_{n=0}^\infty a_n x^n\] is called a power series. It is known that this series converges pointwise for every $x$ in the open interval $(-R,R)$, where $R$ is called the radius of convergence and can be found using the formula: \[\dfrac1R = \limsup_{n\to \infty}|a_n|^\tfrac1n.\] Prove that for any $\epsilon > 0$, the power series converges uniformly on the closed interval $[-R+\epsilon, R-\epsilon]$.
+
+
+
+For $k=1,2,3,\ldots,$ define $f_k:[0,1]\to \R$ by \[f_k(x)= \max \left \{ 0,1-4k^2|x-\frac1{k^2}|\right\}\]
+    \begin{enumerate}
+        \item Sketch $f_1$, $f_2$ and $f_3$
+        \item What is the support of $f_k$?
+        \item Show that the following series converges pointwise but not uniformly.
+            \[S(x)=\sum^\infty_{k=1}\frac{f_k(x)}{k},\qquad x\in[0,1]\]
+            You can use the inequality $\sum_{k=m}^n \tfrac1k \ge \ln\dfrac{n}{m}, \forall n,m\in\N,n\ge m\ge 1$ without proof
+    \end{enumerate}
+
+    Note: the support of a function $g:\R\to\R$ is the set $\text{supp}(g)=\set{x\in\R:g(x)\neq 0}$ for all $x\in\R\setminus \text{supp}(g)$.
