@@ -46,7 +46,7 @@ Compiled with the code
 #pascal_triangle(8)
 ```
 
-# Topics
+# Topics for Notes
 
 - [ ] Logic
   - [ ] Set Theory
@@ -56,15 +56,25 @@ Compiled with the code
 - [ ] Calculus
   - [ ] Single Variable
   - [ ] Multivariable
-  - [ ] Differential Equations
+  - [X] Differential Equations
 - [ ] Linear Algebra
-- [ ] Optimisation
+- [X] Optimisation
 - [ ] Probability
 - [ ] Real Analysis
 - [ ] Complex Analysis
 - [ ] Measure Theory
 - [ ] Time Series
 - [ ] Bayesian Inference
+
+
+# other goodies
+
+this repo contains other mathematical adventures of mine; 
+- the \(e=\sum_{n=0}^\infty \tfrac1{n!}\) business card
+- `r` code
+- `tikz` drawings
+- tattoos
+- etc.
 
 # tip
 
