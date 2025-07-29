@@ -70,7 +70,7 @@ Compiled with the code
 # other goodies
 
 this repo contains other mathematical adventures of mine; 
-- the \(e=\sum_{n=0}^\infty \tfrac1{n!}\) business card
+- the \(e=\sum_{n=0}^\infty \frac{1}{n!}\) business card
 - `r` code
 - `tikz` drawings
 - tattoos
