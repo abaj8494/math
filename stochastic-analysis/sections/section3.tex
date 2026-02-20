@@ -1,0 +1,266 @@
+\section{Brownian Motion}
+
+\subsection{Brownian Motion}
+
+\begin{definition}[standard Brownian motion]
+A real-valued process $W = (W_t)_{t \in [0,T]}$, with $W_0 = 0$, defined on a filtered probability space $(\Omega, \F, \P)$, is called a standard $\F$-Brownian motion if:
+\begin{enumerate}
+    \item $W$ is $\F$-adapted.
+    \item For any $0 \leq u \leq t \leq T$, $W_t - W_u$ is independent of $\F_u$.
+    \item For any $0 \leq u \leq t \leq T$, $W_t - W_u \sim \N(0, t - u)$.
+    \item $W$ is sample-paths continuous, i.e.\ almost all sample paths of $W$ are continuous.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Gaussian process]
+A stochastic process $(X_t)_{t \geq 0}$ is said to be a Gaussian process, if for arbitrary times $0 < t_1 < t_2 < \cdots < t_n$, the vector $(X_{t_1}, \ldots, X_{t_n})$ follows a multivariate Gaussian distribution.
+\end{definition}
+
+\subsection{Properties of Brownian Motion}
+
+\begin{theorem}[properties of Brownian motion]
+Let $W$ be an $\F$-Brownian motion. Then
+\begin{enumerate}
+    \item \textbf{(martingale property)} $W$ is a continuous $\F$-martingale.
+    \item \textbf{(Markov property)} For any bounded Borel measurable function $g : \R \to \R$ and $0 \leq u \leq t \leq T$,
+    \[
+    \E[g(W_t)|\F_u] = \E[g(W_t)|\sigma(W_u)] = \underbrace{h(W_u)}_{\text{Doob's measurability theorem}}
+    \]
+    \item $W$ is a Gaussian process.
+    \item $\Cov(W_s, W_t) = \E[W_s W_t] = \min(s, t)$ for all $s, t \geq 0$ and in particular $\E[W_t^2] = t$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For (1), note that $W$ is an integrable, $\F$-adapted process with $\E(W_t|\F_u) = \E(W_t - W_u + W_u|\F_u) = W_u$ for any $0 \leq u \leq t \leq T$.
+
+For (2),
+\begin{align*}
+\E[g(W_t)|\F_u] &= \E[g(W_t - W_u + W_u)|\F_u] \\
+&= \E[g(W_t - W_u + x)|\F_u]\big|_{x=W_u} && \text{($W_u$ is $\F_u$-measurable)} \\
+&= \E[g(W_t - W_u + x)]\big|_{x=W_u} && \text{(independent increments)}
+\end{align*}
+which is a function of $W_u$ and therefore $\sigma(W_u)$-measurable (Lemma~1.5.1). It follows that
+\[
+\E[\hblue{\E[g(W_t)|\F_u]}|\sigma(W_u)] = \hblue{\E[g(W_t)|\F_u]}
+\]
+\[
+\Rightarrow \E[g(W_t)|\sigma(W_u)] = \E[g(W_t)|\F_u].
+\]
+
+For (3), note that
+\[
+\begin{pmatrix} W_{t_1} \\ W_{t_2} \\ \vdots \\ W_{t_n} \end{pmatrix}
+=
+\begin{pmatrix} 1 & 0 & \cdots & 0 \\ 1 & 1 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 1 & 1 & \cdots & 1 \end{pmatrix}
+\underbrace{\begin{pmatrix} W_{t_1} \\ W_{t_2} - W_{t_1} \\ \vdots \\ W_{t_n} - W_{t_{n-1}} \end{pmatrix}}_{=: y \sim \N}
+\]
+We can then conclude by using the fact that any linear transform of a Gaussian vector is again Gaussian. In particular, $(W_{t_1}, \ldots, W_{t_n}) \sim \N(0, A\Sigma A^T)$ where $\Sigma = \Var(y)$.
+
+For (4),
+\begin{align*}
+\Cov(W_s, W_t) &= \E[W_s W_t] \\
+&= \E[W_s(W_t - W_s)] + \E[W_s^2] \\
+&= \E[W_s]\E[W_t - W_s] + \E[W_s^2] \\
+&= s
+\end{align*}
+Similarly when $s \geq t$, $\Cov(W_s, W_t) = t$. Therefore $\E[W_t W_s] = \min(s, t)$.
+\end{proof}
+
+\begin{examples}[Exponential Brownian motion with drift]
+Let $x, m \in \R$ and $\sigma > 0$ and we set $Y_t = x e^{mt + \sigma W_t}$. The process $Y$ is called an exponential Brownian motion with drift $m$ and variance $\sigma^2$. We first notice that the process $Y$ is adapted to the filtration $\F$. Next,
+\[
+\E[Y_t] = x e^{mt} \E(e^{\sigma W_t}) = x e^{mt} M_{W_t}(\sigma) = x e^{(m + \sigma^2/2)t}.
+\]
+We want to show that the process $Y$ is an $\F$-martingale if and only if $m = -\sigma^2/2$. Indeed, for $s \leq t$,
+\begin{align*}
+\E[x e^{mt + \sigma W_t} | \F_s] &= \E[x e^{ms + m(t-s) + \sigma W_s + \sigma(W_t - W_s)} | \F_s] \\
+&= Y_s \E[e^{m(t-s) + \sigma(W_t - W_s)}] \\
+&= Y_s e^{m(t-s) + \sigma^2(t-s)/2}
+\end{align*}
+and the claim follows.
+\end{examples}
+
+\subsection{Quadratic Variation}
+
+\subsubsection{Total Variation}
+
+\begin{definition}[total variation, aka first-order variation]
+Let $\pi_n = \{t_0 = 0, t_1, \ldots, t_{m_n} = T\}$ be a partition of $[0,T]$ with $n(\pi) = m_n$ subintervals. The maximum step size of the partition is denoted by
+\[
+|\pi_n| := \max_{1 \leq k \leq m_n} (t_k - t_{k-1}).
+\]
+For a given partition $\pi_n$, we define the corresponding measure of the oscillation of a function $f$ by
+\[
+V_n(f) = \sum_{k=1}^{m_n} |f(t_k) - f(t_{k-1})|.
+\]
+The total variation of $f$ is defined as
+\[
+V(f) := \lim_{|\pi_n| \to 0} V_n(f) = \lim_{|\pi_n| \to 0} \sum_{k=1}^{m_n} |f(t_k) - f(t_{k-1})|
+\]
+\end{definition}
+
+\begin{lemma}
+Any continuously differentiable function $f$ is a function of finite variation, i.e.\ $V(f) < \infty$.
+\end{lemma}
+
+\begin{proof}
+\[
+V_n(f) = \sum_{k=1}^{m_n} \left|\int_{t_{k-1}}^{t_k} f'(t) \, dt\right| \leq \sum_{k=1}^{m_n} \int_{t_{k-1}}^{t_k} |f'(t)| \, dt = \int_0^T |f'(t)| \, dt < \infty
+\]
+where we have used the fact that any continuous function on a closed and bounded interval is bounded. By taking the limit as $|\pi_n| \to 0$, we have proved that any continuously differentiable function $f$ on $[0,T]$ is a function of finite variation.
+\end{proof}
+
+\begin{theorem}[Jordan's decomposition and related results]
+\leavevmode
+\begin{itemize}
+    \item Any bounded increasing function $f$ is a function of finite variation, i.e.\ $V(f) < \infty$.
+    \item (Jordan's decomposition) If $f$ is a function of finite variation, i.e.\ $V(f) < \infty$, then $f = f_1 - f_2$ where $f_1, f_2$ are non-decreasing functions.
+    \item The difference of two bounded increasing functions is a function of finite variation.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+(Sketch) The first result comes from $V(f) = |f(T) - f(0)| < \infty$.
+
+The second result can be proved by construction (omitted).
+
+The third result follows from (1) as well as the fact that the difference of two functions of finite variation also has finite variation (a direct result of triangle inequality).
+\end{proof}
+
+\subsubsection{Quadratic Variation}
+
+\begin{definition}[quadratic variation]
+For a given partition $\pi_n = \{t_0 = 0, t_1, \ldots, t_{m_n} = T\}$ of $[0,T]$, the quadratic variation of $f$ is defined as
+\[
+\langle f \rangle = V^{(2)}(f) := \lim_{|\pi_n| \to 0} V_n^{(2)}(f) = \lim_{|\pi_n| \to 0} \sum_{k=1}^{m_n} |f(t_k) - f(t_{k-1})|^2
+\]
+\end{definition}
+
+\begin{lemma}
+Any continuously differentiable function $f$ has zero quadratic variation, i.e.\ $V^{(2)}(f) = 0$.
+\end{lemma}
+
+\begin{proof}
+\[
+V_n^{(2)}(f) = \sum_{k=1}^{m_n} |f(t_k) - f(t_{k-1})|^2 = \sum_{k=1}^{m_n} \left(\int_{t_{k-1}}^{t_k} f'(t) \, dt\right)^2
+\]
+\[
+\leq \sum_{k=1}^{m_n} (t_k - t_{k-1}) \int_{t_{k-1}}^{t_k} |f'(t)|^2 \, dt \qquad \text{(by Cauchy--Schwarz, see Theorem~A.0.1)}
+\]
+\[
+\leq |\pi_n| \int_0^T |f'(t)|^2 \, dt < \infty
+\]
+Taking the limit as $|\pi_n| \to 0$, we have $V^{(2)}(f) = \lim_{|\pi_n| \to 0} V_n^{(2)}(f) = 0$, completing the proof. Alternatively, this can also be shown by combining the results of Lemma~3.3.1 and~3.3.3.
+\end{proof}
+
+\begin{lemma}[finite variation $\Rightarrow$ zero quadratic variation]
+Let $f$ be a continuous function of finite variation on $[0,T]$. Then the quadratic variation of $f$ is equal to zero.
+\end{lemma}
+
+\begin{proof}
+Observe that for any partition $\pi_n = \{t_0 = 0, t_1, \ldots, t_{m_n} = T\}$ of $[0,T]$ we have
+\begin{align*}
+V_n^{(2)}(f) &= \sum_{k=1}^{m_n} |f(t_k) - f(t_{k-1})|^2 \\
+&\leq \max_{1 \leq m \leq m_n} |f(t_m) - f(t_{m-1})| \sum_{k=1}^{m_n} |f(t_k) - f(t_{k-1})| \\
+&= \max_{1 \leq m \leq m_n} |f(t_m) - f(t_{m-1})| \cdot V_n(f).
+\end{align*}
+By using the fact that any continuous function is uniformly continuous on a closed bounded interval, taking the limit as $|\pi_n| \to 0$ completes the proof.
+\end{proof}
+
+\begin{corollary}
+(from Lemma~3.3.3) If the quadratic variation of a continuous stochastic process is a.s.\ strictly positive, then the total variation of the process is almost surely infinity. In particular, sample paths of a Brownian motion are a.s.\ functions of infinite variation on any interval.
+\end{corollary}
+
+\begin{theorem}
+Let $W$ be a standard Brownian motion. $W$ is a process of finite quadratic variation. In particular, $\langle W \rangle_t = t$ (a.s.) for all $t \geq 0$.
+\end{theorem}
+
+\begin{proof}
+Let $t \geq 0$ and $\pi_n = \{t_0 = 0, t_1, \ldots, t_{n(\pi)} = t\}$ be a partition of $[0,t]$. We want to show that
+\[
+\lim_{n(\pi) \to \infty} \sum_{k=1}^{n(\pi)} (W_{t_k} - W_{t_{k-1}})^2 =: V_n^{(2)}(W) = t
+\]
+where the convergence is in $L^2(\Omega, \F_T, \P)$, that is,
+\[
+\lim_{n(\pi) \to \infty} \E\left[\left(\sum_{k=1}^{n(\pi)} (W_{t_k} - W_{t_{k-1}})^2 - t\right)^2\right] = 0.
+\]
+For brevity of notation, write $\Delta t_k = t_k - t_{k-1}$, $\Delta W_k = W_{t_k} - W_{t_{k-1}}$ and $\theta_k = (\Delta W_k)^2 - \Delta t_k$. Our goal is to prove that $I_n = \E[(\sum \theta_k)^2] \to 0$ as $n(\pi) \to \infty$. To show this,
+\[
+I_n = \E\left[\left(\sum_{k=1}^{n(\pi)} \theta_k\right)^2\right] = \E\left[\sum_{i,j} \theta_i \theta_j\right] = \sum_{i=1}^{n(\pi)} \E(\theta_i^2) + 2\sum_{i \neq j} \E(\theta_i \theta_j)
+\]
+We can show that the second term is $0$ by using independent increments and $\E[(\Delta W_k)^2] = \Delta t_k$. Then
+\begin{align*}
+I_n &= \sum_{k=1}^{n(\pi)} \left(\E[(\Delta W_k)^4] - 2\Delta t_k \E[(\Delta W_k)^2] + (\Delta t_k)^2\right) \\
+&= 2\sum_{k=1}^{n(\pi)} (\Delta t_k)^2 \leq 2|\pi_n| \sum_{k=1}^{n(\pi)} \Delta t_k = 2t|\pi_n|
+\end{align*}
+where in the second equality we used the fact the 4th central moment of a $X \sim \N(\mu, \sigma^2)$ r.v.\ is $\E((X - \mu)^4) = 3\sigma^4$.
+
+It is now clear that the quantity $I_n$ tends to zero as $n$ tends to infinity, since $|\pi_n|$ tends to zero.
+\end{proof}
+
+\begin{lemma}
+The process $M = W^2 - \langle W \rangle$ is a continuous $\F$-martingale.
+\end{lemma}
+
+\begin{proof}
+The process $M$ is $\F$-adapted and integrable since $W^2$ is $\F$-adapted and integrable, while the quadratic variation $\langle W \rangle_t = t$ is clearly $\F$-adapted and integrable.
+
+For $0 \leq u \leq t \leq T$, from the equality $\E(W_t W_u|\F_u) = W_u \E(W_t|\F_u) = W_u^2$, we deduce that
+\begin{align*}
+\E(M_t|\F_u) &= \E(W_t^2 - t|\F_u) \\
+&= \E(W_t^2 - W_u^2 + W_u^2 - t|\F_u) \\
+&= \E(W_t^2 - W_u^2|\F_u) + W_u^2 - t \\
+&= \E((W_t - W_u)^2|\F_u) + W_u^2 - t \\
+&= W_u^2 - u = M_u.
+\end{align*}
+\end{proof}
+
+\begin{theorem}[alternative definition of quadratic variation for martingales]
+Let $M$ be a continuous, square integrable $\F$-martingale, i.e.\ $\E(M_t^2) < \infty$ for all $t \geq 0$. Then the quadratic variation $\langle M \rangle$ is the unique continuous, increasing and $\F$-adapted process with $\langle M \rangle_0 = 0$ such that $M^2 - \langle M \rangle$ give us an $\F$-martingale.
+\end{theorem}
+
+\begin{remark}
+The existence of $\langle M \rangle$ in the theorem above follows from the Doob--Meyer decomposition (Theorem~2.4.2).
+\end{remark}
+
+We now obtain a generalisation of Lemma~3.3.4:
+
+\begin{corollary}
+(from Theorem~3.3.3) If $M$ is a continuous, square integrable $\F$-martingale, then
+\[
+M^2 - \langle M \rangle
+\]
+is also an $\F$-martingale. In particular, if $M_0 = 0$, then $\E[M_t^2 - \langle M \rangle_t] = M_0^2 - \langle M \rangle_0 = 0$ and therefore
+\[
+\Var(M_t) = \E(M_t^2) = \E(\langle M \rangle_t).
+\]
+\end{corollary}
+
+\subsection{Reflection Principle}
+
+Let $b > 0$ and $B$ a standard Brownian motion. Define the hitting time
+\[
+T_b = \inf\{s : B_s = b\}.
+\]
+
+\begin{theorem}
+The following results hold (pp.41--44):
+\begin{itemize}
+    \item \textbf{(reflection principle)} $\P(T_b < t) = 2\P(B_t > b)$. More precisely, $T_b$ follows a L\'{e}vy distribution with parameters $(0, b^2)$ (or equivalently, an inverse Gamma distribution with shape $1/2$ and scale $b^2$).
+    \item We can therefore show that $\P(T_b < \infty) = 1$ but $\E(T_b) = \infty$.
+    \item The moment generating function of $T_b$ is $e^{-\sqrt{2\lambda}\, b}$ for $b, \lambda > 0$.
+    \item For any $t \geq 0$, the running supremum $B_t^* = \sup_{s \leq t} B_s$ and $|B_t|$ have the same distribution.
+    \item The joint distribution of $B_t^* = \sup_{s \leq t} B_s$ and $B_t$ is given by
+    \[
+    \P(B_t \leq x, B_t^* > y) = \P(B_t > 2y - x) = \P(B_t < x - 2y)
+    \]
+    for every $t \geq 0$, $y \geq 0$ and $x \leq y$.
+    \item The joint density of $B_t^* = \sup_{s \leq t} B_s$ and $B_t$ is given by
+    \[
+    \frac{2(2y - x)}{t} \cdot \frac{1}{\sqrt{2\pi t}} \exp\!\left(-\frac{(2y - x)^2}{2t}\right)
+    \]
+    for $x \leq y$, $y \geq 0$.
+    \item The drawdown $B_t^* - B_t$ has the same distribution as $|B_t|$.
+\end{itemize}
+\end{theorem}

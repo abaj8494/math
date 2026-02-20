@@ -1,0 +1,280 @@
+\section{Ito's Integral}\footnote{I will skip the definition of Ito's integral for elementary processes, which is required to formally define Ito's integral for more general processes as discussed here.}
+
+\subsection{Ito's Integral for Processes from \texorpdfstring{$L^2_\P(W)$}{L2P(W)}}
+
+\begin{definition}
+$L^2_\P(W)$ denotes the class of all $\F$-progressively measurable processes $\gamma$ defined on $(\Omega, \F, \P)$ s.t.
+\[
+\|\gamma\|^2_W := \E\left[\int_0^T |\gamma_u|^2 \, du\right] < \infty.
+\]
+\end{definition}
+
+\begin{definition}[Ito's integral for general integrands]
+For any process $\gamma \in L^2_\P(W)$, the random variable $I_T(\gamma)$ is called Ito's integral of $\gamma$ with respect to $W$ over $[0,T]$. We write (notation only, not a formal definition):
+\[
+I_T(\gamma) = \int_0^T \gamma_u \cdot dW_u
+\]
+\[
+I_t(\gamma) = I_T(\gamma \indic_{[0,t]}) = \int_0^t \gamma_u \cdot dW_u
+\]
+\end{definition}
+
+\begin{theorem}[properties of Ito's integrals]
+Let $\gamma \in L^2_\P(W)$, i.e.\ $\E\left[\int_0^T |\gamma_u|^2 \, du\right] < \infty$. Then:
+\begin{enumerate}[(i)]
+    \item \hred{\textbf{(martingale)} $I(\gamma)$ is a continuous, square integrable $\F$-martingale.}
+
+    \item \textbf{(linearity)} For constants $a$ and $b$, $I_t(a\gamma + b\eta) = aI_t(\gamma) + bI_t(\eta)$.
+
+    \item \textbf{(Ito isometry)} $\E[I_t^2(\gamma)] = \E\left[\int_0^t \gamma_u^2 \, du\right]$.
+
+    \item \textbf{(quadratic variation)} The quadratic variation accumulated up to time $t$ by the Ito's integral is
+    \[
+    \langle I(\gamma) \rangle_t = \int_0^t \gamma_u^2 \, du.
+    \]
+    Furthermore, Theorem~3.3.3 says that $I^2(\gamma) - \langle I(\gamma) \rangle$ is an $\F$-martingale. Corollary~3.3.2 implies that
+    \[
+    \Var(I_t(\gamma)) = \E[I_t^2(\gamma)] = \E[\langle I(\gamma) \rangle_t].
+    \]
+
+    \item \textbf{(local property)} For any $\F$-stopping time $\tau$, $I(\gamma \indic_{[0,\tau]}) = I_\tau(\gamma)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For (iii), we prove the case for an elementary process $\gamma \in \mathcal{R}$. Since the expected value of the cross terms are zero, i.e.\ $\E[(W_{t_{j+1}} - W_{t_j})(W_{t_{k+1}} - W_{t_k})] = 0$ for $j \neq k$, we obtain
+\begin{align*}
+\E\left[\left(\sum_{j=0}^{m-1} \gamma_j (W_{t_{j+1}} - W_{t_j})\right)^2\right]
+&= \E\left[\sum_{j=0}^{m-1} \gamma_j^2 (W_{t_{j+1}} - W_{t_j})^2\right] \\
+&= \E\left[\sum_{i=0}^{m-1} \gamma_j^2 \E\left[(W_{t_{j+1}} - W_{t_j})^2 \mid \F_{t_j}\right]\right] \\
+&= \E\left[\sum_{i=0}^{m-1} \gamma_j^2 (t_{j+1} - t_j)\right] \\
+&= \|\gamma\|^2_W
+\end{align*}
+This means that $\hat{I}_T : (\mathcal{K}, \|\cdot\|_W) \to L^2(\Omega, \F_T, \P)$ is an isometry, i.e.\ a distance preserving transformation. This can be extended to the isometry $I_T : (L^2_\P(W), \|\cdot\|_W) \to L^2(\Omega, \F_T, \P)$.\footnote{The extension is done using the fact that the class of simple process $\mathcal{K}$ is a dense subset in the Banach space $L^2_\P(W)$ and the space $L^2(\Omega, \F_T, \P)$ is also complete (since it a Banach space or more specifically a Hilbert space).}
+
+For (iv), again we consider an elementary process $\gamma$ and we can then do a similar proof to that of Theorem~3.3.2. We first compute the quadratic variation accumulated by the Ito integral on one of the subintervals $[t_j, t_{j+1}]$ on which $\gamma_u = \gamma_j$ is constant. For this, we choose partition points
+\[
+t_j = s_0 < s_1 < \cdots < s_m = t_{j+1}
+\]
+and consider
+\[
+\sum_{i=0}^{m-1} (I_{s_{i+1}}(\gamma) - I_{s_i}(\gamma))^2 = \sum_{i=0}^{m-1} (\gamma_j (W_{s_{i+1}} - W_{s_i}))^2 = \gamma_j^2 \sum_{i=0}^{m-1} (W_{s_{i+1}} - W_{s_i})^2
+\]
+As $m \to \infty$ and the step size $\max_{0 \leq i \leq m-1} (s_{i+1} - s_i)$ approaches zero, the term $\sum_{i=0}^{m-1} (W_{s_{i+1}} - W_{s_i})^2$ converges to the quadratic variation accumulated by Brownian motion between times $t_j$ and $t_{j+1}$, which is $t_{j+1} - t_j$. Therefore, the limit of the above is
+\[
+\gamma_j^2 (t_{j+1} - t_j) = \int_{t_j}^{t_{j+1}} \gamma_u^2 \, du.
+\]
+Adding up all these pieces for each of the subintervals $[t_j, t_{j+1}]$ completes the proof.
+\end{proof}
+
+\begin{examples}[Ito's integral for a deterministic integrand]
+For a deterministic function $f$, we have
+\[
+X_t = \int_0^t f(s) \, dW_s \sim \N\left(0, \int_0^t f^2(s) \, ds\right).
+\]
+The computation of $\E(X_t)$ and $\Var(X_t)$ follows directly from Theorem~4.1.1. Normality follows from the fact that $X_t$ is (the limit of) the sum of independent normal r.v.s:
+\[
+\int_0^t f(s) \, dW_s = \lim_{m \to \infty} \sum_{j=0}^{m-1} f(t_j)(W_{t_{j+1}} - W_{t_j}).
+\]
+\end{examples}
+
+\begin{examples}[Ito's integral]
+We can show that $\int_0^t 2W_s \, dW_s$ is a martingale, by noting that
+\[
+\E\left[\int_0^T |2W_u|^2 \, du\right] = \int_0^T \E[4W_t^2] \, dt = \int_0^T 4t \, dt = 2T^2 < \infty
+\]
+where the first equality uses Fubini's Theorem.
+\end{examples}
+
+\subsection{Ito's Integral for Processes from \texorpdfstring{$L_\P(W)$}{LP(W)}}
+
+\begin{definition}
+$L_\P(W)$ denotes the class of all $\F$-progressively measurable processes $\gamma$ on $(\Omega, \F, \P)$ s.t.
+\[
+\P\left(\int_0^T |\gamma_u|^2 \, du < \infty\right) = 1.
+\]
+\end{definition}
+
+By applying the optional stopping technique (aka localisation), we can extend the definition of Ito's integral to the more general class $L_\P(W)$. Details are omitted, the important conclusion is that:
+
+\begin{theorem}
+\hred{If $\gamma \in L_\P(W)$, i.e.\ $\P\left(\int_0^T |\gamma_u|^2 \, du < \infty\right) = 1$, then $I(\gamma)$ is a continuous $\F$-local martingale.}
+\end{theorem}
+
+\subsection{Ito's Lemma in 1D}
+
+Ito processes are a special class of continuous semimartingales.
+
+\begin{definition}[Ito process]
+An $\F$-adapted continuous process $X$ is called an Ito process if it admits a representation
+\[
+X_t = X_0 + \int_0^t \alpha_u \, du + \int_0^t \beta_u \cdot dW_u, \quad \text{for all } t \in [0,T]
+\]
+for some $\F$-adapted processes $\alpha$ and $\beta$ that are defined on $(\Omega, \F, \P)$ and satisfy suitable integrability conditions. It is customary to write the integral formula above using differential notation as
+\[
+dX_t = \alpha_t \, dt + \beta_t \cdot dW_t.
+\]
+\end{definition}
+
+\begin{lemma}[quadratic variation of Ito processes]
+Consider an Ito process denoted by $dX_t = \alpha_t \, dt + \beta_t \cdot dW_t$.
+\begin{enumerate}[(i)]
+    \item The quadratic variation of the Ito process is $\langle X \rangle_t = \int_0^t \beta_u^2 \, du$.
+
+    \item The quadratic covariation (aka cross-variation) of two Ito processes $X_t = \int_0^t \alpha_u \, dW_u$ and $Y_t = \int_0^t \beta_u \, dW_u$ is
+    \[
+    \langle X, Y \rangle_t = \int_0^t \alpha_u \beta_u \, du.
+    \]
+
+    \item \textbf{(polarisation formula)} A more general version of (ii) gives the quadratic covariation of two continuous semimartingales. If $X^i = X_0^i + M^i + A^i$ and $X^j = X_0^j + M^j + A^j$ are in $\Sc(\P)$, then
+    \[
+    \langle X^i, X^j \rangle = \langle M^i, M^j \rangle = \frac{1}{2}\left(\langle M^i + M^j \rangle - \langle M^i \rangle - \langle M^j \rangle\right) = \frac{1}{4}\left(\langle M^i + M^j \rangle - \langle M^i - M^j \rangle\right).
+    \]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) First note that the process $A_t = \int_0^t \alpha_u \, du$ is always a process of finite variation (thus zero quadratic variation). This is clear when $\alpha \geq 0$ and $A_t$ is increasing, since the total variation on $[0,T]$ is just $A_T$ (Theorem~3.3.1). If $\alpha$ is not positive, we can write $\alpha = \alpha^+ - \alpha^-$ and $A_t = A_t^+ - A_t^-$ where $\alpha^+ = \max(\alpha, 0)$, $\alpha^- = \max(-\alpha, 0)$ and
+\[
+A_t^{\pm} = \int_0^t \alpha_s^{\pm} \, ds
+\]
+and it is not difficult to see that the total variation of $A$ is bounded by $A_T^+ + A_T^-$.
+The quadratic variation of the process $B_t = \int_0^t \beta_u \cdot dW_u$ is given in Theorem~4.1.1, thus the result.
+
+(ii) We can use the polarisation formula:
+\begin{align*}
+\langle X, Y \rangle_t &= \frac{1}{2} \left(\langle X + Y \rangle_t - \langle X \rangle_t - \langle Y \rangle_t\right) \\
+&= \frac{1}{2} \left(\left\langle \int (\alpha_u + \beta_u) \, dW_u, \int (\alpha_u + \beta_u) \, dW_u \right\rangle_t - \left\langle \int \alpha_u \, dW_u \right\rangle_t - \left\langle \int \beta_u \, dW_u \right\rangle_t\right) \\
+&= \frac{1}{2} \left(\int_0^t (\alpha_u + \beta_u)^2 \, ds - \int_0^t \alpha_u^2 \, ds - \int_0^t \beta_u^2 \, ds\right) \\
+&= \int_0^t \alpha_u \beta_u \, ds,
+\end{align*}
+which concludes the proof.
+\end{proof}
+
+\begin{theorem}[Ito's Lemma, 1D]
+Suppose that $g : [0,T] \times \R \to \R$ is a function of class $C^{2,1}([0,T] \times \R, \R)$, i.e.\ $g$ is twice continuously differentiable. Then for any Ito process $X$, the process $Y_t = g(t, X_t)$, $t \in [0,T]$, is an Ito process (and therefore also a continuous semimartingale). Moreover, its canonical decomposition is given by the Ito formula
+\[
+dg(t, X_t) = g_t(t, X_t) \, dt + g_x(t, X_t) \, dX_t + \frac{1}{2} g_{xx}(t, X_t) \, d\langle X \rangle_t.
+\]
+or equivalently,
+\[
+g(t, X_t) = g(0, X_0) + \int_0^t g_t(s, X_s) \, ds + \int_0^t g_x(s, X_s) \, dX_s + \frac{1}{2} \int_0^t g_{xx}(s, X_s) \, d\langle X \rangle_s.
+\]
+If $dX_t = \alpha_t \, dt + \beta_t \, dW_t$, then
+\[
+dg(t, X_t) = g_t(t, X_t) \, dt + g_x(t, X_t) \alpha_t \, dt + g_x(t, X_t) \beta_t \, dW_t + \frac{1}{2} g_{xx}(t, X_t) \beta_t^2 \, dt.
+\]
+\end{theorem}
+
+\begin{examples}[Ito's lemma, 1D]
+We can use Ito formula to determine whether a process is a martingale (no drift), submartingale (drift $> 0$) or supermartingale (drift $< 0$).
+
+\begin{enumerate}
+    \item $f(W_t) = (W_t)^2$. Then we have for all $t \in [0,T]$,
+    \[
+    df(W_t) = 2W_t \, dW_t + \frac{1}{2} \cdot 2 \, dt \implies W_t^2 = W_0^2 + \int_0^t 2W_s \, dW_s + \int_0^t ds = \int_0^t 2W_s \, dW_s + t.
+    \]
+    This also gives the Doob--Meyer decomposition (Theorem~2.4.2) of the positive submartingale $W^2$. Also recall that $W_t^2 - t = \int_0^t 2W_s \, dW_s$ is a martingale (e.g.\ Theorem~3.3.3, or Example~4.1.2).
+
+    \item $Y_t = g(t, W_t) = e^{\mu t + W_t}$. Let $g(t, x) = e^{\mu t + x}$ and then $g_t = \mu Y_t$, $g_x = Y_t$, $g_{xx} = Y_t$ and so
+    \begin{align*}
+    dY_t &= \mu Y_t \, dt + Y_t \, dW_t + \frac{1}{2} \cdot Y_t \, d\langle W \rangle_t = \left(\mu + \frac{1}{2}\right) Y_t \, dt + Y_t \, dW_t \\
+    &\implies Y_t = Y_0 + \int_0^t \underbrace{\left(\mu + \frac{1}{2}\right) Y_u \, du}_{\text{increasing}} + \int_0^t \underbrace{Y_u \, dW_u}_{\text{a martingale, as } Y \in L^2_\P(W)}.
+    \end{align*}
+    Therefore, we conclude that $Y$ is a submartingale.
+
+    \item (integration by parts, Corollary~4.4.1) $Z_t = \sin(W_t) \cos(W_t)$. Then
+    \[
+    dZ_t = \sin W_t \, d(\cos W_t) + \cos W_t \, d(\sin W_t) + d\langle \sin W, \cos W \rangle_t.
+    \]
+    By Ito's lemma,
+    \begin{align*}
+    d(\cos W_t) &= -\sin W_t \, dW_t - \frac{1}{2} \cos W_t \, dt, \\
+    d(\sin W_t) &= \cos W_t \, dW_t - \frac{1}{2} \sin W_t \, dt.
+    \end{align*}
+    Also $d\langle \sin W, \cos W \rangle_t = -\sin W_t \cos W_t \, dt$, so
+    \[
+    dZ_t = -\sin^2(W_t) \, dW_t + \cos^2(W_t) \, dW_t - 2 \sin W_t \cos W_t \, dt
+    \]
+    The sign of the drift term is not always positive or negative, and therefore $Z$ is none of a martingale, submartingale or supermartingale.
+\end{enumerate}
+\end{examples}
+
+\subsection{Ito's Lemma in Multidimensional Space}
+
+\begin{definition}[Ito's integral, multidimensional]
+Let $\gamma \in L_W(\P)$, that is, $\gamma$ is an $\R^d$-valued $\F$-progressively measurable process satisfying
+\[
+\P\left(\int_0^T |\gamma_u|^2 \, du < \infty\right) = 1,
+\]
+where $|\cdot|$ stands for the Euclidean norm in $\R^d$. Then the Ito stochastic integral of $\gamma$ w.r.t.\ $W$ is well defined and for any $t \in [0,T]$,
+\[
+I_t(\gamma) = \int_0^t \gamma_u \cdot dW_u = \sum_{i=1}^{d} \int_0^t \gamma_u^i \, dW_u^i.
+\]
+\end{definition}
+
+\begin{definition}[Ito process, multidimensional]
+$X = (X^1, \ldots, X^k)$ is a $k$-dimensional Ito process if
+\[
+X_t^i = X_0^i + \int_0^t \alpha_u^i \, du + \int_0^t \beta_u^i \cdot dW_u
+\]
+where $\alpha^i$ are real-valued processes and $\beta^i = (\beta^{i1}, \ldots, \beta^{id})$ are $\R^d$-valued processes for $i = 1, \ldots, k$. It is implicitly assumed in the above that the processes $\alpha^i$, $\beta^i$, $i = 1, \ldots, k$ are integrable in a suitable sense.
+\end{definition}
+
+\begin{lemma}[quadratic variation of $k$-dimensional Ito processes]
+For $X = (X^1, \ldots, X^k)$ defined in Definition~4.4.2, for any $t \in [0,T]$,
+\[
+\langle X^i, X^j \rangle_t = \int_0^t \beta_u^i \cdot \beta_u^j \, du = \int_0^t \sum_{l=1}^{d} \beta_u^{il} \beta_u^{jl} \, du.
+\]
+\end{lemma}
+
+\begin{theorem}[Ito's Lemma, multidimensional]
+Suppose that $g$ is a function of class $C^2(\R^k, \R)$, i.e.\ $g$ is twice continuously differentiable, and that $X$ a $k$-dimensional Ito process. Then
+\begin{align*}
+dg(X_t) &= \sum_{i=1}^{k} g_{x_i}(X_t) \, dX_t^i + \frac{1}{2} \sum_{i,j=1}^{k} g_{x_i x_j}(X_t) \beta_t^i \cdot \beta_t^j \, dt \\
+&= \sum_{i=1}^{k} g_{x_i}(X_t) \alpha_t^i \, dt + \sum_{i=1}^{k} g_{x_i}(X_t) \beta_t^i \cdot dW_t + \frac{1}{2} \sum_{i,j=1}^{k} g_{x_i x_j}(X_t) \beta_t^i \cdot \beta_t^j \, dt.
+\end{align*}
+\end{theorem}
+
+\begin{corollary}[integration by parts formula]
+Given two continuous semimartingales $X$ and $Y$, then
+\[
+X_t Y_t = X_0 Y_0 + \int_0^t X_u \, dY_u + \int_0^t Y_u \, dX_u + \langle X, Y \rangle_t
+\]
+or equivalently,
+\[
+dX_t Y_t = X_t \, dY_t + Y_t \, dX_t + d\langle X, Y \rangle_t.
+\]
+If at least one of $X$ or $Y$ is a process of finite variation, then
+\[
+dX_t Y_t = X_t \, dY_t + Y_t \, dX_t.
+\]
+\end{corollary}
+
+\begin{examples}[Ito's lemma, multidimensional]
+Let
+\[
+R_t(d) := \sqrt{(W_t^1)^2 + (W_t^2)^2 + \cdots + (W_t^d)^2}
+\]
+where $W = (W^1, W^2, \ldots, W^d)$ is a standard $d$-dimensional Brownian motion for $d \geq 3$. The process $R$ is called a Bessel process. We want to show that $1/R_t(3)$ for $1 \leq t \leq T$ is a local martingale but not a martingale.
+
+\begin{enumerate}
+    \item To show it is a local martingale, we apply Ito's lemma to compute the dynamics of $1/R_t(3)$ (and show that there is no drift term). Let
+    \[
+    Y_t = R_t^2(3) = (W_t^1)^2 + (W_t^2)^2 + (W_t^3)^2 \implies dY_t = \sum_{i=1}^{3} 2W_t^i \, dW_t^i + 3 \, dt.
+    \]
+    But $1/R_t(3) = 1/\sqrt{Y_t} = g(Y_t)$ where $g(x) = 1/\sqrt{x}$. Strictly speaking, one cannot apply directly Ito's formula as $g$ is not differentiable at zero. But for $d \geq 3$, the $d$-dimensional Brownian motion never return to the origin after time $0$. So (heuristically) one can apply Ito formula again to obtain that
+    \begin{align*}
+    d(1/R_t(3)) &= -\frac{1}{2} \frac{1}{Y_t^{3/2}} \, dY_t + \frac{1}{2} \cdot \frac{3}{4} \cdot \frac{1}{Y_t^{5/2}} \, d\langle Y \rangle_t \\
+    &= -\frac{1}{2} \frac{1}{Y_t^{3/2}} \left(\sum_{i=1}^{3} 2W_t^i \, dW_t^i + 3 \, dt\right) + \frac{1}{2} \cdot \frac{3}{4} \cdot \frac{1}{Y_t^{5/2}} (4Y_t \, dt) \\
+    &= \frac{1}{R_t^3} \sum_{i=1}^{3} W_t^i \, dW_t^i = \frac{1}{R_t^3} W_t \cdot dW_t
+    \end{align*}
+    as $d\langle Y \rangle_t = \sum_{i=1}^{3} (2W_t^i)^2 \, dt = 4R_t^2 \, dt$. This is not a true martingale as $\|1/R_t^3 \cdot W_t\|^2_W = \infty$.
+
+    \item We can also show that
+    \[
+    \E[1/R_t(d)] = \frac{1}{\sqrt{t}} \E\left[\frac{1}{\sqrt{X}}\right] = \sqrt{\frac{2}{\pi t}}
+    \]
+    where $X \sim \chi^2_3$. As the expectation is decreasing in $t$, $1/R_t(3)$ is indeed a supermartingale (see also Theorem~5.1.1).
+\end{enumerate}
+\end{examples}

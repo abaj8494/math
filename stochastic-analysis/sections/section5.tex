@@ -1,0 +1,267 @@
+\section{Semimartingales}
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=1.5cm and 2.5cm,
+    box/.style={rectangle, draw, rounded corners, minimum width=3cm, minimum height=0.8cm, align=center, font=\small},
+    arrow/.style={-{Stealth[length=2mm]}, thick}
+]
+    % Nodes
+    \node[box] (mg) {Martingales};
+    \node[box, right=of mg] (lmg) {Local Martingales};
+    \node[box, right=of lmg] (smg) {Semimartingales};
+    \node[box, above=of mg] (sqmg) {Square Integrable\\Martingales};
+    \node[box, above=of sqmg] (bddmg) {Bounded\\Martingales};
+    \node[box, below=of mg] (submg) {Submartingales};
+    \node[box, below=of submg] (supmg) {Supermartingales};
+
+    % Arrows (A -> B means A is a subclass of B)
+    \draw[arrow] (bddmg) -- (sqmg);
+    \draw[arrow] (sqmg) -- (mg);
+    \draw[arrow] (mg) -- (lmg);
+    \draw[arrow] (lmg) -- (smg);
+    \draw[arrow] (submg) -- (smg);
+    \draw[arrow] (supmg) -- (smg);
+\end{tikzpicture}
+\captionof{figure}{The family of martingales. An arrow from $A$ to $B$ indicates that $A$ is subclass of $B$.}
+\end{center}
+
+\subsection{Local Martingales}
+
+We introduced local martingales in Definition~2.3.1 and Theorem~4.2.1. In this section, we state a few important results about local martingales.
+
+\begin{theorem}[local martingales]
+\leavevmode
+\begin{enumerate}[(i)]
+    \item Any non-negative $\F$-local martingale $M$ is an $\F$-supermartingale\footnote{The assumption that $M$ is non-negative can be replaced by the assumption that $M \geq \eta$ for some random variable $\eta$ with $\E(\eta) > -\infty$.}. If, in addition, $\E(M_t)$ is constant then $M$ is an $\F$-martingale.
+
+    \item (corollary of above) Let $M$ be a non-negative $\F$-local martingale. If $M_0 = 0$ then $M_t = 0$ for every $t \in [0, T]$.
+
+    \item (quadratic variation) Let $M$ be a continuous $\F$-local martingale. Then the quadratic variation $\langle M \rangle$ is the unique continuous, increasing and $\F$-adapted process with $\langle M \rangle_0 = 0$ such that the process $M^2 - \langle M \rangle$ is a continuous $\F$-local martingale.
+
+    \begin{remark}
+    The quadratic variation is invariant with respect to an $\F_0$-measurable shift of $M$; specifically, if $N = \psi + M$ for some $\F_0$-measurable random variable $\psi$ is a continuous local martingale, then $\langle N \rangle = \langle M \rangle$. In particular, $\langle M \rangle = \langle M - M_0 \rangle$.
+    \end{remark}
+
+    \item Let $M$ be a continuous $\F$-local martingale s.t.\ $\langle M \rangle_t = 0$ for $t \in [0, T]$. Then $M_t = M_0$ for every $t \in [0, T]$.
+
+    \item Let $M$ be a continuous $\F$-local martingale of finite variation\footnote{An $\F$-adapted stochastic process $X = (X_t)_{t \in [0,T]}$ is said to be of finite variation if almost all sample paths of $X$ are functions of finite variation on $[0, T]$.}. Then $M_t = M_0$ for every $t \in [0, T]$.
+
+    \item (corollary of above) If $M_0 = 0$ and $M$ is a continuous $\F$-local martingale of finite variation, then $M$ vanishes (more precisely, it is indistinguishable from the null process).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(ii) Assume that $M_{t_0} \neq 0$ for some $t_0 \in [0, T]$. Then $\E(M_{t_0}) > 0 = \E(M_0)$, which contradicts the property that $M$ is a supermartingale.
+
+(iv) We may assume, without loss of generality, that $M$ is a continuous bounded martingale and $M_0 = 0$. This is because one can always take $M' = M - M_0$ and stop the continuous local martingale $M'$ such that it is bounded. Then
+\[
+\E[M_t^2 - \langle M \rangle_t] = M_0^2 - \langle M \rangle_0 = 0 \implies \E\left[M_t^2\right] = \E[\langle M \rangle_t] = 0
+\]
+for any $t \in [0, T]$ and thus $M_t = 0$ for any $t \in [0, T]$.
+
+(v) It suffices to apply (iv) and to observe that the assumption that sample paths of $M$ are continuous functions of finite variation implies that the quadratic variation of $M$ vanishes.
+\end{proof}
+
+\begin{examples}[Quadratic variation]
+Recall that $d(W_t^2) = 2W_t \, dW_t + dt$. This implies
+\[
+W_t^2 = W_0^2 + \int_0^t 2W_s \, dW_s + \int_0^t ds
+\]
+\[
+W_t^2 - t = W_0^2 + \int_0^t 2W_s \, dW_s
+\]
+where the RHS is an $\F$-martingale. We therefore conclude that $\langle W \rangle_t = t$.
+\end{examples}
+
+\subsection{Semimartingales}
+
+\subsubsection{Properties of Semimartingales}
+
+\begin{definition}[continuous semimartingale]
+A real-valued, continuous, $\F$-adapted process $X$ is called a (real-valued) \textbf{continuous semimartingale} if it admits a (canonical) decomposition
+\[
+X_t = X_0 + M_t + A_t, \quad \forall t \in [0, T],
+\]
+where $X_0$, $M$ and $A$ satisfy:
+\begin{enumerate}[(i)]
+    \item $X_0$ is an $\F_0$-measurable random variable.
+    \item $M$ is a continuous local martingale with $M_0 = 0$.
+    \item $A$ is a continuous process whose almost all sample paths are of finite variation on the interval $[0, T]$ with $A_0 = 0$.
+\end{enumerate}
+We denote by $\Sc(\P)$ the class of all real-valued continuous semimartingales on the probability space $(\Omega, \F, \P)$. A continuous semimartingale is a continuous local martingale if and only if the process $A$ in its canonical decomposition $X = X_0 + M + A$ vanishes, that is, is indistinguishable from the null process.
+\end{definition}
+
+\begin{examples}[Semimartingale]
+Consider the drawdown process $X_t = W_t^* - W_t$ where $W_t$ is a standard Brownian motion and $W_t^* = \sup_{s \leq t} W_s$ is the running supremum. Then $X$ is a semimartingale. In particular, $X$ is a submartingale as $A_t = W_t^*$ is an increasing process.
+\end{examples}
+
+\begin{theorem}[uniqueness of semimartingale decomposition]
+Let $X$ be a continuous semimartingale with the decomposition $X = X_0 + M + A$ so that $M_0 = A_0 = 0$. If $X$ admits also a decomposition $X = X_0 + \widetilde{M} + \widetilde{A}$ for some continuous local martingale $\widetilde{M}$ with $\widetilde{M}_0 = 0$ and some continuous process $\widetilde{A}$ of finite variation on $[0, T]$ with $\widetilde{A}_0 = 0$ then $M_t = \widetilde{M}_t$ and $A_t = \widetilde{A}_t$ for $t \in [0, T]$.
+\end{theorem}
+
+\begin{proof}
+It is enough to observe that a difference of two continuous local martingales is also a continuous local martingales, and a difference of two continuous processes of finite variation also follows a continuous process of finite variation. In our case, we have $M - \widetilde{M} = \widetilde{A} - A$ and $M_0 - \widetilde{M}_0 = \widetilde{A}_0 - A_0 = 0$.
+
+Consequently, in view of (vi) of Theorem~5.1.1, any continuous local martingale of finite variation starting at $0$ at time $0$ is a null process. We therefore conclude that $M_t = \widetilde{M}_t$ and $A_t = \widetilde{A}_t$ for every $t \in [0, T]$.
+\end{proof}
+
+\begin{theorem}[quadratic variation of semimartingales]
+If $X = X_0 + M + A \in \Sc(\P)$, then the quadratic variation $\langle X \rangle = \langle M \rangle$. More generally, if $X^i = X_0^i + M^i + A^i$ and $X^j = X_0^j + M^j + A^j$ are in $\Sc(\P)$, then
+\[
+\langle X^i, X^j \rangle = \langle M^i, M^j \rangle = \frac{1}{2}\left(\langle M^i + M^j \rangle - \langle M^i \rangle - \langle M^j \rangle\right) = \frac{1}{4}\left(\langle M^i + M^j \rangle - \langle M^i - M^j \rangle\right).
+\]
+\end{theorem}
+
+\subsubsection{It\^o's Lemma for Continuous Semimartingales}
+
+\begin{theorem}[It\^o's Lemma]
+If $X = X_0 + M + A$ is a real-valued continuous semimartingale, and $g$ is a function of class $C^{2,1}([0, T] \times \R, \R)$, then the process $Y_t = g(t, X_t)$ follows a continuous semimartingale with the following canonical decomposition
+\[
+dY_t = g_t(t, X_t) \, dt + g_x(t, X_t) \, dX_t + \frac{1}{2} g_{xx}(t, X_t) \, d\langle M \rangle_t.
+\]
+\end{theorem}
+
+\begin{examples}[It\^o's lemma for semimartingales]
+We again consider the drawdown process $X_t = W_t^* - W_t$ where $W_t$ is a standard Brownian motion and $W_t^* = \sup_{s \leq t} W_s$ is the running supremum.
+
+We note that $X$ is not an It\^o process, but is a continuous semimartingale with $M_t = -W_t$, $A_t = W_t^*$ in its canonical decomposition. By It\^o's lemma, we can compute, e.g.
+\begin{align*}
+dX_t^2 &= 2X_t \, dX_t + \frac{1}{2} \cdot 2 \, d\langle X \rangle_t \\
+&= -2X_t \, dW_t + 2X_t \, dW_t^* + d\langle -W \rangle_t \\
+&= -2X_t \, dW_t + 2X_t \, dW_t^* + dt.
+\end{align*}
+\end{examples}
+
+\subsection{Recognising a Brownian Motion}
+
+In some instances, it would be convenient to have the possibility of checking whether a given process is a standard Brownian motion by establishing its martingale property and by computing its quadratic variation. We may use the martingale characterisation of a Brownian motion, due to Paul L\'evy.
+
+\begin{theorem}[L\'evy, 1D]
+Let $M$ be a continuous $\F$-local martingale such that $M_0 = 0$ and $\langle M \rangle_t = t$ for every $t \in [0, T]$ (i.e.\ the process $M_t^2 - t$ is a continuous $\F$-local martingale). Then $M$ is a standard $\F$-Brownian motion.
+
+Under the stronger assumption that $M$ is a square integrable continuous $\F$-martingale, this property can be represented as follows
+\[
+\E\left[M_t^2 - M_u^2 \mid \F_u\right] = t - u, \quad u \leq t \leq T,
+\]
+or equivalently (in view of the martingale property of $M$, see proof of Lemma~3.3.4)
+\[
+\E\left((M_t - M_u)^2 \mid \F_u\right) = t - u, \quad u \leq t \leq T.
+\]
+\end{theorem}
+
+\begin{proof}
+Suppose $M$ satisfies the assumptions of Theorem~5.3.1. We want to show that $M$ is an $\F$-Brownian motion. Let $\lambda \in \R$. We apply the It\^o formula theorem to $F(x) = e^{i\lambda x}$. Then $F_x(\lambda, x) = i\lambda F(\lambda, x)$, $F_{xx}(\lambda, x) = -\lambda^2 F(\lambda, x)$.
+\begin{align*}
+F(\lambda, M_t) &= F(\lambda, M_s) + i\lambda \int_s^t e^{i\lambda M_u} \, dM_u - \frac{1}{2}\lambda^2 \int_s^t e^{i\lambda M_u} \, du \\
+\implies e^{i\lambda(M_t - M_s)} &= 1 + i\lambda \int_s^t e^{i\lambda(M_u - M_s)} \, dM_u - \frac{1}{2}\lambda^2 \int_s^t e^{i\lambda(M_u - M_s)} \, du,
+\end{align*}
+for all $s \leq t$. By the martingale property of stochastic integrals,
+\[
+\E\left[\int_s^t e^{i\lambda M_u} \, dM_u \,\middle|\, \F_s\right] = 0
+\]
+Then
+\[
+\E[e^{i\lambda(M_t - M_s)} \mid \F_s] = 1 - \frac{1}{2}\lambda^2 \int_s^t \E[e^{i\lambda(M_u - M_s)} \mid \F_s] \, du.
+\]
+If we write $g(t) = \E[e^{i\lambda(M_t - M_s)} \mid \F_s]$, then the above translates to the following differential equation (in integral form)
+\[
+g(t) = 1 - \frac{1}{2}\lambda^2 \int_s^t g(u) \, du
+\]
+to which $g(t) = e^{-\frac{\lambda^2}{2}(t - s)}$ is the unique solution, i.e.
+\[
+\E[e^{i\lambda(M_t - M_s)} \mid \F_s] = e^{-\frac{\lambda^2}{2}(t - s)}
+\]
+and therefore the random variable $M_t - M_s$ is independent of $\F_s$ and has the normal $\N(0, t - s)$ distribution (characteristic function, Definition~1.4.1). Hence, $M$ is an $\F$-Brownian motion.
+\end{proof}
+
+\begin{lemma}
+A real-valued continuous $\F$-adapted process $X$ defined on $(\Omega, \F, \P)$ is a standard $\F$-Brownian motion if and only if for any $\lambda \in \R$ the process
+\[
+M_t^\lambda = \exp\left(\lambda X_t - \frac{1}{2}\lambda^2 t\right), \quad \forall t \in [0, T],
+\]
+is a $\F$-local martingale and $M_0^\lambda = 1$.
+\end{lemma}
+
+\begin{theorem}[an oversimplified version of Dubins--Schwarz theorem]
+If $M$ is a continuous $\F$-local martingale such that $\langle M \rangle$ is strictly increasing and $\langle M \rangle_\infty = \infty$, then $M$ is a time changed Brownian motion.
+\end{theorem}
+
+\begin{proof}
+$\langle M \rangle$ is continuous and strictly increasing therefore the inverse of $\langle M \rangle$ is given by $C_t := \inf\{s : \langle M \rangle_s > t\}$. We consider the process $W_t := M_{C_t}$ for $t \geq 0$, which is adapted to the filtration $\G = (\F_{C_t})_{t \geq 0}$. We now assume, without loss of generality, $M$ is a bounded martingale. Then from the Doob Optional Sampling Theorem~(2.5.1) and the fact that $C_t$ is $\F$-stopping time for all $t$, we obtain
+\[
+\E[W_t \mid \G_s] = \E[M_{C_t} \mid \F_{C_s}] = M_{C_s} = W_s.
+\]
+Therefore $W$ is a $\G$-local martingale. Furthermore, since $C$ is the (right) inverse of $M$ then $\langle W \rangle_t = \langle M \rangle_{C_t} = t$. Hence, by L\'evy characterisation theorem, $W$ is a Brownian motion in the filtration $\G$.
+
+Finally, since $\langle M \rangle$ is strictly increasing, $C$ is the (left) inverse of $\langle M \rangle$ and so $C_{\langle M \rangle_t} = t$. This shows that
+\[
+M_t = M_{C_{\langle M \rangle_t}} = W_{\langle M \rangle_t},
+\]
+where $W$ is a Brownian motion in the filtration $\G$.
+\end{proof}
+
+\subsection{Martingale Representation Theorem (for the Brownian Filtration)}
+
+It\^o representation theorem states that any square integrable and $\F_T^W$-measurable random variable admits a representation as the It\^o integral of some stochastic process.
+
+\begin{theorem}[It\^o representation theorem]
+For any random variable $X \in L^2\left(\Omega, \F_T^W, \P\right)$, there exists a unique $\F$-predictable process $\gamma$ from the class $L^2_\P(W)$ such that the following equality is valid
+\[
+X = \E^\P X + \int_0^T \gamma_u \cdot dW_u.
+\]
+The condition that $\gamma$ belongs to $L^2_\P(W)$ implies that the It\^o integral $I(\gamma)$ is a square integrable $\F$-martingale and thus we also have that, for every $t \in [0, T]$,
+\[
+\E^\P(X \mid \F_t^W) = \E^\P X + \int_0^t \gamma_u \cdot dW_u.
+\]
+\end{theorem}
+
+\begin{remark}
+We omit the definition of an $\F$-predictable process, but we note any left-continuous and $\F$-adapted process is $\F$-predictable. Also, a $\F$-predictable process is also $\F$-progressively measurable, but the converse does not hold.
+\end{remark}
+
+\begin{theorem}[martingale representation theorem]
+Let a process $M = (M_t)_{t \in [0,T]}$ be an $\F^W$-martingale s.t.\ $\E^\P[M_T^2] < \infty$. Then there exists a unique $\F$-predictable process $\gamma$ from the class $L^2_\P(W)$ such that, for any $t \in [0, T]$,
+\[
+M_t = M_0 + \int_0^t \gamma_u \cdot dW_u.
+\]
+\end{theorem}
+
+\begin{proof}
+A straightforward consequence of It\^o representation theorem with $X = M_T$.
+\end{proof}
+
+\begin{remark}
+The theorem suggests the existence of $\gamma$, but in general it is very difficult to find it.
+\end{remark}
+
+\begin{examples}[Martingale representation theorem]
+Consider $X = W_T^3$. We want to find $\gamma$ such that
+\[
+W_T^3 = \E(W_T^3) + \int_0^T \gamma_u \, dW_u.
+\]
+\hgray{Note if we directly apply It\^o's lemma to $X$, then $dW_t^3 = 3W_t^2 \, dW_t + \frac{1}{2} \cdot 6W_t \, dt$ and therefore,}
+\[
+\hgray{W_T^3 = \int_0^T 3W_s^2 \, dW_s + \int_0^T 3W_s \, ds}
+\]
+\hgray{which is not the form we want.} We consider the martingale $M_t = \E(M_T^3 \mid \F_t)$ with $M_T = W_T^3$ [why? The MRT implies that a martingale can be written as a stochastic integral w.r.t.\ the Brownian motion]. For $t \in [0, T]$,
+\begin{align*}
+M_t &= \E(W_T^3 \mid \F_t) \\
+&= \E\left((W_T - W_t + W_t)^3 \mid \F_t\right) \\
+&= \E\left((W_T - W_t + x)^3 \mid \F_t\right)\big|_{x = W_t} && \text{($W_t$ is $\F_t$-measurable)} \\
+&= \E\left[(W_T - W_t + x)^3\right]\big|_{x = W_t} && \text{(independent increments)} \\
+&= \left[x^3 + 3x(T - t)\right]\big|_{x = W_t} && \text{($W_T - W_t \sim \N(0, T - t)$)} \\
+&= W_t^3 + 3W_t(T - t) \\
+&= f(t, W_t)
+\end{align*}
+where $f(t, x) = x^3 + 3x(T - t)$. Applying It\^o's formula to $M_t = f(t, W_t)$ gives
+\begin{align*}
+dM_t &= -3W_t \, dt + 3W_t^2 \, dW_t + 3(T - t) \, dW_t + \frac{1}{2} \cdot 6W_t \, d\langle W \rangle_t \\
+&= [3W_t^2 + 3(T - t)] \, dW_t.
+\end{align*}
+Therefore we can take $\gamma_u = 3W_u^2 + 3(T - u)$ for $u \in [0, T]$.
+\end{examples}
+
+\begin{corollary}
+Any $\F^W$-local martingale is necessarily a continuous process.
+\end{corollary}

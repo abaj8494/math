@@ -1,0 +1,272 @@
+\section{Girsanov Theorem}
+
+\subsection{Change of Measure}
+
+\begin{definition}
+Consider two probability measures $\P$ and $\Q$ defined on $(\Omega, \A)$.
+\begin{itemize}
+    \item (equivalence) $\P$ and $\Q$ are said to be \textbf{equivalent} if
+    \[
+    \P(A) = 0 \iff \Q(A) = 0
+    \]
+    for all $A \in \A$; i.e.\ they have the same set of null events in the $\sigma$-algebra $\A$.
+
+    \item (absolute continuity) $\Q$ is said to be \textbf{absolutely continuous} with respect to $\P$, written $\Q \ll \P$, if
+    \[
+    \P(A) = 0 \implies \Q(A) = 0
+    \]
+    for all $A \in \A$.
+\end{itemize}
+\end{definition}
+
+\begin{remark}
+If $\P$ and $\Q$ are equivalent on $\A$, then they also enjoy this property on any $\sigma$-algebra $\G \subseteq \A$. In particular, if $\P \sim \Q$ on $\F_T$ then $\P \sim \Q$ on $\F_t$ for every $t \in [0, T]$.
+\end{remark}
+
+\begin{theorem}[Radon--Nikodym Theorem]
+Let $\P$ and $\Q$ be two probability measures on $(\Omega, \A)$ such that $\Q \ll \P$, then there exist a unique positive $\P$-integrable random variable $\eta$ (the \textbf{Radon--Nikodym density}) such that for all $A \in \A$,
+\[
+\Q(A) = \E^\P(\eta \indic_A).
+\]
+We also write
+\[
+\eta = \frac{d\Q}{d\P}.
+\]
+\end{theorem}
+
+\begin{examples}[Radon--Nikodym Density]
+\leavevmode
+\begin{enumerate}
+    \item Coin flip with $\Omega = \{T, H\}$. Consider $\P$ given by $\P\{H\} = \P\{T\} = 1/2$ and $\Q$ by $\Q\{H\} = 1/3$, $\Q\{T\} = 2/3$. Clearly $\P$ and $\Q$ are equivalent; further,
+    \begin{align*}
+    \Q\{T\} &= \E^\P[\eta \indic_{\{T\}}] = \eta\{T\} \P\{T\} \\
+    \Q\{H\} &= \E^\P[\eta \indic_{\{H\}}] = \eta\{H\} \P\{H\}
+    \end{align*}
+    $\implies \eta(\omega) = \frac{\Q(\omega)}{\P(\omega)}$, $\omega \in \{T, H\}$.
+
+    \item Consider $\Omega = [0, \infty)$ and $\A = \B([0, \infty))$. One can define two equivalent probability measure on $(\Omega, \A)$ by setting, for every $A \in \A$,
+    \begin{align*}
+    \P(A) &= \int_\Omega \indic_A(x) \indic_{[0,1]}(x) \, dx = \int_0^\infty \indic_A(x) \, d\P(x) \\
+    \Q(A) &= \int_\Omega \indic_A(x) e^{-x} \, dx = \int_0^\infty \indic_A(x) \, d\Q(x)
+    \end{align*}
+    The probability measure $\P$ is the uniform (Lebesgue) measure on $[0, 1]$ and $\Q$ is the exponential measure. It is not difficult to see that $\P$ is absolutely continuous with respect to $\Q$ but not the reverse, as $\P(A) \leq e \Q(A)$.
+
+    To find the Radon--Nikodym density of $\Q$ with respect to $\P$ we note that for any $A \in \A$,
+    \[
+    \P(A) = \int_\Omega \indic_A(x) \indic_{[0,1]}(x) \, dx = \int_\Omega \indic_A(x) \frac{\indic_{[0,1]}(x)}{e^{-x}} e^{-x} \, dx = \int_\Omega \indic_A(x) \frac{\indic_{[0,1]}(x)}{e^{-x}} \, d\Q(x)
+    \]
+    Therefore the Radon--Nikodym density of $\P$ w.r.t.\ $\Q$ is given by $\eta(x) = \indic_{[0,1]}(x) / e^{-x}$. Further, if we let $X(\omega) = \omega$, then we can show that $X \sim U[0, 1]$ under $\P$ and $X \sim \text{Exp}(1)$ under $\Q$ by computing the CDFs.
+\end{enumerate}
+\end{examples}
+
+\subsection{Radon--Nikodym Density Process}
+
+For Theorem~7.1.1, in the special case of $\A = \F_T$, we usually write $\eta_T$ to denote the (unique) $\F_T$-measurable r.v.\ such that for every $A \in \F_T$,
+\[
+\Q(A) = \E^\P(\eta_T \indic_A) = \int_A \eta_T \, d\P.
+\]
+
+\begin{remark}
+\leavevmode
+\begin{enumerate}[(i)]
+    \item For any $\Q$-integrable r.v.\ $\psi$, we have
+    \[
+    \E^\Q(\psi) = \E^\P(\eta_T \psi).
+    \]
+    $\psi$ is $\Q$-integrable if and only if $\eta_T \psi$ is $\P$-integrable.
+    \item $\P\{\eta_T > 0\} = 1$.
+    \item $\E^\P \eta_T = \Q(\Omega) = 1$.
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[Radon--Nikodym density process]
+The \textbf{Radon--Nikodym density process} $\eta = (\eta_t)_{t \in [0,T]}$ of $\Q$ with respect to $\P$ and a given filtration $\F$ is defined by setting
+\[
+\eta_t := \E^\P(\eta_T \mid \F_t), \quad \forall t \in [0, T]
+\]
+\end{definition}
+
+\begin{remark}
+\leavevmode
+\begin{enumerate}[(i)]
+    \item The tower property implies that Radon--Nikodym density process $\eta$ is a strictly positive martingale under $\P$.
+    \item The random variable $\eta_t$ is the Radon--Nikodym density of $\Q$ with respect to $\P$ on $(\Omega, \F_t)$. That is,
+    \[
+    \eta_t = \frac{d\Q}{d\P}\bigg|_{\F_t}
+    \]
+\end{enumerate}
+\end{remark}
+
+\subsection{Abstract Bayes Formula}
+
+\begin{lemma}[abstract Bayes formula]
+Let $\G$ be a sub-$\sigma$-algebra of $\F_T$, and let $\psi$ be a $\Q$-integrable random variable. Then
+\[
+\E^\Q(\psi \mid \G) = \frac{\E^\P(\eta \psi \mid \G)}{\E^\P(\eta \mid \G)}.
+\]
+\end{lemma}
+
+\begin{proof}
+It can be easily checked that $\E^\P(\eta \mid \G)$ is strictly positive $\P$-a.s.\ so that the RHS is well-defined. By our assumption, the random variable $\eta \psi$ is $\P$-integrable, it is therefore enough to show that
+\[
+\E^\P(\eta \psi \mid \G) = \hblue{\E^\Q(\psi \mid \G)} \E^\P(\eta \mid \G).
+\]
+We want to verify that, for all $A \in \G$,
+\[
+\E^\P(\eta \psi \indic_A) = \E^\P\left[\E^\Q(\psi \mid \G) \E^\P(\eta \mid \G) \indic_A\right].
+\]
+Write $Y = \hblue{\E^\Q(\psi \mid \G)}$. Then
+\begin{align*}
+\E^\P\left[\E^\Q(\psi \mid \G) \E^\P(\eta \mid \G) \indic_A\right] &= \E^\P\left[\E^\P(\eta Y \mid \G) \indic_A\right] && \text{(since $Y$ is $\G$-measurable)} \\
+&= \E^\P\left[\E^\P(\eta Y \indic_A \mid \G)\right] && \text{(since $\indic_A$ is $\G$-measurable)} \\
+&= \E^\P\left[\eta Y \indic_A\right] && \text{(tower property)} \\
+&= \E^\Q\left[Y \indic_A\right] = \E^\Q\left[\hblue{\E^\Q(\psi \mid \G)} \indic_A\right] \\
+&= \E^\Q\left[\E^\Q(\psi \indic_A \mid \G)\right] \\
+&= \E^\Q\left[\psi \indic_A\right] \\
+&= \E^\P(\eta \psi \indic_A)
+\end{align*}
+The definition of conditional expectation then gives the desired result.
+\end{proof}
+
+\begin{lemma}
+A stochastic process $X$ is an $\F$-martingale under $\Q$ if and only if the product $\eta X$ is an $\F$-martingale under $\P$.
+\end{lemma}
+
+\begin{proof}
+This is a direct application of the abstract Bayes formula. Assume first that $\eta X$ is an $\F$-martingale under $\P$ so that $\E^\P(\eta_t X_t \mid \F_u) = \eta_u X_u$ for any $0 \leq u \leq t \leq T$. Then the Bayes formula yields,
+\begin{align*}
+\E^\Q(X_t \mid \F_u) &= \frac{\E^\P(\eta_T X_t \mid \F_u)}{\E^\P(\eta_T \mid \F_u)} = \frac{\E^\P(X_t \E^\P(\eta_T \mid \F_t) \mid \F_u)}{\E^\P(\eta_T \mid \F_u)} = \frac{\E^\P(X_t \eta_t \mid \F_u)}{\eta_u} = \frac{X_u \eta_u}{\eta_u} = X_u
+\end{align*}
+for any $0 \leq u \leq t \leq T$. We conclude that $X$ is an $\F$-martingale under $\Q$. The proof of the converse implication goes along the same lines.
+\end{proof}
+
+\subsection{Girsanov Theorem}
+
+\subsubsection{Linear Drift}
+
+\begin{proposition}
+Let $W$ be a one-dimensional standard Brownian motion on a probability space $(\Omega, \F, \P)$. For a real number $\gamma \in \R$, we define the process $\widetilde{W}$ by setting $\widetilde{W}_t = W_t - \gamma t$ for $t \in [0, T]$. Let the probability measure $\widetilde{\P}$, equivalent to $\P$ on $(\Omega, \F_T)$, be defined through the formula (see Definition~6.4.1 for $\mathcal{E}$)
+\[
+\eta_T = \frac{d\widetilde{\P}}{d\P} = \exp\left(\gamma W_T - \frac{1}{2}\gamma^2 T\right) = \mathcal{E}_T(\gamma W).
+\]
+Then $\widetilde{W}$ is a standard Brownian motion on the probability space $(\Omega, \F, \widetilde{\P})$.
+\end{proposition}
+
+\begin{proof}
+To establish the proposition, we make use of the abstract Bayes formula (Lemma~7.3.1) and L\'evy's characterisation theorem (Lemma~5.3.1). In view of the latter, it suffices to show that for any $\lambda \in \R$ the process
+\[
+M_t^\lambda = \exp\left(\lambda \widetilde{W}_t - \frac{1}{2}\lambda^2 t\right), \quad \forall t \in [0, T],
+\]
+is an $\F$-martingale under $\widetilde{\P}$. By Lemma~7.3.2, we can equivalently check that $\eta M^\lambda$ is an $\F$-martingale under $\P$. But
+\[
+\eta_t M_t^\lambda = \exp\left(\gamma W_t - \frac{1}{2}\gamma^2 t\right) \exp\left(\lambda(W_t - \gamma t) - \frac{1}{2}\lambda^2 t\right) = \exp\left(\alpha W_t - \frac{1}{2}\alpha^2 t\right)
+\]
+where $\alpha = \lambda + \gamma$. Clearly $\E^\P(\eta_t M_t^\lambda) = 1$ for all $t \in [0, T]$ and thus this process follows an $\F$-martingale under $\P$. From the L\'evy characterisation theorem we conclude that $\widetilde{W}$ is a standard Brownian motion on $(\Omega, \F, \widetilde{\P})$.
+\end{proof}
+
+\subsubsection{Stochastic Drift}
+
+Let $W$ be a $d$-dimensional standard Brownian motion defined on a filtered probability space $(\Omega, \F, \P)$. For an $\R^d$-valued process $\gamma \in \Lp_\P(W)$, we define the real-valued $\F$-adapted process $U$ by setting
+\[
+U_t = I_t(\gamma) = \int_0^t \gamma_u \cdot d\bm{W}_u, \quad t \in [0, T].
+\]
+
+\begin{proposition}
+Suppose that $\gamma$ is an $\R^d$-valued $\F$-progressively measurable process such that $\hred{\E^\P[\mathcal{E}_T(U)] = 1}$. Define a probability measure $\widetilde{\P}$ on $(\Omega, \F_T)$ equivalent to $\P$ by means of the Radon--Nikodym derivative
+\[
+\eta_T = \frac{d\widetilde{\P}}{d\P} = \mathcal{E}_T\left(\int_0^{\cdot} \gamma_u \cdot d\bm{W}_u\right) = \mathcal{E}_T(U).
+\]
+Then the process $\widetilde{\bm{W}}$ given by the formula
+\[
+\widetilde{\bm{W}}_t = \bm{W}_t - \int_0^t \gamma_u \, du, \quad \forall t \in [0, T]
+\]
+follows a standard $d$-dimensional Brownian motion on the space $(\Omega, \F, \widetilde{\P})$.
+\end{proposition}
+
+The condition $\E^\P[\mathcal{E}_T(U)] = 1$ is required in Proposition~7.4.2 to ensure that $\eta = \mathcal{E}_T(U)$ is a true $\F$-martingale under $\P$: $\eta = \mathcal{E}_T(U)$ is in general a non-negative $\F$-local martingale and therefore an $\F$-supermartingale. Having $\E^\P[\mathcal{E}_T(U)] = \E^\P[\mathcal{E}_0(U)] = 1$ guarantees $\eta$ is a true $\F$-martingale.
+
+However, it is difficult to check this condition in general. We present two sufficient conditions below.
+
+\begin{proposition}
+\leavevmode
+\begin{enumerate}[(i)]
+    \item (Novikov's condition) If
+    \[
+    \E^\P\left[\exp\left(\frac{1}{2} \int_0^T |\gamma_u|^2 \, du\right)\right] < \infty,
+    \]
+    then $\hred{\E^\P(\mathcal{E}_T(U)) = 1}$. Consequently, the process $\eta = \mathcal{E}(U)$ is a strictly positive continuous $\F$-martingale. In particular, if the process $\gamma$ is uniformly bounded, that is, there exists a constant $K$ such that $|\gamma_t| \leq K$ for $t \in [0, T]$, then Novikov's condition is satisfied and thus $\E^\P(\mathcal{E}_T(U)) = 1$.
+
+    \item (Kazamaki's condition) A weaker but also sufficient condition is the Kazamaki condition:
+    \[
+    \E^\P\left[\exp\left(\frac{1}{2} \int_0^t \gamma_u \cdot d\bm{W}_u\right)\right] < \infty, \quad \forall t \in [0, T].
+    \]
+\end{enumerate}
+\end{proposition}
+
+The next result shows that, if the underlying filtration is generated by a $d$-dimensional Brownian motion, the Radon--Nikodym density process of any probability measure equivalent to $\P$ has necessarily the form of the stochastic exponential for some process $\gamma$.
+
+\begin{proposition}
+Assume $\F = \F^W$. Then for any probability measure $\widetilde{\P}$ on $(\Omega, \F_T)$ equivalent to $\P$, there exists an $\F^W$-progressively measurable, $\R^d$-valued process $\gamma$ such that
+\[
+\eta_T = \frac{d\widetilde{\P}}{d\P} = \mathcal{E}_T\left(\int_0^{\cdot} \gamma_u \cdot d\bm{W}_u\right).
+\]
+\end{proposition}
+
+\begin{proof}
+Let $\eta_T$ be the Radon--Nikodym density of $\widetilde{\P}$ with respect to $\P$ on $(\Omega, \F_T)$ (whose existence is guaranteed by Radon--Nikodym theorem). Clearly, the process $\eta_t = \E^\P(\eta_T \mid \F_t)$ is an $\F$-martingale and $\eta_0 = 1$. Further, since the underlying filtration $\F = \F^W$ is a Brownian filtration, the martingale representation theorem (Theorem~5.4.2) implies the existence of a process $\widetilde{\gamma} \in \Lp_\P(W)$ such that
+\[
+\eta_t = 1 + \int_0^t \widetilde{\gamma}_u \cdot d\bm{W}_u, \quad \forall t \in [0, T].
+\]
+Since $\P\{\eta_T > 0\} = 1$, we also have that $\P\{\eta_t > 0\} = 1$ for any $t \in [0, T]$, and further, in view of continuity of $\eta$ (which is apparent from the representation above) we obtain $\P\{\eta_t > 0, \forall t \in [0, T]\} = 1$. Therefore, the process $\gamma_t = \widetilde{\gamma}_t \eta_t^{-1}$ is well defined and we have
+\[
+\eta_t = 1 + \int_0^t \widetilde{\gamma}_u \cdot d\bm{W}_u = 1 + \int_0^t \eta_u \gamma_u \cdot d\bm{W}_u.
+\]
+We conclude that the Radon--Nikodym density process is the unique solution to the SDE
+\[
+d\eta_t = \eta_t \gamma_t \cdot d\bm{W}_t,
+\]
+and thus, in view of the form of the stochastic exponential, it satisfies, for any $t \in [0, T]$,
+\[
+\eta_t = \mathcal{E}_t\left(\int_0^{\cdot} \gamma_u \cdot d\bm{W}_u\right)
+\]
+This completes the proof of the proposition.
+\end{proof}
+
+\subsubsection{Continuous Semimartingales}
+
+\begin{theorem}[Girsanov theorem for continuous semimartingales]
+Let $\widetilde{\P} \sim \P$ be two equivalent probability measures on $(\Omega, \F_T)$ with Radon--Nikodym density $\eta_T$. We assume, in addition, that the Radon--Nikodym density process $\eta_t := \E^\P(\eta_T \mid \F_t)$, $t \in [0, T]$ is continuous\footnote{We know already that this holds if $\F = \F^W$ for some Brownian motion $W$, see Proof of Proposition~7.4.4.}. Then any continuous real-valued $\P$-semimartingale $X$ is a continuous $\widetilde{\P}$-semimartingale. If the canonical decomposition of $X$ under $\P$ is $X = X_0 + M + A$ then its canonical decomposition under $\widetilde{\P}$ is $X = X_0 + \widetilde{M} + \widetilde{A}$ where
+\[
+\widetilde{M}_t = M_t - \int_0^t \frac{1}{\eta_u} \, d\langle \eta, M \rangle_u = M_t - \langle \mathcal{L}(\eta), M \rangle_t
+\]
+and
+\[
+\widetilde{A}_t = A_t + \int_0^t \frac{1}{\eta_u} \, d\langle \eta, M \rangle_u = A_t + \langle \mathcal{L}(\eta), M \rangle_t
+\]
+In particular, $X$ follows a local martingale under $\widetilde{\P}$ if and only if the process $\widetilde{A} = A + \langle \mathcal{L}(\eta), M \rangle$ vanishes identically (Definition~5.2.1), that is, $A_t + \langle \mathcal{L}(\eta), M \rangle_t = 0$ for every $t \in [0, T]$.
+
+The transform $\varphi : M \mapsto M - \langle \mathcal{L}(\eta), M \rangle$ is called \textbf{Girsanov transform}.
+\end{theorem}
+
+\begin{proof}
+We need to prove that
+\begin{enumerate}[(i)]
+    \item $\widetilde{M}$ is a local martingale under $\widetilde{\P}$.
+    \item $\widetilde{A}$ is a process of finite variation with $\widetilde{A}_0 = 0$ (i.e.\ almost all sample paths are of finite variation on $[0, T]$).
+\end{enumerate}
+
+To show (ii), recall the polarisation formula
+\[
+\langle X, Y \rangle = \frac{1}{4}\left(\langle X + Y \rangle - \langle X - Y \rangle\right),
+\]
+which is the difference of two increasing processes and therefore must have finite variation (Theorem~3.3.1). Hence, $\widetilde{A} = A + \langle \mathcal{L}(\eta), M \rangle$ being the sum of two processes of finite variation, must be a process of finite variation itself.
+
+To show (i), we check its equivalence: $\eta \widetilde{M}$ is a local martingale under $\P$. Consider the dynamics of $\eta \widetilde{M}$:
+\begin{align*}
+d\eta_t \widetilde{M}_t &= \eta_t \, d\widetilde{M}_t + \widetilde{M}_t \, d\eta_t + d\langle \eta, \widetilde{M} \rangle_t && \text{(integration by parts)} \\
+&= \hblue{\eta_t \, d[M_t - \langle \mathcal{L}(\eta), M \rangle_t]} + \hsalmon{\widetilde{M}_t \, d\eta_t} + \hgreen{d\langle \eta, M - \langle \mathcal{L}(\eta), M \rangle \rangle_t} \\
+&= \hblue{\eta_t \, dM_t - \eta_t \, d\langle \mathcal{L}(\eta), M \rangle_t} + \hsalmon{\widetilde{M}_t \, d\eta_t} + \hgreen{d\langle \eta, M \rangle_t} && \text{($\langle \mathcal{L}(\eta), M \rangle$ has finite variation)} \\
+&= \eta_t \, dM_t + \widetilde{M}_t \, d\eta_t && \text{(observe $d\langle \eta, M \rangle_t = \eta_t \, d\langle \mathcal{L}(\eta), M \rangle_t$)}
+\end{align*}
+where $M$ and $\eta$ are both $\P$-local martingales. Hence, $\eta \widetilde{M}$ is also a $\P$-local martingale, completing the proof.
+\end{proof}
