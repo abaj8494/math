@@ -1,0 +1,93 @@
+\documentclass[11pt]{article}
+\usepackage[paperwidth=500pt,paperheight=5000pt,margin=10pt]{geometry}
+\usepackage{fontspec}
+\usepackage{amsmath,amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=false}
+\setlength{\headheight}{13.59999pt}
+\definecolor{linkblue}{HTML}{00007B}
+\definecolor{exampleblue}{HTML}{4169E1}
+\definecolor{highlightred}{HTML}{B22222}
+\definecolor{highlightblue}{HTML}{0000FF}
+\definecolor{notegray}{HTML}{7F807F}
+\definecolor{highlightsalmon}{HTML}{F08080}
+\definecolor{highlightgreen}{HTML}{006400}
+\definecolor{examplebarbg}{rgb}{0.255, 0.41, 0.884}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{thmtools}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textit{Melantha Wang}}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\usepackage{tikz}
+\usepackage{caption}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc}
+\usepackage{mdframed}
+\usepackage[bottom]{footmisc}
+\setlength{\parskip}{0pt plus 1pt}
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\normalsize\centering}{\thesection}{1em}{\scshape}
+\titleformat{\subsection}{\normalfont\bfseries\fontsize{12}{14.4}\selectfont}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\bfseries}{\thesubsubsection}{1em}{}
+\newtheoremstyle{italicbody}{3pt}{3pt}{\itshape}{}{\bfseries}{.}{ }{}
+\newtheoremstyle{uprightbody}{3pt}{3pt}{}{}{\bfseries}{.}{ }{}
+\theoremstyle{italicbody}
+\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem{lemma}{Lemma}[subsection]
+\newtheorem{corollary}{Corollary}[subsection]
+\newtheorem{proposition}{Proposition}[subsection]
+\theoremstyle{uprightbody}
+\newtheorem{definition}{Definition}[subsection]
+\newtheorem{examplesinner}{Examples}[subsection]
+\newtheorem{remark}{Remark}[subsection]
+\newtheorem{result}{Result}[subsection]
+\newmdenv[leftline=true,rightline=false,topline=false,bottomline=false,linewidth=3pt,linecolor=examplebarbg,innerleftmargin=10pt,innerrightmargin=0pt,innertopmargin=2pt,innerbottommargin=2pt,skipabove=3pt,skipbelow=3pt]{examplebox}
+\newenvironment{examples}[1][]{\begin{examplebox}\refstepcounter{examplesinner}{\color{exampleblue}\sffamily\bfseries Examples~\theexamplesinner\ifx\\#1\\\else\ (#1)\fi.}\,}{\end{examplebox}}
+\renewcommand{\theHtheorem}{\thesection.\thesubsection.\arabic{theorem}}
+\renewcommand{\theHlemma}{\thesection.\thesubsection.\arabic{lemma}}
+\renewcommand{\theHcorollary}{\thesection.\thesubsection.\arabic{corollary}}
+\renewcommand{\theHproposition}{\thesection.\thesubsection.\arabic{proposition}}
+\renewcommand{\theHdefinition}{\thesection.\thesubsection.\arabic{definition}}
+\renewcommand{\theHexamplesinner}{\thesection.\thesubsection.\arabic{examplesinner}}
+\renewcommand{\theHremark}{\thesection.\thesubsection.\arabic{remark}}
+\renewcommand{\theHresult}{\thesection.\thesubsection.\arabic{result}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Sc}{\mathcal{S}^c}
+\newcommand{\Lp}{\mathcal{L}}
+\newcommand{\indic}{\mathbf{1}}
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand{\hblue}[1]{{\color{highlightblue}#1}}
+\newcommand{\hred}[1]{{\color{highlightred}#1}}
+\newcommand{\hgray}[1]{{\color{notegray}#1}}
+\newcommand{\hsalmon}[1]{{\color{highlightsalmon}#1}}
+\newcommand{\hgreen}[1]{{\color{highlightgreen}#1}}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\pagestyle{empty}
+\pagestyle{empty}
+\begin{document}
+\begin{examples}[Conditional Jensen's inequality (Theorem~1.5.2)]
+Conditional Jensen's inequality can come handy when dealing with martingales. For example, if $S$ is a martingale, then the process $(S - K)^+$ is a submartingale, as $f : x \mapsto (x - K)^+$ is convex:
+\[
+\E[f(S_t)|\F_s] \geq f(\E[S_t|\F_s]) = f(S_s),
+\]
+for $0 \leq s \leq t \leq T$.
+Similarly we can show that $(S^2)$ is also a submartingale.
+\end{examples}
+\end{document}

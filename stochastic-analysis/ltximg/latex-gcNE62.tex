@@ -1,0 +1,115 @@
+\documentclass[11pt]{article}
+\usepackage[paperwidth=500pt,paperheight=5000pt,margin=10pt]{geometry}
+\usepackage{fontspec}
+\usepackage{amsmath,amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=false}
+\setlength{\headheight}{13.59999pt}
+\definecolor{linkblue}{HTML}{00007B}
+\definecolor{exampleblue}{HTML}{4169E1}
+\definecolor{highlightred}{HTML}{B22222}
+\definecolor{highlightblue}{HTML}{0000FF}
+\definecolor{notegray}{HTML}{7F807F}
+\definecolor{highlightsalmon}{HTML}{F08080}
+\definecolor{highlightgreen}{HTML}{006400}
+\definecolor{examplebarbg}{rgb}{0.255, 0.41, 0.884}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{thmtools}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textit{Melantha Wang}}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\usepackage{tikz}
+\usepackage{caption}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc}
+\usepackage{mdframed}
+\usepackage[bottom]{footmisc}
+\setlength{\parskip}{0pt plus 1pt}
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\normalsize\centering}{\thesection}{1em}{\scshape}
+\titleformat{\subsection}{\normalfont\bfseries\fontsize{12}{14.4}\selectfont}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\bfseries}{\thesubsubsection}{1em}{}
+\newtheoremstyle{italicbody}{3pt}{3pt}{\itshape}{}{\bfseries}{.}{ }{}
+\newtheoremstyle{uprightbody}{3pt}{3pt}{}{}{\bfseries}{.}{ }{}
+\theoremstyle{italicbody}
+\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem{lemma}{Lemma}[subsection]
+\newtheorem{corollary}{Corollary}[subsection]
+\newtheorem{proposition}{Proposition}[subsection]
+\theoremstyle{uprightbody}
+\newtheorem{definition}{Definition}[subsection]
+\newtheorem{examplesinner}{Examples}[subsection]
+\newtheorem{remark}{Remark}[subsection]
+\newtheorem{result}{Result}[subsection]
+\newmdenv[leftline=true,rightline=false,topline=false,bottomline=false,linewidth=3pt,linecolor=examplebarbg,innerleftmargin=10pt,innerrightmargin=0pt,innertopmargin=2pt,innerbottommargin=2pt,skipabove=3pt,skipbelow=3pt]{examplebox}
+\newenvironment{examples}[1][]{\begin{examplebox}\refstepcounter{examplesinner}{\color{exampleblue}\sffamily\bfseries Examples~\theexamplesinner\ifx\\#1\\\else\ (#1)\fi.}\,}{\end{examplebox}}
+\renewcommand{\theHtheorem}{\thesection.\thesubsection.\arabic{theorem}}
+\renewcommand{\theHlemma}{\thesection.\thesubsection.\arabic{lemma}}
+\renewcommand{\theHcorollary}{\thesection.\thesubsection.\arabic{corollary}}
+\renewcommand{\theHproposition}{\thesection.\thesubsection.\arabic{proposition}}
+\renewcommand{\theHdefinition}{\thesection.\thesubsection.\arabic{definition}}
+\renewcommand{\theHexamplesinner}{\thesection.\thesubsection.\arabic{examplesinner}}
+\renewcommand{\theHremark}{\thesection.\thesubsection.\arabic{remark}}
+\renewcommand{\theHresult}{\thesection.\thesubsection.\arabic{result}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Sc}{\mathcal{S}^c}
+\newcommand{\Lp}{\mathcal{L}}
+\newcommand{\indic}{\mathbf{1}}
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand{\hblue}[1]{{\color{highlightblue}#1}}
+\newcommand{\hred}[1]{{\color{highlightred}#1}}
+\newcommand{\hgray}[1]{{\color{notegray}#1}}
+\newcommand{\hsalmon}[1]{{\color{highlightsalmon}#1}}
+\newcommand{\hgreen}[1]{{\color{highlightgreen}#1}}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\pagestyle{empty}
+\pagestyle{empty}
+\begin{document}
+\begin{proof}
+\textbf{Existence.} Suppose $X \in L^1(\Omega, \P)$ then $X^\pm \in L^1(\Omega, \P)$. Without loss of generality, we may assume that $X \geq 0$. Define a new probability measure $\Q$ on $(\Omega, \A)$ by setting for any $A \in \A$,
+\[
+\Q(A) := \frac{\E[\indic_A X]}{\E[X]}
+\]
+The probability $\Q$ is absolutely continuous with respect to $\P$ on $\A$ (i.e.\ for $A \in \A$, $\P(A) = 0 \Rightarrow \Q(A) = 0$). This implies that $\Q \ll \P$ on $\G \subseteq \A$ (Remark following Definition~7.1.1). Therefore from the Radon--Nikodym Theorem, there exists a positive $\G$-measurable Radon--Nikodym derivative $\eta = d\Q/d\P \in L^1(\Omega, \P)$ such that
+\begin{align*}
+\E[\indic_A X] &=: \E[X] \Q(A) \\
+&= \E[X] \E[\eta \indic_A] \\
+&= \E[\E[X] \E[\eta \indic_A] | \G] \\
+&= \E[\eta \E[X] \indic_A]
+\end{align*}
+then $\eta \E[X]$ is a version of the conditional expectation $\E[X|\G]$.
+
+\textbf{Uniqueness.} Suppose $Y$ and $Y'$ are both $\G$-conditional expectation of $X$. Let $G = \{\omega : Y(\omega) > Y'(\omega)\}$ and we assume that $\P(G) > 0$. To this end, we note that
+\[
+G := \{Y - Y' > 0\} = \bigcup_{n=1}^{\infty} \{Y - Y' > \tfrac{1}{n}\}
+\]
+\[
+G_n := \{Y - Y' > \tfrac{1}{n}\} = \bigcup_{j=1}^{n} \{Y - Y' > \tfrac{1}{j}\}
+\]
+By Theorem~1.2.1, $G_n \uparrow G \Rightarrow \P(G_n) \uparrow \P(G)$, so there exists $m > 0$ such that $\P(G_m) > 0$.
+
+Since $Y$ and $Y'$ are both $\G$-conditional expectations, we have by (ii) of Definition~1.5.2 that for every $A \in \G$, in particular $G$, we have $\E[\indic_G Y] = \E[\indic_G Y'] \Rightarrow \E[\indic_G (Y - Y')] = 0$. But
+\begin{align*}
+\E\left[\indic_G (Y - Y')\right] &\geq \E\left[\indic_{G_m} (Y - Y')\right] && (\indic_G \geq \indic_{G_m}) \\
+&\geq \frac{1}{m} \P[G_m] > 0 && (\indic_{G_m} = \indic_{\{Y - Y' > 1/m\}})
+\end{align*}
+This is a contradiction and hence $\P(G) = 0$.
+\end{proof}
+\end{document}

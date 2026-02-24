@@ -1,0 +1,121 @@
+\documentclass[11pt]{article}
+\usepackage[paperwidth=500pt,paperheight=5000pt,margin=10pt]{geometry}
+\usepackage{fontspec}
+\usepackage{amsmath,amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=false}
+\setlength{\headheight}{13.59999pt}
+\definecolor{linkblue}{HTML}{00007B}
+\definecolor{exampleblue}{HTML}{4169E1}
+\definecolor{highlightred}{HTML}{B22222}
+\definecolor{highlightblue}{HTML}{0000FF}
+\definecolor{notegray}{HTML}{7F807F}
+\definecolor{highlightsalmon}{HTML}{F08080}
+\definecolor{highlightgreen}{HTML}{006400}
+\definecolor{examplebarbg}{rgb}{0.255, 0.41, 0.884}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{thmtools}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textit{Melantha Wang}}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\usepackage{tikz}
+\usepackage{caption}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc}
+\usepackage{mdframed}
+\usepackage[bottom]{footmisc}
+\setlength{\parskip}{0pt plus 1pt}
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\normalsize\centering}{\thesection}{1em}{\scshape}
+\titleformat{\subsection}{\normalfont\bfseries\fontsize{12}{14.4}\selectfont}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\bfseries}{\thesubsubsection}{1em}{}
+\newtheoremstyle{italicbody}{3pt}{3pt}{\itshape}{}{\bfseries}{.}{ }{}
+\newtheoremstyle{uprightbody}{3pt}{3pt}{}{}{\bfseries}{.}{ }{}
+\theoremstyle{italicbody}
+\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem{lemma}{Lemma}[subsection]
+\newtheorem{corollary}{Corollary}[subsection]
+\newtheorem{proposition}{Proposition}[subsection]
+\theoremstyle{uprightbody}
+\newtheorem{definition}{Definition}[subsection]
+\newtheorem{examplesinner}{Examples}[subsection]
+\newtheorem{remark}{Remark}[subsection]
+\newtheorem{result}{Result}[subsection]
+\newmdenv[leftline=true,rightline=false,topline=false,bottomline=false,linewidth=3pt,linecolor=examplebarbg,innerleftmargin=10pt,innerrightmargin=0pt,innertopmargin=2pt,innerbottommargin=2pt,skipabove=3pt,skipbelow=3pt]{examplebox}
+\newenvironment{examples}[1][]{\begin{examplebox}\refstepcounter{examplesinner}{\color{exampleblue}\sffamily\bfseries Examples~\theexamplesinner\ifx\\#1\\\else\ (#1)\fi.}\,}{\end{examplebox}}
+\renewcommand{\theHtheorem}{\thesection.\thesubsection.\arabic{theorem}}
+\renewcommand{\theHlemma}{\thesection.\thesubsection.\arabic{lemma}}
+\renewcommand{\theHcorollary}{\thesection.\thesubsection.\arabic{corollary}}
+\renewcommand{\theHproposition}{\thesection.\thesubsection.\arabic{proposition}}
+\renewcommand{\theHdefinition}{\thesection.\thesubsection.\arabic{definition}}
+\renewcommand{\theHexamplesinner}{\thesection.\thesubsection.\arabic{examplesinner}}
+\renewcommand{\theHremark}{\thesection.\thesubsection.\arabic{remark}}
+\renewcommand{\theHresult}{\thesection.\thesubsection.\arabic{result}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Sc}{\mathcal{S}^c}
+\newcommand{\Lp}{\mathcal{L}}
+\newcommand{\indic}{\mathbf{1}}
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand{\hblue}[1]{{\color{highlightblue}#1}}
+\newcommand{\hred}[1]{{\color{highlightred}#1}}
+\newcommand{\hgray}[1]{{\color{notegray}#1}}
+\newcommand{\hsalmon}[1]{{\color{highlightsalmon}#1}}
+\newcommand{\hgreen}[1]{{\color{highlightgreen}#1}}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\pagestyle{empty}
+\pagestyle{empty}
+\begin{document}
+(1), note that $W$ is an integrable, $\F$-adapted process with $\E(W_t|\F_u) = \E(W_t - W_u + W_u|\F_u) = W_u$ for any $0 \leq u \leq t \leq T$.
+
+For (2),
+\begin{align*}
+\E[g(W_t)|\F_u] &= \E[g(W_t - W_u + W_u)|\F_u] \\
+&= \E[g(W_t - W_u + x)|\F_u]\big|_{x=W_u} && \text{($W_u$ is $\F_u$-measurable)} \\
+&= \E[g(W_t - W_u + x)]\big|_{x=W_u} && \text{(independent increments)}
+\end{align*}
+which is a function of $W_u$ and therefore $\sigma(W_u)$-measurable (Lemma~1.5.1). It follows that
+\[
+\E[\hblue{\E[g(W_t)|\F_u]}|\sigma(W_u)] = \hblue{\E[g(W_t)|\F_u]}
+\]
+\[
+\Rightarrow \E[g(W_t)|\sigma(W_u)] = \E[g(W_t)|\F_u].
+\]
+
+For (3), note that
+\[
+\begin{pmatrix} W_{t_1} \\ W_{t_2} \\ \vdots \\ W_{t_n} \end{pmatrix}
+=
+\begin{pmatrix} 1 & 0 & \cdots & 0 \\ 1 & 1 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 1 & 1 & \cdots & 1 \end{pmatrix}
+\underbrace{\begin{pmatrix} W_{t_1} \\ W_{t_2} - W_{t_1} \\ \vdots \\ W_{t_n} - W_{t_{n-1}} \end{pmatrix}}_{=: y \sim \N}
+\]
+We can then conclude by using the fact that any linear transform of a Gaussian vector is again Gaussian. In particular, $(W_{t_1}, \ldots, W_{t_n}) \sim \N(0, A\Sigma A^T)$ where $\Sigma = \Var(y)$.
+
+For (4),
+\begin{align*}
+\Cov(W_s, W_t) &= \E[W_s W_t] \\
+&= \E[W_s(W_t - W_s)] + \E[W_s^2] \\
+&= \E[W_s]\E[W_t - W_s] + \E[W_s^2] \\
+&= s
+\end{align*}
+Similarly when $s \geq t$, $\Cov(W_s, W_t) = t$. Therefore $\E[W_t W_s] = \min(s, t)$.
+\end{proof}
+
+\begin{examples}
+\end{document}
