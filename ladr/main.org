@@ -1,0 +1,115 @@
+:PROPERTIES:
+:ID: 0a1fdfe8-2e52-431b-808b-412660a8e9b0
+:END:
+#+TITLE: Linear Algebra Done Right
+#+LATEX_COMPILER: lualatex
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper, 11pt]
+#+OPTIONS: title:nil toc:nil num:t author:nil date:nil ^:{}
+
+#+LATEX_HEADER: \setlength{\headheight}{13.59999pt}
+#+LATEX_HEADER: \definecolor{linkblue}{HTML}{00007B}
+#+LATEX_HEADER: \definecolor{exampleblue}{HTML}{4169E1}
+#+LATEX_HEADER: \definecolor{highlightred}{HTML}{B22222}
+#+LATEX_HEADER: \definecolor{highlightblue}{HTML}{0000FF}
+#+LATEX_HEADER: \definecolor{notegray}{HTML}{7F807F}
+#+LATEX_HEADER: \definecolor{highlightsalmon}{HTML}{F08080}
+#+LATEX_HEADER: \definecolor{highlightgreen}{HTML}{006400}
+#+LATEX_HEADER: \definecolor{examplebarbg}{rgb}{0.255, 0.41, 0.884}
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{thmtools}
+#+LATEX_HEADER: \usepackage{mathrsfs}
+#+LATEX_HEADER: \usepackage{bm}
+#+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \pagestyle{fancy}
+#+LATEX_HEADER: \fancyhf{}
+#+LATEX_HEADER: \lhead{\textit{Aayush Bajaj}}
+#+LATEX_HEADER: \rhead{\thepage}
+#+LATEX_HEADER: \renewcommand{\headrulewidth}{0pt}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{caption}
+#+LATEX_HEADER: \usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc}
+#+LATEX_HEADER: \usepackage{mdframed}
+#+LATEX_HEADER: \usepackage[bottom]{footmisc}
+#+LATEX_HEADER: \setlength{\parskip}{0pt plus 1pt}
+#+LATEX_HEADER: \usepackage{titlesec}
+#+LATEX_HEADER: \titleformat{\section}{\normalfont\normalsize\centering}{\thesection}{1em}{\scshape}
+#+LATEX_HEADER: \titleformat{\subsection}{\normalfont\bfseries\fontsize{12}{14.4}\selectfont}{\thesubsection}{1em}{}
+#+LATEX_HEADER: \titleformat{\subsubsection}{\normalfont\bfseries}{\thesubsubsection}{1em}{}
+#+LATEX_HEADER: \newtheoremstyle{italicbody}{3pt}{3pt}{\itshape}{}{\bfseries}{.}{ }{}
+#+LATEX_HEADER: \newtheoremstyle{uprightbody}{3pt}{3pt}{}{}{\bfseries}{.}{ }{}
+#+LATEX_HEADER: \theoremstyle{italicbody}
+#+LATEX_HEADER: \newtheorem{theorem}{Theorem}[subsection]
+#+LATEX_HEADER: \newtheorem{lemma}{Lemma}[subsection]
+#+LATEX_HEADER: \newtheorem{corollary}{Corollary}[subsection]
+#+LATEX_HEADER: \newtheorem{proposition}{Proposition}[subsection]
+#+LATEX_HEADER: \theoremstyle{uprightbody}
+#+LATEX_HEADER: \newtheorem{definition}{Definition}[subsection]
+#+LATEX_HEADER: \newtheorem{examplesinner}{Examples}[subsection]
+#+LATEX_HEADER: \newtheorem{remark}{Remark}[subsection]
+#+LATEX_HEADER: \newtheorem{result}{Result}[subsection]
+#+LATEX_HEADER: \newmdenv[leftline=true,rightline=false,topline=false,bottomline=false,linewidth=3pt,linecolor=examplebarbg,innerleftmargin=10pt,innerrightmargin=0pt,innertopmargin=2pt,innerbottommargin=2pt,skipabove=3pt,skipbelow=3pt]{examplebox}
+#+LATEX_HEADER: \newenvironment{examples}[1][]{\begin{examplebox}\refstepcounter{examplesinner}{\color{exampleblue}\sffamily\bfseries Examples~\theexamplesinner\ifx\\#1\\\else\ (#1)\fi.}\,}{\end{examplebox}}
+#+LATEX_HEADER: \renewcommand{\theHtheorem}{\thesection.\thesubsection.\arabic{theorem}}
+#+LATEX_HEADER: \renewcommand{\theHlemma}{\thesection.\thesubsection.\arabic{lemma}}
+#+LATEX_HEADER: \renewcommand{\theHcorollary}{\thesection.\thesubsection.\arabic{corollary}}
+#+LATEX_HEADER: \renewcommand{\theHproposition}{\thesection.\thesubsection.\arabic{proposition}}
+#+LATEX_HEADER: \renewcommand{\theHdefinition}{\thesection.\thesubsection.\arabic{definition}}
+#+LATEX_HEADER: \renewcommand{\theHexamplesinner}{\thesection.\thesubsection.\arabic{examplesinner}}
+#+LATEX_HEADER: \renewcommand{\theHremark}{\thesection.\thesubsection.\arabic{remark}}
+#+LATEX_HEADER: \renewcommand{\theHresult}{\thesection.\thesubsection.\arabic{result}}
+#+LATEX_HEADER: \newcommand{\E}{\mathbb{E}}
+#+LATEX_HEADER: \newcommand{\Var}{\operatorname{Var}}
+#+LATEX_HEADER: \newcommand{\Cov}{\operatorname{Cov}}
+#+LATEX_HEADER: \renewcommand{\P}{\mathbb{P}}
+#+LATEX_HEADER: \newcommand{\Q}{\mathbb{Q}}
+#+LATEX_HEADER: \newcommand{\R}{\mathbb{R}}
+#+LATEX_HEADER: \newcommand{\N}{\mathcal{N}}
+#+LATEX_HEADER: \newcommand{\F}{\mathcal{F}}
+#+LATEX_HEADER: \newcommand{\G}{\mathcal{G}}
+#+LATEX_HEADER: \newcommand{\A}{\mathcal{A}}
+#+LATEX_HEADER: \newcommand{\B}{\mathcal{B}}
+#+LATEX_HEADER: \newcommand{\Sc}{\mathcal{S}^c}
+#+LATEX_HEADER: \newcommand{\Lp}{\mathcal{L}}
+#+LATEX_HEADER: \newcommand{\indic}{\mathbf{1}}
+#+LATEX_HEADER: \DeclareMathOperator{\sgn}{sgn}
+#+LATEX_HEADER: \newcommand{\hblue}[1]{{\color{highlightblue}#1}}
+#+LATEX_HEADER: \newcommand{\hred}[1]{{\color{highlightred}#1}}
+#+LATEX_HEADER: \newcommand{\hgray}[1]{{\color{notegray}#1}}
+#+LATEX_HEADER: \newcommand{\hsalmon}[1]{{\color{highlightsalmon}#1}}
+#+LATEX_HEADER: \newcommand{\hgreen}[1]{{\color{highlightgreen}#1}}
+#+LATEX_HEADER: \renewcommand{\qedsymbol}{$\blacksquare$}
+#+LATEX_HEADER: \pagestyle{empty}
+
+#+BEGIN_EXPORT latex
+\geometry{a4paper, top=2cm, left=1cm, right=1cm}
+\pagestyle{fancy}
+\hypersetup{colorlinks=true, linkcolor=linkblue, citecolor=linkblue, urlcolor=linkblue}
+\begin{center}
+{\bfseries \large Linear Algebra Done Right} \\[0.5em]
+February 2026
+\end{center}
+\tableofcontents
+\newpage
+#+END_EXPORT
+
+* Vector Spaces
+
+* Finite-Dimensional Vector Spaces
+
+* Linear Maps
+
+* Polynomials
+
+* Eigenvalues and Eigenvectors
+
+* Inner Product Spaces
+
+* Operators on Inner Product Spaces
+
+* Operators on Complex Vector Spaces
+
+* Multilinear Algebra and Determinants
+
+$U=\{(x,0,0)\in\mathrm{{F}}^{3}:x\in\mathrm{{F}}\}$

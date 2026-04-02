@@ -1,0 +1,148 @@
+:PROPERTIES:
+:ROAM_ALIASES: "Measure Theory Scratch"
+:ID:       E64912FE-D60A-43D7-A891-93F4981B6C62
+:END:
+#+TITLE: Informal Measure Theory Notes
+#+LATEX_COMPILER: lualatex
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper, 11pt]
+#+OPTIONS: title:nil toc:nil num:t author:nil date:nil ^:{}
+
+#+LATEX_HEADER: \setlength{\headheight}{13.59999pt}
+#+LATEX_HEADER: \definecolor{linkblue}{HTML}{00007B}
+#+LATEX_HEADER: \definecolor{exampleblue}{HTML}{4169E1}
+#+LATEX_HEADER: \definecolor{highlightred}{HTML}{B22222}
+#+LATEX_HEADER: \definecolor{highlightblue}{HTML}{0000FF}
+#+LATEX_HEADER: \definecolor{notegray}{HTML}{7F807F}
+#+LATEX_HEADER: \definecolor{highlightsalmon}{HTML}{F08080}
+#+LATEX_HEADER: \definecolor{highlightgreen}{HTML}{006400}
+#+LATEX_HEADER: \definecolor{examplebarbg}{rgb}{0.255, 0.41, 0.884}
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{thmtools}
+#+LATEX_HEADER: \usepackage{mathrsfs}
+#+LATEX_HEADER: \usepackage{bm}
+#+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \pagestyle{fancy}
+#+LATEX_HEADER: \fancyhf{}
+#+LATEX_HEADER: \lhead{\textit{A.B}}
+#+LATEX_HEADER: \rhead{\thepage}
+#+LATEX_HEADER: \renewcommand{\headrulewidth}{0pt}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{caption}
+#+LATEX_HEADER: \usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc}
+#+LATEX_HEADER: \usepackage{mdframed}
+#+LATEX_HEADER: \usepackage[bottom]{footmisc}
+#+LATEX_HEADER: \setlength{\parskip}{0pt plus 1pt}
+#+LATEX_HEADER: \usepackage{titlesec}
+#+LATEX_HEADER: \titleformat{\section}{\normalfont\normalsize\centering}{\thesection}{1em}{\scshape}
+#+LATEX_HEADER: \titleformat{\subsection}{\normalfont\bfseries\fontsize{12}{14.4}\selectfont}{\thesubsection}{1em}{}
+#+LATEX_HEADER: \titleformat{\subsubsection}{\normalfont\bfseries}{\thesubsubsection}{1em}{}
+#+LATEX_HEADER: \newtheoremstyle{italicbody}{3pt}{3pt}{\itshape}{}{\bfseries}{.}{ }{}
+#+LATEX_HEADER: \newtheoremstyle{uprightbody}{3pt}{3pt}{}{}{\bfseries}{.}{ }{}
+#+LATEX_HEADER: \theoremstyle{italicbody}
+#+LATEX_HEADER: \newtheorem{theorem}{Theorem}[subsection]
+#+LATEX_HEADER: \newtheorem{lemma}{Lemma}[subsection]
+#+LATEX_HEADER: \newtheorem{corollary}{Corollary}[subsection]
+#+LATEX_HEADER: \newtheorem{proposition}{Proposition}[subsection]
+#+LATEX_HEADER: \theoremstyle{uprightbody}
+#+LATEX_HEADER: \newtheorem{definition}{Definition}[subsection]
+#+LATEX_HEADER: \newtheorem{examplesinner}{Examples}[subsection]
+#+LATEX_HEADER: \newtheorem{remark}{Remark}[subsection]
+#+LATEX_HEADER: \newtheorem{result}{Result}[subsection]
+#+LATEX_HEADER: \newmdenv[leftline=true,rightline=false,topline=false,bottomline=false,linewidth=3pt,linecolor=examplebarbg,innerleftmargin=10pt,innerrightmargin=0pt,innertopmargin=2pt,innerbottommargin=2pt,skipabove=3pt,skipbelow=3pt]{examplebox}
+#+LATEX_HEADER: \newenvironment{examples}[1][]{\begin{examplebox}\refstepcounter{examplesinner}{\color{exampleblue}\sffamily\bfseries Examples~\theexamplesinner\ifx\\#1\\\else\ (#1)\fi.}\,}{\end{examplebox}}
+#+LATEX_HEADER: \renewcommand{\theHtheorem}{\thesection.\thesubsection.\arabic{theorem}}
+#+LATEX_HEADER: \renewcommand{\theHlemma}{\thesection.\thesubsection.\arabic{lemma}}
+#+LATEX_HEADER: \renewcommand{\theHcorollary}{\thesection.\thesubsection.\arabic{corollary}}
+#+LATEX_HEADER: \renewcommand{\theHproposition}{\thesection.\thesubsection.\arabic{proposition}}
+#+LATEX_HEADER: \renewcommand{\theHdefinition}{\thesection.\thesubsection.\arabic{definition}}
+#+LATEX_HEADER: \renewcommand{\theHexamplesinner}{\thesection.\thesubsection.\arabic{examplesinner}}
+#+LATEX_HEADER: \renewcommand{\theHremark}{\thesection.\thesubsection.\arabic{remark}}
+#+LATEX_HEADER: \renewcommand{\theHresult}{\thesection.\thesubsection.\arabic{result}}
+#+LATEX_HEADER: \newcommand{\E}{\mathbb{E}}
+#+LATEX_HEADER: \newcommand{\Var}{\operatorname{Var}}
+#+LATEX_HEADER: \newcommand{\Cov}{\operatorname{Cov}}
+#+LATEX_HEADER: \renewcommand{\P}{\mathbb{P}}
+#+LATEX_HEADER: \newcommand{\Q}{\mathbb{Q}}
+#+LATEX_HEADER: \newcommand{\R}{\mathbb{R}}
+#+LATEX_HEADER: \newcommand{\N}{\mathcal{N}}
+#+LATEX_HEADER: \newcommand{\F}{\mathcal{F}}
+#+LATEX_HEADER: \newcommand{\G}{\mathcal{G}}
+#+LATEX_HEADER: \newcommand{\A}{\mathcal{A}}
+#+LATEX_HEADER: \newcommand{\B}{\mathcal{B}}
+#+LATEX_HEADER: \newcommand{\Sc}{\mathcal{S}^c}
+#+LATEX_HEADER: \newcommand{\Lp}{\mathcal{L}}
+#+LATEX_HEADER: \newcommand{\indic}{\mathbf{1}}
+#+LATEX_HEADER: \DeclareMathOperator{\sgn}{sgn}
+#+LATEX_HEADER: \newcommand{\hblue}[1]{{\color{highlightblue}#1}}
+#+LATEX_HEADER: \newcommand{\hred}[1]{{\color{highlightred}#1}}
+#+LATEX_HEADER: \newcommand{\hgray}[1]{{\color{notegray}#1}}
+#+LATEX_HEADER: \newcommand{\hsalmon}[1]{{\color{highlightsalmon}#1}}
+#+LATEX_HEADER: \newcommand{\hgreen}[1]{{\color{highlightgreen}#1}}
+#+LATEX_HEADER: \renewcommand{\qedsymbol}{$\blacksquare$}
+#+LATEX_HEADER: \pagestyle{empty}
+#+LATEX_HEADER: \geometry{a4paper, top=2cm, left=1cm, right=1cm}
+
+#+LATEX_LINKCOLOR: deep-navy
+
+
+
+#+BEGIN_EXPORT latex
+\pagestyle{fancy}
+\begin{center}
+{\bfseries \large Informal Measure Theory Notes} \\[0.5em]
+April 2026
+\end{center}
+\tableofcontents
+\dotfill
+\newpage
+
+#+END_EXPORT
+
+* Probability Triples
+
+#+begin_src latex
+\begin{proposition}
+  Suppose $\Omega \in \mathcal{F}$ and $\mathcal{F}$ is closed under set difference. Then $\mathcal{F}$ is an algebra.
+\end{proposition}
+
+\begin{proof}
+  
+\end{proof}
+#+end_src
+
+
+#+begin_src latex
+\begin{proposition}
+The unique solution of the SDE
+\[
+dX_t = \mu(t, X_t) \, dt + \sigma(t, X_t) \cdot d\bm{W}_t
+\]
+with
+\begin{align*}
+\mu(t, X_t) &= A_t X_t + a_t, \\
+\sigma(t, X_t) &= [B_t^1 X_t + b_t^1, \cdots, B_t^d X_t + b_t^d],
+\end{align*}
+where $A$, $a$, $B^i$, $b^i$ $(i = 1, \cdots, d)$ are all $\F$-adapted bounded processes, is given by the formula
+\[
+X_t = \Phi_t \left(X_0 + \int_0^t \Phi_u^{-1} [a_u - \bm{B}_u \cdot \bm{b}_u] \, du + \int_0^t \Phi_u^{-1} \bm{b}_u \cdot d\bm{W}_u\right)
+\]
+where
+\[
+\Phi_t = \exp\left(\int_0^t \left(A_u - \frac{\bm{B}_u \cdot \bm{B}_u}{2}\right) du + \int_0^t \bm{B}_u \cdot d\bm{W}_u\right).
+\]
+\end{proposition}
+
+\begin{remark}
+Analogous to ODE, we can consider the integration factor given by
+\[
+Y_t = \Phi_t^{-1} = \exp\left(-\int_0^t A_u \, du - \int_0^t \bm{B}_u \cdot d\bm{W}_u + \frac{1}{2} \int_0^t \bm{B}_u \cdot \bm{B}_u \, du\right)
+\]
+\end{remark}
+
+\begin{proof}
+To check that $X$ is a solution to the SDE, it suffices to differentiate the RHS using It\^o's formula (easier: compute $d(X_t Y_t)$). The uniqueness of solution can be deduced from It\^o's Theorem~(6.1.1).
+\end{proof}
+
+#+end_src
