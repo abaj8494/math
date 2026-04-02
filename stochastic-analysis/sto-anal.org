@@ -1,5 +1,6 @@
 :PROPERTIES:
 :ID: 0a1fdfe8-2e52-431b-808b-412660a8e9b0
+:ROAM_ALIASES: "Melantha Wang"
 :END:
 #+TITLE: MATH5975 Introduction to Stochastic Analysis
 #+LATEX_COMPILER: lualatex
